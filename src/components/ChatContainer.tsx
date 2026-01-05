@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { ChatMessage } from "./ChatMessage";
 import { ChatInput } from "./ChatInput";
 import { streamChat, type Message } from "@/lib/chatApi";
+import { fullDocumentText } from "@/data/sopContent";
 import { useToast } from "@/hooks/use-toast";
 import { FileText, Sparkles } from "lucide-react";
 
@@ -47,6 +48,7 @@ export function ChatContainer() {
 
     await streamChat({
       messages: [...messages, userMsg],
+      documentText: fullDocumentText,
       onDelta: (chunk) => upsertAssistant(chunk),
       onDone: () => setIsLoading(false),
       onError: (error) => {

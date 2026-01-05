@@ -5,164 +5,151 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-// SOP Document sections for context - STRICT SME ROLE
-const sopContext = `## ROLE & AUTHORITY
-You are a Subject Matter Expert (SME) for the Sales Support Team SOP at 99acres. Your responsibility is to provide factually correct, document-verified answers ONLY. You do NOT infer, assume, guess, or extrapolate beyond what is explicitly stated.
+// Strict, document-grounded chat proxy.
+// Enforces: answers MUST be backed by verbatim quotes from the provided document excerpts.
 
-## CORE RULES (MANDATORY COMPLIANCE)
-
-### Rule 1: Answer ONLY from Document
-- Use EXACT information present in the document below
-- If a fact is NOT explicitly mentioned, you MUST NOT answer it
-
-### Rule 2: NO Assumptions, NO Logical Guessing
-- Do NOT fill gaps using domain knowledge or common sense
-- Do NOT "connect dots" unless the document explicitly connects them
-
-### Rule 3: Missing Information Handling (CRITICAL)
-If required information is not available or unclear, respond EXACTLY with:
-- "Information not available in the provided document."
-- "The document does not explicitly mention this."
-
-### Rule 4: Zero Hallucination Policy
-- NEVER fabricate values, names, dates, counts, features, prices, or conclusions
-- NEVER rephrase uncertainty as confidence
-
-### Rule 5: Strict Interpretation
-- Treat vague statements conservatively
-- If multiple interpretations exist, state: "The document does not clearly specify this."
-
-## DISALLOWED BEHAVIORS (HARD STOP)
-❌ No assumptions
-❌ No inferred logic
-❌ No "likely", "probably", "typically", "usually", "generally"
-❌ No external knowledge
-❌ No summarization that changes meaning
-
-## QUALITY CONTROL (Before Answering)
-- Is every claim directly traceable to document text below?
-- Can you quote the source section?
-- If NOT, reject the answer
-
-## FAILURE MODE RESPONSE
-If user asks beyond document scope:
-"I cannot answer this because the document does not contain this information."
-
-## RESPONSE FORMAT (Markdown)
-- **Direct Answer**: Bold one-line answer first
-- **Source Section**: Reference which section below contains the info
-- **Details**: Use headers (##), bullets (-), numbered lists
-- **Exact Values**: Use \`code format\` for dimensions, emails, formats
-- **Important Notes**: Use > blockquotes
-
-## PRIORITY ORDER
-1. Accuracy
-2. Faithfulness to document
-3. Clarity
-4. Brevity
-
----
-
-# SOP DOCUMENT CONTENT
-
-## Section 1: RERA Registered Project Page - Mandatory Items
+// Fallback mini-document (used only if the client does not send documentText)
+const fallbackDocumentText = `Mandatory Items for RERA Registered Project Page:
 - Project Name
 - Builder Name
 - RERA Number
 - Property Type
 - Option Sizes with configuration and saleable area
-- Valid documents for Option Sizes: RERA Certificate, Approved Plan, IOD, Commencement Certificate
 
-## Section 2: Non-RERA Project Page - Mandatory Items
+---
+
+Non-RERA Project Page Requirements:
 - Project Name
 - Builder Name
 - Property Type
 - Option Sizes with configuration and saleable area
 
-## Section 3: XID Page Creation
-- Created when builder wants to advertise but not interested in project page
-- Sold from: BOSS team
-- Backend: Sales Support
-- Mandatory items: XID Name, Builder Name, Property Type, Option Sizes
-- NOT possible on XID: Lead Tracking Dashboard, LMS/SMS leads, Slot activation
+---
 
-## Section 4: Slot Activation Errors & Resolutions
-- Error: "No size available for slot activation"
-  - Cause: Option sizes missing
-  - Resolution: Add option sizes in XID/Project page via Add to Inventory
-- Error: "No builder premium found"
-  - Cause: Builder premium not set
-  - Resolution: Raise ticket to Premium team via SST HUB
-- Error: "Something went wrong"
-  - Resolution: Check all mandatory requirements and retry
+Slot Activation Errors & Resolutions:
+- Error: "No size available for slot activation"\n  - Cause: Option sizes missing\n  - Resolution: Add option sizes in XID/Project page via Add to Inventory
+- Error: "No builder premium found"\n  - Cause: Builder premium not set\n  - Resolution: Raise ticket to Premium team via SST HUB
+- Error: "Something went wrong"\n  - Resolution: Check all mandatory requirements and retry`;
 
-## Section 5: Option Size Valid Documents
-- RERA Certificate
-- Approved Plan
-- IOD/CC (Intimation of Disapproval/Commencement Certificate)
-- Builder Brochure
-- Agreement
-- Allotment Letter
-- Payment Schedule
-- Bank Approved Project Documents
+const STRICT_RULES = `## ROLE & AUTHORITY
+You are acting as a Subject Matter Expert (SME). Provide factually correct, document-verified answers only.
 
-## Section 6: Builder Information Management
-- Change Builder Name: Raise ticket to Tech team via SST Hub
-  - Approval Required: Regional Head
-- Edit Builder Description: Maximum 2500 characters
-  - Not allowed: Contact info, URLs
-- Builder Logo: \`170 x 112 px\`, formats: PNG, JPEG
+## CORE RULES (MANDATORY)
+1) Answer ONLY from the provided DOCUMENT EXCERPTS.
+2) NO assumptions, NO guessing, NO extrapolation.
+3) If info is missing/unclear, respond exactly with one of:
+- "Information not available in the provided document."
+- "The document does not explicitly mention this."
+- "The document does not clearly specify this."
+- "I cannot answer this because the document does not contain this information."
 
-## Section 7: Project Page Image Requirements
-- Project Logo: \`100 x 60 px\`
-- Project Images: Minimum \`800 x 600 px\`
-- Offer Image: \`1366 x 768 px\`
-- Floor Plan: Minimum \`800 x 600 px\`, must show layout with dimensions
+## OUTPUT FORMAT (MANDATORY)
+Return EITHER one of the exact failure messages above OR a Markdown bullet list where EVERY bullet includes a verbatim quote from the DOCUMENT EXCERPTS.
 
-## Section 8: Price List Management
-- Add Price List: Edit Project Info → Price List tab → upload PDF
-- Remove Price List: Edit Project Info → Price List tab → remove existing file
-- Only PDF format allowed
+Format each bullet exactly like:
+- <answer> — Evidence: "<verbatim quote copied from the excerpts>"
 
-## Section 9: Payment Plan
-- Add via: Edit Project Info → Payment Schedule
-- Options: Upload PDF OR add manual entries
+Hard rules:
+- The Evidence quote MUST be copied exactly from the DOCUMENT EXCERPTS.
+- If you cannot find an exact quote for a claim, do NOT answer the claim; use a failure message instead.
+- Do not use words like "likely", "probably", "typically", "usually", "generally".`;
 
-## Section 10: Video Requirements
-- Supported Formats: MP4, MOV, FLV, AVI, 3GP, MKV, WEBM
-- Minimum Resolution: \`1280 x 720 px\`
-- Duration: 30 seconds to 5 minutes
-- Professional shoot requests: \`asap.ops@99acres.com\`
-- Virtual shoot requests: \`virtualshoot@99acres.com\`
+const FAILURE_MESSAGES = new Set([
+  "Information not available in the provided document.",
+  "The document does not explicitly mention this.",
+  "The document does not clearly specify this.",
+  "I cannot answer this because the document does not contain this information.",
+]);
 
-## Section 11: Walkthrough/Drone Shoot
-- Request via: \`asap.ops@99acres.com\`
-- Requirements: Site access, permissions, weather dependent
+function tokenize(q: string) {
+  return Array.from(
+    new Set(
+      q
+        .toLowerCase()
+        .split(/[^a-z0-9]+/g)
+        .map((t) => t.trim())
+        .filter((t) => t.length >= 3)
+    )
+  );
+}
 
-## Section 12: Inventory Management
-- Add sizes: Edit Project Info → Add to Inventory
-- Each size requires: Configuration, Saleable Area, Property Type
+function scoreSection(section: string, tokens: string[]) {
+  const hay = section.toLowerCase();
+  let score = 0;
+  for (const t of tokens) {
+    // cheap frequency scoring
+    let idx = 0;
+    while (true) {
+      idx = hay.indexOf(t, idx);
+      if (idx === -1) break;
+      score += 1;
+      idx += t.length;
+    }
+  }
+  return score;
+}
 
-## Section 13: Lead Management
-- LMS leads: Available ONLY for Project Pages with active slots
-- SMS leads: Available ONLY for Project Pages
-- XID pages: NO lead tracking available
+function pickRelevantExcerpts(documentText: string, query: string) {
+  // fullDocumentText uses "\n\n---\n\n" delimiter.
+  const parts = documentText.split(/\n\n---\n\n/g);
+  const tokens = tokenize(query);
 
-## Section 14: Campaign Queries
-- Contact: \`corpservice-99acres@99acres.com\`
+  if (tokens.length === 0) return "";
 
-## Section 15: Escalation Matrix
-- Level 1: Kripa Shankar Mahato, Ashish Negi
-- Level 2: Yogesh Sharma
+  const scored = parts
+    .map((p) => ({ p, score: scoreSection(p, tokens) }))
+    .filter((x) => x.score > 0)
+    .sort((a, b) => b.score - a.score);
 
-## Section 16: Approvals Required
-- Builder Name Change: Regional Head approval required
-- Project Deletion: Branch Head approval required
-- Premium Changes: Premium team via SST Hub
+  if (scored.length === 0) return "";
 
-## Section 17: SST Hub
-- Purpose: Central ticketing system for raising requests
-- Used for: Tech issues, Premium changes, Builder info changes`;
+  // Keep excerpts reasonably small.
+  const MAX_SECTIONS = 6;
+  const MAX_CHARS = 14000;
+
+  let out = "";
+  for (const item of scored.slice(0, MAX_SECTIONS)) {
+    if (out.length + item.p.length + 10 > MAX_CHARS) break;
+    out += (out ? "\n\n---\n\n" : "") + item.p;
+  }
+  return out;
+}
+
+function extractEvidenceQuotes(answer: string) {
+  const quotes: string[] = [];
+  // Match: Evidence: "..."
+  const re = /Evidence:\s*"([\s\S]*?)"/g;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(answer)) !== null) {
+    const q = (m[1] ?? "").trim();
+    if (q) quotes.push(q);
+  }
+  return quotes;
+}
+
+function enforceStrictness(answer: string, excerpts: string) {
+  const trimmed = answer.trim();
+  if (FAILURE_MESSAGES.has(trimmed)) return trimmed;
+
+  const evidence = extractEvidenceQuotes(trimmed);
+  if (evidence.length === 0) {
+    return "Information not available in the provided document.";
+  }
+
+  for (const q of evidence) {
+    if (!excerpts.includes(q)) {
+      return "Information not available in the provided document.";
+    }
+  }
+
+  // If we got here, at least every cited quote is verbatim from excerpts.
+  return trimmed;
+}
+
+function sseFromText(content: string) {
+  const payload = JSON.stringify({ choices: [{ delta: { content } }] });
+  return `data: ${payload}\n\ndata: [DONE]\n\n`;
+}
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -170,53 +157,76 @@ serve(async (req) => {
   }
 
   try {
-    const { messages } = await req.json();
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    
-    if (!LOVABLE_API_KEY) {
-      throw new Error("LOVABLE_API_KEY is not configured");
+    const body = await req.json().catch(() => ({}));
+    const messages = Array.isArray((body as any)?.messages) ? (body as any).messages : [];
+    const documentText =
+      typeof (body as any)?.documentText === "string" ? (body as any).documentText : fallbackDocumentText;
+
+    const lastUserMsg = [...messages].reverse().find((m: any) => m?.role === "user")?.content ?? "";
+
+    // Build excerpts and hard-stop if we can't find anything relevant.
+    const excerpts = pickRelevantExcerpts(documentText, lastUserMsg);
+    if (!excerpts) {
+      return new Response(sseFromText("Information not available in the provided document."), {
+        headers: { ...corsHeaders, "Content-Type": "text/event-stream" },
+      });
     }
+
+    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
+    if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
 
     console.log("Processing chat request with", messages.length, "messages");
 
-    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    const systemPrompt = `${STRICT_RULES}\n\n---\n\n## DOCUMENT EXCERPTS (ONLY SOURCE OF TRUTH)\n\n${excerpts}`;
+
+    // Prevent prior assistant messages from "poisoning" future answers.
+    const userOnlyMessages = messages
+      .filter((m: any) => m && m.role === "user" && typeof m.content === "string")
+      .map((m: any) => ({ role: "user", content: m.content }));
+
+    const aiResp = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${LOVABLE_API_KEY}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
-        messages: [
-          { role: "system", content: sopContext },
-          ...messages,
-        ],
-        stream: true,
+        model: "openai/gpt-5-mini",
+        messages: [{ role: "system", content: systemPrompt }, ...userOnlyMessages],
+        stream: false,
       }),
     });
 
-    if (!response.ok) {
-      if (response.status === 429) {
-        return new Response(
-          JSON.stringify({ error: "Rate limit exceeded. Please try again in a moment." }),
-          { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-        );
+    if (!aiResp.ok) {
+      if (aiResp.status === 429) {
+        return new Response(JSON.stringify({ error: "Rate limit exceeded. Please try again in a moment." }), {
+          status: 429,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
       }
-      if (response.status === 402) {
-        return new Response(
-          JSON.stringify({ error: "Usage limit reached. Please check your account." }),
-          { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-        );
+      if (aiResp.status === 402) {
+        return new Response(JSON.stringify({ error: "Usage limit reached. Please check your account." }), {
+          status: 402,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
       }
-      const errorText = await response.text();
-      console.error("AI gateway error:", response.status, errorText);
-      return new Response(
-        JSON.stringify({ error: "Failed to get AI response" }),
-        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
+      const errorText = await aiResp.text();
+      console.error("AI gateway error:", aiResp.status, errorText);
+      return new Response(JSON.stringify({ error: "Failed to get AI response" }), {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
     }
 
-    return new Response(response.body, {
+    const data = await aiResp.json().catch(() => ({}));
+    const rawText: string =
+      (data as any)?.choices?.[0]?.message?.content ??
+      (data as any)?.choices?.[0]?.delta?.content ??
+      "Information not available in the provided document.";
+
+    const strictText = enforceStrictness(String(rawText ?? ""), excerpts);
+
+    return new Response(sseFromText(strictText), {
       headers: { ...corsHeaders, "Content-Type": "text/event-stream" },
     });
   } catch (error) {
