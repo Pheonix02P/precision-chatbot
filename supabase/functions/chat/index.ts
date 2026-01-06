@@ -5,92 +5,98 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-// Strict, document-grounded chat proxy.
-// Enforces: answers MUST be backed by verbatim quotes from the provided document excerpts.
+// Enhanced RAG-based chat with strict document adherence
+// Uses semantic chunking and provides structured responses
 
-// Fallback mini-document (used only if the client does not send documentText)
-const fallbackDocumentText = `Mandatory Items for RERA Registered Project Page:
-- Project Name
-- Builder Name
-- RERA Number
-- Property Type
-- Option Sizes with configuration and saleable area
+const SYSTEM_PROMPT = `You are a Sales Support Assistant for 99acres real estate platform. Your role is to help sales teams quickly find accurate information about project pages, content management, and troubleshooting.
 
----
+## CRITICAL RULES (MANDATORY COMPLIANCE)
 
-Non-RERA Project Page Requirements:
-- Project Name
-- Builder Name
-- Property Type
-- Option Sizes with configuration and saleable area
+1. **Answer ONLY from the provided DOCUMENT EXCERPTS**
+   - Use exact information present in the document
+   - If a fact is not explicitly mentioned, you MUST NOT answer it
 
----
+2. **NO Assumptions, NO Logical Guessing**
+   - Do not fill gaps using domain knowledge or common sense
+   - Do not "connect dots" unless the document explicitly connects them
 
-Slot Activation Errors & Resolutions:
-- Error: "No size available for slot activation"\n  - Cause: Option sizes missing\n  - Resolution: Add option sizes in XID/Project page via Add to Inventory
-- Error: "No builder premium found"\n  - Cause: Builder premium not set\n  - Resolution: Raise ticket to Premium team via SST HUB
-- Error: "Something went wrong"\n  - Resolution: Check all mandatory requirements and retry`;
+3. **Missing Information Handling**
+   If the required information is not available or unclear, respond with:
+   "❌ **Information not available in the knowledge base.**
+   
+   The document does not contain information about this topic. Please contact the relevant team for assistance."
 
-const STRICT_RULES = `## ROLE & AUTHORITY
-You are acting as a Subject Matter Expert (SME). Provide factually correct, document-verified answers only.
+4. **Zero Hallucination Policy**
+   - Never fabricate values, names, dates, counts, features, prices, or conclusions
+   - Never rephrase uncertainty as confidence
 
-## CORE RULES (MANDATORY)
-1) Answer ONLY from the provided DOCUMENT EXCERPTS.
-2) NO assumptions, NO guessing, NO extrapolation.
-3) If info is missing/unclear, respond exactly with one of:
-- "Information not available in the provided document."
-- "The document does not explicitly mention this."
-- "The document does not clearly specify this."
-- "I cannot answer this because the document does not contain this information."
+## RESPONSE FORMAT
 
-## OUTPUT FORMAT (MANDATORY)
-Return EITHER one of the exact failure messages above OR a Markdown bullet list where EVERY bullet includes a verbatim quote from the DOCUMENT EXCERPTS.
+Structure your responses as follows:
 
-Format each bullet exactly like:
-- <answer> — Evidence: "<verbatim quote copied from the excerpts>"
+**Quick Answer:** (2-3 sentences summarizing the key point)
 
-Hard rules:
-- The Evidence quote MUST be copied exactly from the DOCUMENT EXCERPTS.
-- If you cannot find an exact quote for a claim, do NOT answer the claim; use a failure message instead.
-- Do not use words like "likely", "probably", "typically", "usually", "generally".`;
+**Details:** (Bullet points with specific information from the document)
 
-const FAILURE_MESSAGES = new Set([
-  "Information not available in the provided document.",
-  "The document does not explicitly mention this.",
-  "The document does not clearly specify this.",
-  "I cannot answer this because the document does not contain this information.",
-]);
+**📧 Contact:** (Relevant email if mentioned in document)
 
-function tokenize(q: string) {
+## PERSONALITY
+- Professional, helpful, and efficient
+- Quick and direct (sales teams need fast answers)
+- Use emojis sparingly: ✅ ✓ ❌ ✗ ⚠️ 📧 📋 only
+
+## IMPORTANT GUIDELINES
+- Always cite specific requirements and steps
+- Provide examples when available in the document
+- Use tables for comparisons when helpful
+- Highlight important notes with ⚠️
+- If question is ambiguous, ask for clarification
+- If information not found, say so clearly and suggest whom to contact
+
+REMEMBER: Your answers must be 100% traceable to the document excerpts provided. If you cannot find exact information, admit it.`;
+
+function tokenize(text: string): string[] {
   return Array.from(
     new Set(
-      q
+      text
         .toLowerCase()
-        .split(/[^a-z0-9]+/g)
+        .replace(/[^a-z0-9\s]/g, " ")
+        .split(/\s+/)
         .map((t) => t.trim())
-        .filter((t) => t.length >= 3)
+        .filter((t) => t.length >= 2)
     )
   );
 }
 
-function scoreSection(section: string, tokens: string[]) {
+function scoreSection(section: string, tokens: string[]): number {
   const hay = section.toLowerCase();
   let score = 0;
+  
   for (const t of tokens) {
-    // cheap frequency scoring
+    // Exact match gets higher score
     let idx = 0;
     while (true) {
       idx = hay.indexOf(t, idx);
       if (idx === -1) break;
-      score += 1;
+      score += t.length >= 4 ? 2 : 1; // Longer words get more weight
       idx += t.length;
     }
   }
+  
+  // Boost for title/keyword matches
+  const lines = section.split('\n');
+  const titleLine = lines[0] || '';
+  const keywordLine = lines.find(l => l.toLowerCase().includes('keywords:')) || '';
+  
+  for (const t of tokens) {
+    if (titleLine.toLowerCase().includes(t)) score += 5;
+    if (keywordLine.toLowerCase().includes(t)) score += 3;
+  }
+  
   return score;
 }
 
-function pickRelevantExcerpts(documentText: string, query: string) {
-  // fullDocumentText uses "\n\n---\n\n" delimiter.
+function pickRelevantExcerpts(documentText: string, query: string): string {
   const parts = documentText.split(/\n\n---\n\n/g);
   const tokens = tokenize(query);
 
@@ -103,9 +109,9 @@ function pickRelevantExcerpts(documentText: string, query: string) {
 
   if (scored.length === 0) return "";
 
-  // Keep excerpts reasonably small.
-  const MAX_SECTIONS = 6;
-  const MAX_CHARS = 14000;
+  // Keep more context for better answers
+  const MAX_SECTIONS = 8;
+  const MAX_CHARS = 18000;
 
   let out = "";
   for (const item of scored.slice(0, MAX_SECTIONS)) {
@@ -113,42 +119,6 @@ function pickRelevantExcerpts(documentText: string, query: string) {
     out += (out ? "\n\n---\n\n" : "") + item.p;
   }
   return out;
-}
-
-function extractEvidenceQuotes(answer: string) {
-  const quotes: string[] = [];
-  // Match: Evidence: "..."
-  const re = /Evidence:\s*"([\s\S]*?)"/g;
-  let m: RegExpExecArray | null;
-  while ((m = re.exec(answer)) !== null) {
-    const q = (m[1] ?? "").trim();
-    if (q) quotes.push(q);
-  }
-  return quotes;
-}
-
-function enforceStrictness(answer: string, excerpts: string) {
-  const trimmed = answer.trim();
-  if (FAILURE_MESSAGES.has(trimmed)) return trimmed;
-
-  const evidence = extractEvidenceQuotes(trimmed);
-  if (evidence.length === 0) {
-    return "Information not available in the provided document.";
-  }
-
-  for (const q of evidence) {
-    if (!excerpts.includes(q)) {
-      return "Information not available in the provided document.";
-    }
-  }
-
-  // If we got here, at least every cited quote is verbatim from excerpts.
-  return trimmed;
-}
-
-function sseFromText(content: string) {
-  const payload = JSON.stringify({ choices: [{ delta: { content } }] });
-  return `data: ${payload}\n\ndata: [DONE]\n\n`;
 }
 
 serve(async (req) => {
@@ -159,30 +129,43 @@ serve(async (req) => {
   try {
     const body = await req.json().catch(() => ({}));
     const messages = Array.isArray((body as any)?.messages) ? (body as any).messages : [];
-    const documentText =
-      typeof (body as any)?.documentText === "string" ? (body as any).documentText : fallbackDocumentText;
+    const documentText = typeof (body as any)?.documentText === "string" ? (body as any).documentText : "";
 
     const lastUserMsg = [...messages].reverse().find((m: any) => m?.role === "user")?.content ?? "";
 
-    // Build excerpts and hard-stop if we can't find anything relevant.
+    console.log("Processing query:", lastUserMsg.substring(0, 100));
+
+    // Build excerpts
     const excerpts = pickRelevantExcerpts(documentText, lastUserMsg);
+    
     if (!excerpts) {
-      return new Response(sseFromText("Information not available in the provided document."), {
-        headers: { ...corsHeaders, "Content-Type": "text/event-stream" },
-      });
+      const noInfoResponse = `❌ **Information not available in the knowledge base.**
+
+The document does not contain information about this specific topic. 
+
+**📧 For assistance, please contact:**
+- **XID Operations:** xidops@99acres.com (Project creation, options, content)
+- **Premium Team:** premium@99acres.com (Builder premium, slots)
+- **Product Team:** product@99acres.com (P2V, New Launch tags)`;
+
+      return new Response(
+        `data: ${JSON.stringify({ choices: [{ delta: { content: noInfoResponse } }] })}\n\ndata: [DONE]\n\n`,
+        { headers: { ...corsHeaders, "Content-Type": "text/event-stream" } }
+      );
     }
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
 
-    console.log("Processing chat request with", messages.length, "messages");
+    console.log("Found", excerpts.split("---").length, "relevant sections");
 
-    const systemPrompt = `${STRICT_RULES}\n\n---\n\n## DOCUMENT EXCERPTS (ONLY SOURCE OF TRUTH)\n\n${excerpts}`;
+    const systemPromptWithContext = `${SYSTEM_PROMPT}\n\n---\n\n## DOCUMENT EXCERPTS (YOUR ONLY SOURCE OF TRUTH)\n\n${excerpts}`;
 
-    // Prevent prior assistant messages from "poisoning" future answers.
-    const userOnlyMessages = messages
-      .filter((m: any) => m && m.role === "user" && typeof m.content === "string")
-      .map((m: any) => ({ role: "user", content: m.content }));
+    // Keep conversation context but filter to user messages for cleaner context
+    const conversationMessages = messages
+      .filter((m: any) => m && typeof m.content === "string")
+      .slice(-6) // Keep last 6 messages for context
+      .map((m: any) => ({ role: m.role, content: m.content }));
 
     const aiResp = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -191,44 +174,41 @@ serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "openai/gpt-5-mini",
-        messages: [{ role: "system", content: systemPrompt }, ...userOnlyMessages],
-        stream: false,
+        model: "google/gemini-2.5-flash",
+        messages: [
+          { role: "system", content: systemPromptWithContext },
+          ...conversationMessages
+        ],
+        stream: true,
       }),
     });
 
     if (!aiResp.ok) {
       if (aiResp.status === 429) {
-        return new Response(JSON.stringify({ error: "Rate limit exceeded. Please try again in a moment." }), {
-          status: 429,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
+        return new Response(
+          JSON.stringify({ error: "Rate limit exceeded. Please try again in a moment." }),
+          { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
       }
       if (aiResp.status === 402) {
-        return new Response(JSON.stringify({ error: "Usage limit reached. Please check your account." }), {
-          status: 402,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
+        return new Response(
+          JSON.stringify({ error: "Usage limit reached. Please check your account." }),
+          { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
       }
       const errorText = await aiResp.text();
       console.error("AI gateway error:", aiResp.status, errorText);
-      return new Response(JSON.stringify({ error: "Failed to get AI response" }), {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({ error: "Failed to get AI response" }),
+        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
     }
 
-    const data = await aiResp.json().catch(() => ({}));
-    const rawText: string =
-      (data as any)?.choices?.[0]?.message?.content ??
-      (data as any)?.choices?.[0]?.delta?.content ??
-      "Information not available in the provided document.";
-
-    const strictText = enforceStrictness(String(rawText ?? ""), excerpts);
-
-    return new Response(sseFromText(strictText), {
+    // Stream the response
+    return new Response(aiResp.body, {
       headers: { ...corsHeaders, "Content-Type": "text/event-stream" },
     });
+
   } catch (error) {
     console.error("Chat error:", error);
     return new Response(

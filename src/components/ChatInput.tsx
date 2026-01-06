@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { SendHorizontal } from "lucide-react";
+import { SendHorizontal, Loader2 } from "lucide-react";
 
 interface ChatInputProps {
   onSend: (message: string) => void;
@@ -36,25 +36,31 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex items-end gap-2 p-4 bg-card border-t border-border"
+      className="flex items-end gap-2 p-4 bg-card"
     >
-      <Textarea
-        ref={textareaRef}
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        onKeyDown={handleKeyDown}
-        placeholder="Ask about SOPs, XID procedures, RERA requirements..."
-        disabled={disabled}
-        className="min-h-[48px] max-h-[200px] resize-none rounded-xl bg-background border-border focus-visible:ring-primary"
-        rows={1}
-      />
+      <div className="flex-1 relative">
+        <Textarea
+          ref={textareaRef}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder="Ask about project creation, options, pricing, troubleshooting..."
+          disabled={disabled}
+          className="min-h-[48px] max-h-[200px] resize-none rounded-xl bg-background border-border focus-visible:ring-primary pr-4"
+          rows={1}
+        />
+      </div>
       <Button
         type="submit"
         size="icon"
         disabled={!input.trim() || disabled}
         className="h-12 w-12 shrink-0 rounded-xl bg-primary hover:bg-primary/90 transition-all shadow-md hover:shadow-lg disabled:opacity-50"
       >
-        <SendHorizontal className="h-5 w-5" />
+        {disabled ? (
+          <Loader2 className="h-5 w-5 animate-spin" />
+        ) : (
+          <SendHorizontal className="h-5 w-5" />
+        )}
       </Button>
     </form>
   );
