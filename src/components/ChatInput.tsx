@@ -36,7 +36,7 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex items-end gap-2 p-4 bg-card"
+      className="flex items-end gap-2"
     >
       <div className="flex-1 relative">
         <Textarea
@@ -46,7 +46,7 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
           onKeyDown={handleKeyDown}
           placeholder="Ask about project creation, options, pricing, troubleshooting..."
           disabled={disabled}
-          className="min-h-[48px] max-h-[200px] resize-none rounded-xl bg-background border-border focus-visible:ring-primary pr-4"
+          className="min-h-[40px] max-h-[120px] resize-none rounded-lg bg-background border-border focus-visible:ring-primary pr-4 text-sm py-2"
           rows={1}
         />
       </div>
@@ -54,12 +54,12 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
         type="submit"
         size="icon"
         disabled={!input.trim() || disabled}
-        className="h-12 w-12 shrink-0 rounded-xl bg-primary hover:bg-primary/90 transition-all shadow-md hover:shadow-lg disabled:opacity-50"
+        className="h-10 w-10 shrink-0 rounded-lg bg-primary hover:bg-primary/90 transition-all shadow-sm disabled:opacity-50"
       >
         {disabled ? (
-          <Loader2 className="h-5 w-5 animate-spin" />
+          <Loader2 className="h-4 w-4 animate-spin" />
         ) : (
-          <SendHorizontal className="h-5 w-5" />
+          <SendHorizontal className="h-4 w-4" />
         )}
       </Button>
     </form>

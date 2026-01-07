@@ -69,10 +69,7 @@ const quickActions = [
 
 export function QuickActions({ onAction, disabled }: QuickActionsProps) {
   return (
-    <div className="flex flex-wrap gap-2 px-4 py-3 border-b border-border bg-secondary/30">
-      <span className="text-xs text-muted-foreground font-medium self-center mr-1">
-        Quick Actions:
-      </span>
+    <div className="flex flex-wrap gap-1.5 px-3 py-2">
       {quickActions.map((action) => {
         const Icon = action.icon;
         return (
@@ -82,9 +79,9 @@ export function QuickActions({ onAction, disabled }: QuickActionsProps) {
             size="sm"
             onClick={() => onAction(action.query)}
             disabled={disabled}
-            className="h-8 px-3 text-xs gap-1.5 bg-background hover:bg-primary/10 hover:text-primary hover:border-primary/50 transition-all"
+            className="h-7 px-2 text-xs gap-1 bg-background hover:bg-primary/10 hover:text-primary hover:border-primary/50 transition-all"
           >
-            <Icon className="h-3.5 w-3.5" />
+            <Icon className="h-3 w-3" />
             {action.label}
           </Button>
         );
