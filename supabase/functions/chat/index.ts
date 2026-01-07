@@ -55,6 +55,38 @@ Structure your responses as follows:
 
 REMEMBER: Your answers must be 100% traceable to the document excerpts provided. If you cannot find exact information, admit it.`;
 
+// Critical terms that should always match strongly regardless of length
+const CRITICAL_TERMS = ["xid", "rera", "option", "options", "slot", "price", "image", "bhk", "np", "fp", "pg"];
+
+// Common phrase mappings for query normalization
+const QUERY_MAPPINGS: Record<string, string> = {
+  "xid page": "project page",
+  "np xid": "project page",
+  "create xid": "create project page XID",
+  "add option": "add option sizes",
+  "create option": "add option sizes create options",
+  "how to create xid": "create project page XID creation",
+  "how to add options": "add option sizes create options",
+};
+
+// Common phrases that should trigger high scoring
+const COMMON_PHRASES = [
+  "create xid", "add options", "create options", "create project",
+  "activation error", "slot error", "change price", "upload image",
+  "add option", "option sizes", "how to create", "some error",
+  "rera project", "non rera", "floor plan", "price list"
+];
+
+function normalizeQuery(query: string): string {
+  let normalized = query.toLowerCase();
+  for (const [from, to] of Object.entries(QUERY_MAPPINGS)) {
+    if (normalized.includes(from)) {
+      normalized = normalized + " " + to;
+    }
+  }
+  return normalized;
+}
+
 function tokenize(text: string): string[] {
   return Array.from(
     new Set(
@@ -68,18 +100,35 @@ function tokenize(text: string): string[] {
   );
 }
 
-function scoreSection(section: string, tokens: string[]): number {
+function scoreSection(section: string, tokens: string[], originalQuery: string): number {
   const hay = section.toLowerCase();
   let score = 0;
   
+  // Phrase matching - check if common phrases match
+  const queryLower = originalQuery.toLowerCase();
+  for (const phrase of COMMON_PHRASES) {
+    if (queryLower.includes(phrase) && hay.includes(phrase)) {
+      score += 25; // High boost for exact phrase match
+    }
+  }
+  
   for (const t of tokens) {
-    // Exact match gets higher score
     let idx = 0;
+    let matchCount = 0;
     while (true) {
       idx = hay.indexOf(t, idx);
       if (idx === -1) break;
-      score += t.length >= 4 ? 2 : 1; // Longer words get more weight
+      matchCount++;
       idx += t.length;
+    }
+    
+    if (matchCount > 0) {
+      // Critical terms get high weight regardless of length
+      if (CRITICAL_TERMS.includes(t)) {
+        score += matchCount * 8;
+      } else {
+        score += matchCount * (t.length >= 4 ? 2 : 1);
+      }
     }
   }
   
@@ -89,8 +138,12 @@ function scoreSection(section: string, tokens: string[]): number {
   const keywordLine = lines.find(l => l.toLowerCase().includes('keywords:')) || '';
   
   for (const t of tokens) {
-    if (titleLine.toLowerCase().includes(t)) score += 5;
-    if (keywordLine.toLowerCase().includes(t)) score += 3;
+    if (titleLine.toLowerCase().includes(t)) {
+      score += CRITICAL_TERMS.includes(t) ? 15 : 5;
+    }
+    if (keywordLine.toLowerCase().includes(t)) {
+      score += CRITICAL_TERMS.includes(t) ? 10 : 3;
+    }
   }
   
   return score;
@@ -98,14 +151,25 @@ function scoreSection(section: string, tokens: string[]): number {
 
 function pickRelevantExcerpts(documentText: string, query: string): string {
   const parts = documentText.split(/\n\n---\n\n/g);
-  const tokens = tokenize(query);
+  
+  // Normalize query to expand with related terms
+  const normalizedQuery = normalizeQuery(query);
+  const tokens = tokenize(normalizedQuery);
+
+  console.log("Normalized query:", normalizedQuery);
+  console.log("Tokens:", tokens.join(", "));
 
   if (tokens.length === 0) return "";
 
   const scored = parts
-    .map((p) => ({ p, score: scoreSection(p, tokens) }))
+    .map((p) => ({ p, score: scoreSection(p, tokens, query) }))
     .filter((x) => x.score > 0)
     .sort((a, b) => b.score - a.score);
+
+  console.log("Top scoring sections:", scored.slice(0, 3).map(s => ({ 
+    title: s.p.split('\n')[0]?.substring(0, 50), 
+    score: s.score 
+  })));
 
   if (scored.length === 0) return "";
 

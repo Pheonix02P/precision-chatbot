@@ -16,7 +16,7 @@ export const knowledgeChunks: KnowledgeChunk[] = [
     id: "rera-project-creation",
     category: "Project Creation",
     title: "Creating RERA-Registered Projects",
-    keywords: ["RERA", "project page", "XID", "mandatory requirements", "new project", "create project"],
+    keywords: ["RERA", "project page", "XID", "mandatory requirements", "new project", "create project", "create XID", "how to create XID", "XID creation", "make XID", "new XID", "project creation", "create project page", "how to create project", "NP XID", "create NP"],
     content: `## Mandatory Requirements for RERA-Registered Project Page
 
 To create/design a RERA-registered project page/XID/NP XID, the following mandatory details are required:
@@ -53,7 +53,7 @@ These enhance listing quality but are not required for creation:
     id: "non-rera-project-creation",
     category: "Project Creation",
     title: "Creating Non-RERA Projects",
-    keywords: ["consent form", "non-RERA", "builder approval", "project creation", "no RERA"],
+    keywords: ["consent form", "non-RERA", "builder approval", "project creation", "no RERA", "create non-RERA", "non-RERA XID", "project without RERA", "create XID without RERA"],
     content: `## Mandatory Requirements for Non-RERA Project Page
 
 **Primary Document Required:**
@@ -93,7 +93,7 @@ Same rules as RERA projects apply:
     id: "inactive-prelunch-projects",
     category: "Project Creation",
     title: "Creating Inactive/Backend/Pre-launch Projects",
-    keywords: ["inactive XID", "backend project", "pre-launch", "SAB campaign", "tentative"],
+    keywords: ["inactive XID", "backend project", "pre-launch", "SAB campaign", "tentative", "create inactive XID", "backend XID", "prelunch XID", "SAB XID"],
     content: `## When to Create Inactive/Backend/Pre-launch XID
 
 **Allowed Scenarios:**
@@ -118,7 +118,7 @@ XID remains inactive until receiving:
     id: "multi-phase-projects",
     category: "Project Creation",
     title: "Multi-Phase Projects",
-    keywords: ["phases", "multi-phase", "new phase", "project expansion", "separate XID"],
+    keywords: ["phases", "multi-phase", "new phase", "project expansion", "separate XID", "add phase", "new phase XID", "multiple phases"],
     content: `## Should You Create Separate XID for New Phase?
 
 **Answer: NO**
@@ -174,7 +174,7 @@ All phases MUST have same saleable area mapping
     id: "valid-documents-options",
     category: "Options Management",
     title: "Valid Documents for Option Sizes",
-    keywords: ["option sizes", "valid documents", "brochure", "price list", "floor plans", "RERA website"],
+    keywords: ["option sizes", "valid documents", "brochure", "price list", "floor plans", "RERA website", "add options", "create options", "how to add options", "option creation", "new option", "add option sizes", "modify options", "options", "option"],
     content: `## Valid Documents to Add/Create/Modify Option Sizes on XID
 
 **Accepted Sources (Any ONE):**
@@ -206,7 +206,7 @@ All phases MUST have same saleable area mapping
     id: "special-property-types",
     category: "Options Management",
     title: "Penthouse/Duplex/Villament Advertising",
-    keywords: ["penthouse", "duplex", "villament", "farmhouse", "rowhouse", "property type"],
+    keywords: ["penthouse", "duplex", "villament", "farmhouse", "rowhouse", "property type", "advertise penthouse", "advertise duplex", "create penthouse option"],
     content: `## Can We Advertise Penthouse/Duplex/Villament/Farmhouse/Rowhouse on the XID Page?
 
 **Direct Advertising Not Allowed:**
@@ -233,7 +233,7 @@ Penthouse, Duplex, Villament, Farmhouse, and Rowhouse cannot be advertised as st
     id: "bhk-configurations",
     category: "Options Management",
     title: "Non-Standard BHK Configurations",
-    keywords: ["1.5 BHK", "2.5 BHK", "study room", "configuration mapping", "BHK"],
+    keywords: ["1.5 BHK", "2.5 BHK", "study room", "configuration mapping", "BHK", "half BHK", "configuration", "BHK options", "create BHK"],
     content: `## Can 1.5/2.5/3.5/4.5 BHK Be Advertised?
 
 **Answer:** No separate category exists, but can be represented
@@ -268,7 +268,7 @@ Study room considered as additional room:
     id: "saleable-area-guidelines",
     category: "Options Management",
     title: "Saleable Area Guidelines",
-    keywords: ["carpet area", "super area", "built-up area", "saleable mapping", "change area"],
+    keywords: ["carpet area", "super area", "built-up area", "saleable mapping", "change area", "saleable area", "area type", "change saleable area", "super built-up"],
     content: `## How to Change Saleable Area on Project Page
 
 **Default Saleable Area Rules:**
@@ -305,7 +305,7 @@ All phases MUST have same saleable area mapping
     id: "removing-option-sizes",
     category: "Options Management",
     title: "Removing Option Sizes",
-    keywords: ["delete option", "remove size", "sold out", "deactivate option"],
+    keywords: ["delete option", "remove size", "sold out", "deactivate option", "remove option", "delete options", "remove options"],
     content: `## How to Remove Option Sizes from the XID Page
 
 **Decision Tree: Are there paid client slots live on this option?**
@@ -337,7 +337,7 @@ Requirements:
     id: "option-visibility-sequencing",
     category: "Options Management",
     title: "Option Visibility and Sequencing",
-    keywords: ["option order", "display sequence", "sorting", "visibility", "seller portal"],
+    keywords: ["option order", "display sequence", "sorting", "visibility", "seller portal", "options not showing", "option visibility", "option display"],
     content: `## Why Options Not Showing in Seller Portal?
 
 **Common Reasons:**
@@ -367,7 +367,7 @@ Answer: NO
     id: "duplicate-options",
     category: "Options Management",
     title: "Duplicate Option Sizes",
-    keywords: ["same size", "duplicate options", "multiple layouts"],
+    keywords: ["same size", "duplicate options", "multiple layouts", "same option size", "two options same size"],
     content: `## Can Two Options Have Same Size?
 
 **Depends on Configuration:**
@@ -397,7 +397,7 @@ Frontend: System automatically converts to Square Feet and displays in Square Fe
     id: "floor-plan-management",
     category: "Content Management",
     title: "Floor Plan Management",
-    keywords: ["floor plans", "unit plans", "layout", "option images"],
+    keywords: ["floor plans", "unit plans", "layout", "option images", "add floor plan", "upload floor plan", "floor plan requirements"],
     content: `## Floor Plan Guidelines
 
 **Valid Sources for Floor Plans:**
@@ -435,7 +435,7 @@ Answer: NO - Upload typical layout images to photo gallery instead`,
     id: "image-requirements",
     category: "Content Management",
     title: "Image Gallery Requirements",
-    keywords: ["images", "photos", "cover image", "gallery", "image requirements", "upload images"],
+    keywords: ["images", "photos", "cover image", "gallery", "image requirements", "upload images", "add images", "image upload", "photo upload", "upload photos"],
     content: `## Image Technical Requirements
 - Format: JPG only
 - Size: Under 5 MB per image
@@ -485,7 +485,7 @@ DO NOT Use: WeTransfer (blocked on XID team's system)`,
     id: "construction-images",
     category: "Content Management",
     title: "Construction Image Management",
-    keywords: ["construction images", "under construction", "RTM images", "remove images"],
+    keywords: ["construction images", "under construction", "RTM images", "remove images", "remove construction images", "delete construction images"],
     content: `## Removing Construction Images
 
 **Requirements:**
@@ -519,7 +519,7 @@ DO NOT Use: WeTransfer (blocked on XID team's system)`,
     id: "brochure-management",
     category: "Content Management",
     title: "Brochure Management",
-    keywords: ["brochure", "PDF", "project brochure", "document upload"],
+    keywords: ["brochure", "PDF", "project brochure", "document upload", "add brochure", "upload brochure", "brochure requirements"],
     content: `## Brochure Requirements
 
 **Content Requirements:**
@@ -557,7 +557,7 @@ Share new brochure with XID team
     id: "video-management",
     category: "Content Management",
     title: "Video Management",
-    keywords: ["videos", "YouTube", "project video", "P2V", "video upload"],
+    keywords: ["videos", "YouTube", "project video", "P2V", "video upload", "add video", "upload video", "video requirements"],
     content: `## How to Add Video to XID Page
 
 Raw video files cannot be directly added
@@ -594,7 +594,7 @@ Raw video files cannot be directly added
     id: "price-list-management",
     category: "Content Management",
     title: "Price List Management",
-    keywords: ["price list", "cost sheet", "price sheet", "pricing document"],
+    keywords: ["price list", "cost sheet", "price sheet", "pricing document", "add price list", "upload price list", "update price list"],
     content: `## Adding Price List
 
 **Accepted Sources (Priority Order):**
@@ -638,7 +638,7 @@ Must Include:
     id: "payment-plan-management",
     category: "Content Management",
     title: "Payment Plan Management",
-    keywords: ["payment plan", "payment schedule", "installment plan"],
+    keywords: ["payment plan", "payment schedule", "installment plan", "add payment plan", "update payment plan"],
     content: `## Adding Payment Plan
 
 **Accepted Sources:**
@@ -673,7 +673,7 @@ Complete Removal (No Replacement): Valid reason must be mentioned in email
     id: "location-highlights",
     category: "Content Management",
     title: "Location Advantages Management",
-    keywords: ["location highlights", "connectivity", "nearby landmarks", "distance"],
+    keywords: ["location highlights", "connectivity", "nearby landmarks", "distance", "location advantages", "add location", "update location"],
     content: `## How to Update Location Highlights/Advantages on the XID Page
 
 **Sources for Location Highlights:**
@@ -720,7 +720,7 @@ Complete Removal (No Replacement): Valid reason must be mentioned in email
     id: "project-usp",
     category: "Content Management",
     title: "Project Highlights and USPs",
-    keywords: ["USP", "why buy", "project highlights", "unique features"],
+    keywords: ["USP", "why buy", "project highlights", "unique features", "add USP", "project USP", "unique selling points"],
     content: `## Guidelines for Project USPs
 
 **Maximum:** 7 logical USPs per project
@@ -765,7 +765,7 @@ Complete Removal (No Replacement): Valid reason must be mentioned in email
     id: "slot-activation-errors",
     category: "Troubleshooting",
     title: "Slot Activation Errors",
-    keywords: ["activation error", "slot error", "cannot activate", "NP slot error", "some error occurred"],
+    keywords: ["activation error", "slot error", "cannot activate", "NP slot error", "some error occurred", "error", "fix error", "troubleshoot error", "slot activation error", "activation issue"],
     content: `## How to Resolve Slot Activation Errors
 
 ### Error: "Some Error Occurred"
@@ -818,7 +818,7 @@ Complete Removal (No Replacement): Valid reason must be mentioned in email
     id: "pricing-display",
     category: "Pricing",
     title: "Pricing Display Management",
-    keywords: ["price", "pricing issues", "price display", "cost", "rate"],
+    keywords: ["price", "pricing issues", "price display", "cost", "rate", "pricing not showing", "price not visible", "update pricing", "change price"],
     content: `## Pricing Priority Hierarchy
 
 The system displays pricing in this priority order:
@@ -857,7 +857,7 @@ ALL option sizes within configuration must be "Price on Request". If even ONE op
     id: "other-charges",
     category: "Pricing",
     title: "Other Charges Management",
-    keywords: ["other charges", "extra charges", "government charges", "additional costs"],
+    keywords: ["other charges", "extra charges", "government charges", "additional costs", "remove other charges", "plus other charges"],
     content: `## Can "+ Other Charges" Be Removed?
 
 **Answer: NO**
@@ -907,7 +907,7 @@ Can be corrected by sharing valid builder price list
     id: "builder-name-change",
     category: "Builder Information",
     title: "Builder Profile Management",
-    keywords: ["builder name", "developer", "builder profile", "company name", "change builder"],
+    keywords: ["builder name", "developer", "builder profile", "company name", "change builder", "update builder name", "builder change"],
     content: `## Changing Builder Name on XID Page
 
 **For Non-RERA Projects:**
@@ -949,7 +949,7 @@ Builder name must exactly match name in Developer section
     id: "builder-logo",
     category: "Builder Information",
     title: "Builder Logo Management",
-    keywords: ["builder logo", "developer logo", "company logo"],
+    keywords: ["builder logo", "developer logo", "company logo", "add logo", "upload logo", "change logo"],
     content: `## Sourcing Builder Logo
 
 **Accepted Sources:**
@@ -974,7 +974,7 @@ Builder name must exactly match name in Developer section
     id: "about-builder",
     category: "Builder Information",
     title: "Builder Description (About Builder)",
-    keywords: ["about builder", "builder description", "developer info", "company profile"],
+    keywords: ["about builder", "builder description", "developer info", "company profile", "builder info", "add builder description"],
     content: `## Approved Content Sources for About Builder
 
 **Valid Sources:**
@@ -1017,7 +1017,7 @@ Builder name must exactly match name in Developer section
     id: "joint-venture-builders",
     category: "Builder Information",
     title: "Joint Venture (Multiple Builders)",
-    keywords: ["joint venture", "JV", "multiple builders", "two builders"],
+    keywords: ["joint venture", "JV", "multiple builders", "two builders", "add two builders", "multiple developers"],
     content: `## Can Two or More Builders Be Displayed?
 
 **Current System:** NO provision for multiple builder names
@@ -1055,7 +1055,7 @@ Builder name must exactly match name in Developer section
     id: "locality-management",
     category: "Location",
     title: "Location and Locality Management",
-    keywords: ["locality", "location change", "area", "neighborhood", "lat/long"],
+    keywords: ["locality", "location change", "area", "neighborhood", "lat/long", "change locality", "update location", "latitude longitude"],
     content: `## Changing Project Locality
 
 **If Locality Explicitly Mentioned In:**
@@ -1101,7 +1101,7 @@ Cannot Display in Locality Section
     id: "offer-management",
     category: "Content Management",
     title: "Offer Management",
-    keywords: ["offers", "promotions", "discounts", "offer image", "offer text"],
+    keywords: ["offers", "promotions", "discounts", "offer image", "offer text", "add offer", "create offer", "offer requirements"],
     content: `## Offer Text Requirements
 
 **Whitelisting Process:**
@@ -1141,7 +1141,7 @@ Cannot Display in Locality Section
     id: "amenity-management",
     category: "Content Management",
     title: "Amenity Management",
-    keywords: ["amenities", "facilities", "project features"],
+    keywords: ["amenities", "facilities", "project features", "add amenities", "update amenities"],
     content: `## How to Add Amenities
 
 **Accepted Sources:**
@@ -1177,7 +1177,7 @@ Cannot Display in Locality Section
     id: "advertising-products",
     category: "Slot Types",
     title: "Available Advertising Products",
-    keywords: ["NP slot", "FP", "PG", "AdStar", "AdPro", "advertising products"],
+    keywords: ["NP slot", "FP", "PG", "AdStar", "AdPro", "advertising products", "slot types", "available products", "advertising options"],
     content: `## Products Available for XID Advertising
 
 **For All Advertisers (Builder/Dealer/Channel Partner):**
@@ -1219,7 +1219,7 @@ Cannot Display in Locality Section
     id: "blocking-advertisers",
     category: "Access Control",
     title: "Blocking Advertisers",
-    keywords: ["block CP", "block dealer", "advertiser block", "builder exclusive"],
+    keywords: ["block CP", "block dealer", "advertiser block", "builder exclusive", "block advertiser", "restrict CP"],
     content: `## Blocking CP/Dealer from XID Page
 
 **When Used:** Builder wants exclusive advertising rights
@@ -1249,7 +1249,7 @@ Cannot Display in Locality Section
     id: "resale-listings",
     category: "Pricing",
     title: "Resale Listing Prices",
-    keywords: ["resale listings", "resale prices", "secondary market"],
+    keywords: ["resale listings", "resale prices", "secondary market", "remove resale", "block resale", "delete resale"],
     content: `## Removing Resale Listings and Prices
 
 **Requirements:**
