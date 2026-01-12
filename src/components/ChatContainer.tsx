@@ -5,27 +5,8 @@ import { QuickActions } from "./QuickActions";
 import { streamChat, type Message } from "@/lib/chatApi";
 import { fullDocumentText } from "@/data/knowledgeBase";
 import { useToast } from "@/hooks/use-toast";
-import { FileText, Sparkles, RotateCcw, Building2 } from "lucide-react";
+import { RotateCcw, Building2, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-const suggestedQuestions = [
-  {
-    icon: "🏢",
-    text: "What are the mandatory requirements to create a RERA registered project page?"
-  },
-  {
-    icon: "⚠️",
-    text: "How to resolve slot activation errors like 'Some Error Occurred'?"
-  },
-  {
-    icon: "📄",
-    text: "What are valid documents to add or modify option sizes on XID page?"
-  },
-  {
-    icon: "💰",
-    text: "How does pricing display work and what is the priority hierarchy?"
-  },
-];
 
 export function ChatContainer() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -81,71 +62,72 @@ export function ChatContainer() {
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full bg-gradient-to-b from-background to-muted/20">
       {/* Messages area - takes maximum space */}
       <div className="flex-1 overflow-y-auto min-h-0">
         {messages.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full p-4 text-center">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center mb-3 shadow-md">
-              <Building2 className="h-6 w-6 text-primary-foreground" />
+          <div className="flex flex-col items-center justify-center h-full px-4 py-6">
+            {/* Hero section - compact */}
+            <div className="text-center mb-4">
+              <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-primary via-primary to-accent shadow-lg shadow-primary/25 mb-3">
+                <Building2 className="h-7 w-7 text-primary-foreground" />
+              </div>
+              <h2 className="text-xl font-bold text-foreground mb-1">
+                Sales Support Assistant
+              </h2>
+              <p className="text-sm text-muted-foreground max-w-md">
+                Get instant answers about projects, options, pricing & troubleshooting
+              </p>
             </div>
-            <h2 className="text-lg font-semibold text-foreground mb-1">
-              How can I help you today?
-            </h2>
-            <p className="text-sm text-muted-foreground mb-4 max-w-sm">
-              Ask about project creation, options, pricing, or troubleshooting.
-            </p>
             
-            {/* Compact Quick Actions */}
-            <QuickActions onAction={handleSend} disabled={isLoading} />
-            
-            <div className="grid gap-2 w-full max-w-lg mt-4">
-              {suggestedQuestions.map((question, index) => (
-                <button
-                  key={index}
-                  onClick={() => handleSend(question.text)}
-                  className="text-left px-3 py-2 rounded-lg border border-border bg-card hover:bg-primary/5 hover:border-primary/30 transition-all text-xs text-foreground group"
-                >
-                  <span className="mr-1.5">{question.icon}</span>
-                  <span className="group-hover:text-primary transition-colors">{question.text}</span>
-                </button>
-              ))}
+            {/* Quick Actions - Full view */}
+            <div className="w-full max-w-2xl mb-4">
+              <div className="flex items-center gap-2 mb-2">
+                <Sparkles className="h-3.5 w-3.5 text-primary" />
+                <span className="text-xs font-medium text-muted-foreground">Quick Topics</span>
+              </div>
+              <QuickActions onAction={handleSend} disabled={isLoading} variant="full" />
             </div>
           </div>
         ) : (
           <div className="pb-2">
-            {/* Show compact quick actions when chatting */}
-            <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm border-b border-border">
-              <QuickActions onAction={handleSend} disabled={isLoading} />
+            {/* Compact quick actions bar when chatting */}
+            <div className="sticky top-0 z-10 bg-background/80 backdrop-blur-md border-b border-border/50 py-1">
+              <QuickActions onAction={handleSend} disabled={isLoading} variant="compact" />
             </div>
-            {messages.map((msg, index) => (
-              <ChatMessage
-                key={index}
-                role={msg.role}
-                content={msg.content}
-                isLoading={isLoading && index === messages.length - 1 && msg.role === "assistant"}
-                messageId={`msg-${index}`}
-              />
-            ))}
-            {isLoading && messages[messages.length - 1]?.role === "user" && (
-              <ChatMessage role="assistant" content="" isLoading />
-            )}
+            
+            {/* Messages */}
+            <div className="space-y-1">
+              {messages.map((msg, index) => (
+                <ChatMessage
+                  key={index}
+                  role={msg.role}
+                  content={msg.content}
+                  isLoading={isLoading && index === messages.length - 1 && msg.role === "assistant"}
+                  messageId={`msg-${index}`}
+                />
+              ))}
+              {isLoading && messages[messages.length - 1]?.role === "user" && (
+                <ChatMessage role="assistant" content="" isLoading />
+              )}
+            </div>
             <div ref={messagesEndRef} />
           </div>
         )}
       </div>
 
-      {/* Compact input area */}
-      <div className="border-t border-border bg-background">
-        <div className="flex items-center gap-2 p-2">
+      {/* Input area - minimal */}
+      <div className="border-t border-border/50 bg-background/80 backdrop-blur-sm">
+        <div className="flex items-center gap-1.5 p-2 max-w-4xl mx-auto">
           {messages.length > 0 && (
             <Button
               variant="ghost"
-              size="sm"
+              size="icon"
               onClick={handleNewChat}
-              className="text-xs text-muted-foreground hover:text-foreground h-8 px-2 shrink-0"
+              className="h-9 w-9 shrink-0 text-muted-foreground hover:text-foreground"
+              title="New Chat"
             >
-              <RotateCcw className="h-3.5 w-3.5" />
+              <RotateCcw className="h-4 w-4" />
             </Button>
           )}
           <div className="flex-1">
