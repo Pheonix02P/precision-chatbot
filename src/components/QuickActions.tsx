@@ -316,7 +316,7 @@ const quickActions = [
 
 export function QuickActions({ onAction, disabled }: QuickActionsProps) {
   return (
-    <div className="flex flex-wrap gap-1 px-2 py-1.5 max-h-[120px] overflow-y-auto">
+    <div className="flex flex-wrap gap-1 px-2 py-1.5">
       {quickActions.map((action) => {
         const Icon = action.icon;
         return (
