@@ -10,9 +10,10 @@ interface ChatMessageProps {
   content: string;
   isLoading?: boolean;
   messageId?: string;
+  userQuestion?: string;
 }
 
-export function ChatMessage({ role, content, isLoading, messageId }: ChatMessageProps) {
+export function ChatMessage({ role, content, isLoading, messageId, userQuestion }: ChatMessageProps) {
   const isUser = role === "user";
   const [copied, setCopied] = useState(false);
 
@@ -128,7 +129,7 @@ export function ChatMessage({ role, content, isLoading, messageId }: ChatMessage
             
             {/* Feedback buttons */}
             {content && !isLoading && messageId && (
-              <FeedbackButtons messageId={messageId} />
+              <FeedbackButtons messageId={messageId} userQuestion={userQuestion} />
             )}
           </>
         )}

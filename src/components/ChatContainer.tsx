@@ -98,15 +98,23 @@ export function ChatContainer() {
             
             {/* Messages */}
             <div className="space-y-1">
-              {messages.map((msg, index) => (
-                <ChatMessage
-                  key={index}
-                  role={msg.role}
-                  content={msg.content}
-                  isLoading={isLoading && index === messages.length - 1 && msg.role === "assistant"}
-                  messageId={`msg-${index}`}
-                />
-              ))}
+              {messages.map((msg, index) => {
+                // Find the preceding user question for assistant messages
+                const userQuestion = msg.role === "assistant" && index > 0 
+                  ? messages.slice(0, index).reverse().find(m => m.role === "user")?.content 
+                  : undefined;
+                
+                return (
+                  <ChatMessage
+                    key={index}
+                    role={msg.role}
+                    content={msg.content}
+                    isLoading={isLoading && index === messages.length - 1 && msg.role === "assistant"}
+                    messageId={`msg-${index}`}
+                    userQuestion={userQuestion}
+                  />
+                );
+              })}
               {isLoading && messages[messages.length - 1]?.role === "user" && (
                 <ChatMessage role="assistant" content="" isLoading />
               )}

@@ -2,17 +2,20 @@ import { useState } from "react";
 import { ThumbsUp, ThumbsDown, ExternalLink, HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 interface FeedbackButtonsProps {
   messageId: string;
+  userQuestion?: string;
 }
 
 const FRESHSERVICE_TICKET_URL = "https://99acres.freshservice.com/support/tickets/new";
 
-export function FeedbackButtons({ messageId }: FeedbackButtonsProps) {
+export function FeedbackButtons({ messageId, userQuestion }: FeedbackButtonsProps) {
   const [feedback, setFeedback] = useState<"positive" | "negative" | null>(null);
   const [showFollowUp, setShowFollowUp] = useState(false);
   const [issueResolved, setIssueResolved] = useState<boolean | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
   const { toast } = useToast();
 
   const handleFeedback = (type: "positive" | "negative") => {
@@ -29,7 +32,7 @@ export function FeedbackButtons({ messageId }: FeedbackButtonsProps) {
     }
   };
 
-  const handleResolutionResponse = (resolved: boolean) => {
+  const handleResolutionResponse = async (resolved: boolean) => {
     setIssueResolved(resolved);
     setShowFollowUp(false);
     
@@ -39,6 +42,27 @@ export function FeedbackButtons({ messageId }: FeedbackButtonsProps) {
         description: "Happy we could help resolve your issue.",
       });
     } else {
+      // Save unresolved question to database
+      if (userQuestion) {
+        setIsSaving(true);
+        try {
+          const { error } = await supabase
+            .from("unresolved_feedback")
+            .insert({
+              question: userQuestion,
+              message_id: messageId,
+            });
+          
+          if (error) {
+            console.error("Failed to save unresolved feedback:", error);
+          }
+        } catch (err) {
+          console.error("Error saving unresolved feedback:", err);
+        } finally {
+          setIsSaving(false);
+        }
+      }
+      
       toast({
         title: "We're sorry",
         description: "Please create a support ticket for further assistance.",
