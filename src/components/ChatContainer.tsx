@@ -62,29 +62,30 @@ export function ChatContainer() {
   };
 
   return (
-    <div className="flex flex-col h-full bg-gradient-to-b from-background to-muted/20">
+    <div className="flex flex-col h-full bg-gradient-to-b from-background via-background to-muted/30">
       {/* Messages area - takes maximum space */}
       <div className="flex-1 overflow-y-auto min-h-0">
         {messages.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full px-4 py-6">
-            {/* Hero section - compact */}
-            <div className="text-center mb-4">
-              <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-primary via-primary to-accent shadow-lg shadow-primary/25 mb-3">
-                <Building2 className="h-7 w-7 text-primary-foreground" />
+          <div className="flex flex-col items-center justify-center h-full px-4 py-8">
+            {/* Hero section with animated elements */}
+            <div className="text-center mb-6 animate-message-in">
+              <div className="relative inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary via-purple-500 to-accent shadow-xl shadow-primary/30 mb-4">
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary to-purple-500 animate-pulse-ring opacity-30" />
+                <Building2 className="h-8 w-8 text-primary-foreground relative z-10" />
               </div>
-              <h2 className="text-xl font-bold text-foreground mb-1">
+              <h2 className="text-2xl font-bold mb-2 animated-gradient-text">
                 Sales Support Assistant
               </h2>
-              <p className="text-sm text-muted-foreground max-w-md">
+              <p className="text-sm text-muted-foreground max-w-md leading-relaxed">
                 Get instant answers about projects, options, pricing & troubleshooting
               </p>
             </div>
             
             {/* Quick Actions - Full view */}
-            <div className="w-full max-w-2xl mb-4">
-              <div className="flex items-center gap-2 mb-2">
-                <Sparkles className="h-3.5 w-3.5 text-primary" />
-                <span className="text-xs font-medium text-muted-foreground">Quick Topics</span>
+            <div className="w-full max-w-2xl mb-4 animate-message-in" style={{ animationDelay: '0.1s' }}>
+              <div className="flex items-center gap-2 mb-3">
+                <Sparkles className="h-4 w-4 text-primary animate-pulse" />
+                <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Quick Topics</span>
               </div>
               <QuickActions onAction={handleSend} disabled={isLoading} variant="full" />
             </div>
