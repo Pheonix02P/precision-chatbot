@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Bot, User, Copy, Check } from "lucide-react";
+import { Bot, User, Copy, Check, Sparkles } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -26,37 +26,45 @@ export function ChatMessage({ role, content, isLoading, messageId, userQuestion 
   return (
     <div
       className={cn(
-        "flex gap-2 px-3 py-2 animate-in fade-in-0 duration-200",
+        "flex gap-3 px-4 py-3 animate-message-in",
         isUser ? "flex-row-reverse" : "flex-row"
       )}
     >
-      {/* Avatar - smaller */}
+      {/* Avatar with glow effect */}
       <div
         className={cn(
-          "flex h-7 w-7 shrink-0 items-center justify-center rounded-full",
+          "relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-transform duration-200 hover:scale-110",
           isUser
-            ? "bg-primary text-primary-foreground"
-            : "bg-gradient-to-br from-primary to-accent text-primary-foreground shadow-sm"
+            ? "bg-primary text-primary-foreground shadow-md shadow-primary/30"
+            : "bg-gradient-to-br from-primary via-accent to-purple-500 text-primary-foreground shadow-lg shadow-primary/40"
         )}
       >
-        {isUser ? <User className="h-3.5 w-3.5" /> : <Bot className="h-3.5 w-3.5" />}
+        {!isUser && (
+          <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary to-purple-500 animate-pulse-ring opacity-30" />
+        )}
+        {isUser ? <User className="h-4 w-4" /> : <Bot className="h-4 w-4" />}
       </div>
       
-      {/* Message bubble */}
+      {/* Message bubble with hover effect */}
       <div
         className={cn(
-          "flex-1 rounded-xl px-3 py-2 max-w-[88%] relative group",
+          "flex-1 rounded-2xl px-4 py-3 max-w-[85%] relative group chat-bubble-hover",
           isUser
-            ? "bg-primary text-primary-foreground ml-auto"
-            : "bg-card text-card-foreground border border-border/60 shadow-sm"
+            ? "bg-primary text-primary-foreground ml-auto shadow-md shadow-primary/20"
+            : "bg-card text-card-foreground border border-border/60 shadow-sm hover:shadow-md hover:border-primary/20"
         )}
       >
         {isLoading && !content ? (
-          <div className="flex items-center gap-1.5 py-0.5">
-            <span className="w-1.5 h-1.5 bg-primary/60 rounded-full animate-bounce [animation-delay:-0.3s]" />
-            <span className="w-1.5 h-1.5 bg-primary/60 rounded-full animate-bounce [animation-delay:-0.15s]" />
-            <span className="w-1.5 h-1.5 bg-primary/60 rounded-full animate-bounce" />
-            <span className="text-[10px] text-muted-foreground ml-1">Searching...</span>
+          <div className="flex items-center gap-2 py-1">
+            <div className="flex items-center gap-1">
+              <span className="w-2 h-2 bg-primary rounded-full animate-typing-dot" style={{ animationDelay: '0s' }} />
+              <span className="w-2 h-2 bg-primary rounded-full animate-typing-dot" style={{ animationDelay: '0.2s' }} />
+              <span className="w-2 h-2 bg-primary rounded-full animate-typing-dot" style={{ animationDelay: '0.4s' }} />
+            </div>
+            <span className="text-xs text-muted-foreground flex items-center gap-1">
+              <Sparkles className="h-3 w-3 animate-pulse" />
+              Thinking...
+            </span>
           </div>
         ) : isUser ? (
           <div className="text-sm leading-relaxed">{content}</div>
@@ -64,18 +72,18 @@ export function ChatMessage({ role, content, isLoading, messageId, userQuestion 
           <>
             <div className="prose prose-sm max-w-none dark:prose-invert 
               prose-headings:text-foreground prose-headings:font-semibold prose-headings:mt-2 prose-headings:mb-1 prose-headings:text-sm
-              prose-p:text-foreground prose-p:leading-relaxed prose-p:my-1 prose-p:text-sm
+              prose-p:text-foreground prose-p:leading-relaxed prose-p:my-1.5 prose-p:text-sm
               prose-strong:text-foreground prose-strong:font-semibold 
-              prose-li:text-foreground prose-li:my-0 prose-li:text-sm
-              prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-xs prose-code:before:content-none prose-code:after:content-none 
-              prose-blockquote:border-l-primary prose-blockquote:bg-muted/50 prose-blockquote:py-0.5 prose-blockquote:px-2 prose-blockquote:rounded-r prose-blockquote:my-1
-              prose-table:text-xs prose-th:bg-muted prose-th:px-2 prose-th:py-1 prose-td:px-2 prose-td:py-1 prose-td:border prose-th:border
-              prose-ul:my-1 prose-ol:my-1">
+              prose-li:text-foreground prose-li:my-0.5 prose-li:text-sm
+              prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:text-xs prose-code:before:content-none prose-code:after:content-none 
+              prose-blockquote:border-l-primary prose-blockquote:bg-muted/50 prose-blockquote:py-1 prose-blockquote:px-3 prose-blockquote:rounded-r-lg prose-blockquote:my-2
+              prose-table:text-xs prose-th:bg-muted prose-th:px-3 prose-th:py-1.5 prose-td:px-3 prose-td:py-1.5 prose-td:border prose-th:border
+              prose-ul:my-1.5 prose-ol:my-1.5">
               <ReactMarkdown
                 components={{
                   table: ({ children }) => (
-                    <div className="overflow-x-auto my-2">
-                      <table className="w-full border-collapse border border-border rounded-lg overflow-hidden text-xs">
+                    <div className="overflow-x-auto my-3 rounded-lg border border-border">
+                      <table className="w-full border-collapse overflow-hidden text-xs">
                         {children}
                       </table>
                     </div>
@@ -83,7 +91,7 @@ export function ChatMessage({ role, content, isLoading, messageId, userQuestion 
                   a: ({ href, children }) => (
                     <a 
                       href={href} 
-                      className="text-primary hover:underline font-medium"
+                      className="text-primary hover:underline font-medium transition-colors hover:text-primary/80"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -91,38 +99,38 @@ export function ChatMessage({ role, content, isLoading, messageId, userQuestion 
                     </a>
                   ),
                   ul: ({ children }) => (
-                    <ul className="list-none space-y-0.5 my-1">
+                    <ul className="list-none space-y-1 my-2">
                       {children}
                     </ul>
                   ),
                   li: ({ children }) => (
-                    <li className="flex items-start gap-1.5 text-sm">
-                      <span className="text-primary mt-1 text-[10px]">•</span>
+                    <li className="flex items-start gap-2 text-sm group/item">
+                      <span className="text-primary mt-1.5 text-xs transition-transform group-hover/item:scale-125">•</span>
                       <span className="flex-1">{children}</span>
                     </li>
                   ),
-                  h1: ({ children }) => <h1 className="text-base font-bold mt-2 mb-1">{children}</h1>,
-                  h2: ({ children }) => <h2 className="text-sm font-bold mt-2 mb-1">{children}</h2>,
-                  h3: ({ children }) => <h3 className="text-sm font-semibold mt-1.5 mb-0.5">{children}</h3>,
-                  p: ({ children }) => <p className="text-sm my-1 leading-relaxed">{children}</p>,
+                  h1: ({ children }) => <h1 className="text-base font-bold mt-3 mb-2 animated-gradient-text">{children}</h1>,
+                  h2: ({ children }) => <h2 className="text-sm font-bold mt-3 mb-1.5 text-primary">{children}</h2>,
+                  h3: ({ children }) => <h3 className="text-sm font-semibold mt-2 mb-1">{children}</h3>,
+                  p: ({ children }) => <p className="text-sm my-1.5 leading-relaxed">{children}</p>,
                 }}
               >
                 {content}
               </ReactMarkdown>
             </div>
             
-            {/* Copy button */}
+            {/* Copy button with improved styling */}
             {content && !isLoading && (
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={handleCopy}
-                className="absolute top-1 right-1 h-6 w-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                className="absolute top-2 right-2 h-7 w-7 p-0 opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-primary/10 hover:scale-110"
               >
                 {copied ? (
-                  <Check className="h-3 w-3 text-green-600" />
+                  <Check className="h-3.5 w-3.5 text-green-500" />
                 ) : (
-                  <Copy className="h-3 w-3" />
+                  <Copy className="h-3.5 w-3.5 text-muted-foreground" />
                 )}
               </Button>
             )}
