@@ -78,7 +78,7 @@ Structure your responses as follows:
 REMEMBER: You are an expert EXPLAINING information, not a guide TELLING users what to do. Your answers must be 100% traceable to the document excerpts provided.`;
 
 // Critical terms that should always match strongly regardless of length
-const CRITICAL_TERMS = ["xid", "rera", "option", "options", "slot", "price", "image", "bhk", "np", "fp", "pg"];
+const CRITICAL_TERMS = ["xid", "rera", "option", "options", "slot", "price", "image", "bhk", "np", "fp", "pg", "logo", "builder", "project"];
 
 // Common phrase mappings for query normalization
 const QUERY_MAPPINGS: Record<string, string> = {
