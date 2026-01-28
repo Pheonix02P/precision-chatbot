@@ -948,8 +948,8 @@ Builder name must exactly match name in Developer section
   {
     id: "builder-logo",
     category: "Builder Information",
-    title: "Builder Logo / Project Logo Management",
-    keywords: ["builder logo", "developer logo", "company logo", "add logo", "upload logo", "change logo", "project logo", "logo requirements", "logo", "xid logo", "page logo"],
+    title: "Builder Logo Management",
+    keywords: ["builder logo", "developer logo", "company logo", "add builder logo", "upload builder logo", "change builder logo", "builder logo requirements"],
     content: `## Sourcing Builder Logo
 
 **Accepted Sources:**
