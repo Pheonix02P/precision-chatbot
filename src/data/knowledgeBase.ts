@@ -2202,23 +2202,19 @@ If "Price per sq ft showing NAN": Check for mismatch between backend saleable ar
 Email: xidops@99acres.com
 Purpose: Project creation, option management, content updates, floor plans, images, brochures, project modifications
 
-**📧 Premium Team**
-Email: premium@99acres.com
-Purpose: Builder premium issues, slot activation, slot transfer, slot-related errors
-
-**📧 Product Team**
-Email: product@99acres.com
-Purpose: P2V removal, New Launch tag removal for RERA projects, product-related queries
-
 **📧 Feedback Team**
-Email: feedback@99acres.com
+Email: Feedback@99acres.com
 Purpose: Price trend issues, society reviews, locality reviews, builder widget removal, system-generated description changes
 
-**📧 Corp Service Team**
-Email: corpservice-99acres@99acres.com
-Purpose: Campaign requests, mailer requests, banner bookings, LBXID
+**📧 Operations Team**
+Email: Operation@99acres.com
+Purpose: Builder profile updates, company name changes, operational queries
 
-**📧 ASAP Operations Team**
+**📧 Listing Screening Team**
+Email: Listingscreening_99acres@99acres.com
+Purpose: Listing quality, screening issues, content moderation
+
+**📧 ASAP Team**
 Email: asap.ops@99acres.com
 Purpose: AdStar/AdPro video queries, video shoot arrangements, seller card videos
 
@@ -2226,17 +2222,27 @@ Purpose: AdStar/AdPro video queries, video shoot arrangements, seller card video
 Email: virtualshoot@99acres.com
 Purpose: Virtual video shoot requests for AdPro
 
+**📧 Corp Service Team**
+Email: Corpservice-99acres@99acres.com
+Purpose: Campaign requests, mailer requests, banner bookings, LBXID
+
+**📧 Photos Team**
+Email: Photos@99acres.com
+Purpose: Photo-related queries, image processing, photo shoots
+
 ## Quick Reference by Query Type
 
 | Query Type | Contact Team | Email |
 |------------|--------------|-------|
 | Project/XID creation | XID Operations | xidops@99acres.com |
 | Options/Floor plans | XID Operations | xidops@99acres.com |
-| Slot issues | Premium Team | premium@99acres.com |
-| P2V/New Launch tag | Product Team | product@99acres.com |
-| Price trends/Reviews | Feedback Team | feedback@99acres.com |
-| Campaigns/Mailers | Corp Service | corpservice-99acres@99acres.com |
-| Video shoots | ASAP Operations | asap.ops@99acres.com |`,
+| Price trends/Reviews | Feedback Team | Feedback@99acres.com |
+| Builder profile | Operations Team | Operation@99acres.com |
+| Listing issues | Listing Screening | Listingscreening_99acres@99acres.com |
+| Video shoots | ASAP Team | asap.ops@99acres.com |
+| Virtual shoots | Virtual Shoot | virtualshoot@99acres.com |
+| Campaigns/Mailers | Corp Service | Corpservice-99acres@99acres.com |
+| Photo queries | Photos Team | Photos@99acres.com |`,
     relatedTopics: ["Troubleshooting", "Support"],
     contactEmail: "xidops@99acres.com"
   }
@@ -2290,19 +2296,39 @@ export const contactDirectory = [
     purpose: "Project creation, option management, content updates"
   },
   {
-    team: "Premium Team",
-    email: "premium@99acres.com",
-    purpose: "Builder premium issues, slot activation"
-  },
-  {
-    team: "Product Team",
-    email: "product@99acres.com",
-    purpose: "P2V removal, New Launch tag removal for RERA projects"
+    team: "Feedback Team",
+    email: "Feedback@99acres.com",
+    purpose: "Price trends, reviews, builder widget, system descriptions"
   },
   {
     team: "Operations Team",
-    email: "operations@99acres.com",
+    email: "Operation@99acres.com",
     purpose: "Builder profile updates, company name changes"
+  },
+  {
+    team: "Listing Screening",
+    email: "Listingscreening_99acres@99acres.com",
+    purpose: "Listing quality, screening issues, content moderation"
+  },
+  {
+    team: "ASAP Team",
+    email: "asap.ops@99acres.com",
+    purpose: "AdStar/AdPro video queries, seller card videos"
+  },
+  {
+    team: "Virtual Shoot",
+    email: "virtualshoot@99acres.com",
+    purpose: "Virtual video shoot requests"
+  },
+  {
+    team: "Corp Service",
+    email: "Corpservice-99acres@99acres.com",
+    purpose: "Campaigns, mailers, banner bookings"
+  },
+  {
+    team: "Photos Team",
+    email: "Photos@99acres.com",
+    purpose: "Photo-related queries, image processing"
   }
 ];
 
