@@ -1277,11 +1277,11 @@ Builder email or letterhead required for blocking and deletion
     id: "project-logo",
     category: "Content Management",
     title: "Project Logo Management",
-    keywords: ["project logo", "add project logo", "upload project logo", "change project logo", "project logo requirements", "logo for project"],
+    keywords: ["project logo", "add project logo", "upload project logo", "change project logo", "project logo requirements", "logo for project", "XID project logo"],
     content: `## How to Add a Project Logo on the XID Page
 
 **Accepted Sources:**
-- Builder's official website
+- Official website of the developer
 - Project brochure
 - Sales email (as per below requirement)
 
@@ -1291,16 +1291,14 @@ Builder email or letterhead required for blocking and deletion
 - Required resolution: 100 x 60 pixels
 
 **Important Note:**
-Builder logos CANNOT be used in place of the project logo under any circumstances. If a valid project logo is not available, the logo section should be left blank.
+Developer company logos CANNOT be used in place of the project logo under any circumstances. If a valid project logo is not available, the logo section should be left blank.
 
-**Difference Between Project Logo and Builder Logo:**
-| Aspect | Project Logo | Builder Logo |
-|--------|--------------|--------------|
-| Purpose | Represents the specific project | Represents the builder/developer company |
-| Resolution | 100 x 60 pixels | 170 x 112 pixels |
-| Naming | Must match project name on XID | Must match builder name on XID |
-| Substitution | Cannot use builder logo | Cannot use project logo |`,
-    relatedTopics: ["Builder Logo", "Image Requirements"],
+**Key Differences from Developer Logo:**
+- Project logo represents the SPECIFIC PROJECT (not the company)
+- Resolution is 100 x 60 pixels (smaller than developer logo)
+- Name on logo must match PROJECT name on XID page
+- These two logo types are NOT interchangeable`,
+    relatedTopics: ["Image Requirements", "Content Guidelines"],
     contactEmail: "xidops@99acres.com"
   },
   {
