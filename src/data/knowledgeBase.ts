@@ -2190,6 +2190,55 @@ Once slots are activated, frontend displays the saleable area mapped in backend.
 If "Price per sq ft showing NAN": Check for mismatch between backend saleable area and Seller panel configuration.`,
     relatedTopics: ["Saleable Area Guidelines", "Slot Activation"],
     contactEmail: "xidops@99acres.com"
+  },
+  {
+    id: "contact-directory",
+    category: "Support",
+    title: "Contact Directory - Team Emails",
+    keywords: ["contact", "email", "emails", "contact emails", "team email", "who to contact", "contact details", "support email", "help email", "reach out", "contact team", "email address", "mail", "mailing"],
+    content: `## Contact Directory - All Team Emails
+
+**📧 XID Operations Team**
+Email: xidops@99acres.com
+Purpose: Project creation, option management, content updates, floor plans, images, brochures, project modifications
+
+**📧 Premium Team**
+Email: premium@99acres.com
+Purpose: Builder premium issues, slot activation, slot transfer, slot-related errors
+
+**📧 Product Team**
+Email: product@99acres.com
+Purpose: P2V removal, New Launch tag removal for RERA projects, product-related queries
+
+**📧 Feedback Team**
+Email: feedback@99acres.com
+Purpose: Price trend issues, society reviews, locality reviews, builder widget removal, system-generated description changes
+
+**📧 Corp Service Team**
+Email: corpservice-99acres@99acres.com
+Purpose: Campaign requests, mailer requests, banner bookings, LBXID
+
+**📧 ASAP Operations Team**
+Email: asap.ops@99acres.com
+Purpose: AdStar/AdPro video queries, video shoot arrangements, seller card videos
+
+**📧 Virtual Shoot Team**
+Email: virtualshoot@99acres.com
+Purpose: Virtual video shoot requests for AdPro
+
+## Quick Reference by Query Type
+
+| Query Type | Contact Team | Email |
+|------------|--------------|-------|
+| Project/XID creation | XID Operations | xidops@99acres.com |
+| Options/Floor plans | XID Operations | xidops@99acres.com |
+| Slot issues | Premium Team | premium@99acres.com |
+| P2V/New Launch tag | Product Team | product@99acres.com |
+| Price trends/Reviews | Feedback Team | feedback@99acres.com |
+| Campaigns/Mailers | Corp Service | corpservice-99acres@99acres.com |
+| Video shoots | ASAP Operations | asap.ops@99acres.com |`,
+    relatedTopics: ["Troubleshooting", "Support"],
+    contactEmail: "xidops@99acres.com"
   }
 ];
 
