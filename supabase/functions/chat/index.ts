@@ -78,7 +78,14 @@ Structure your responses as follows:
 REMEMBER: You are an expert EXPLAINING information, not a guide TELLING users what to do. Your answers must be 100% traceable to the document excerpts provided.`;
 
 // Critical terms that should always match strongly regardless of length
-const CRITICAL_TERMS = ["xid", "rera", "option", "options", "slot", "price", "image", "bhk", "np", "fp", "pg", "logo", "builder", "project"];
+// Note: "builder" and "project" removed as standalone terms to prevent cross-matching between similar entries
+const CRITICAL_TERMS = ["xid", "rera", "option", "options", "slot", "price", "image", "bhk", "np", "fp", "pg", "logo"];
+
+// Compound phrases that should be matched as units (higher priority than individual terms)
+const COMPOUND_PHRASES = [
+  "project logo", "builder logo", "developer logo",
+  "project page", "project name", "builder name"
+];
 
 // Common phrase mappings for query normalization
 const QUERY_MAPPINGS: Record<string, string> = {
@@ -125,9 +132,23 @@ function tokenize(text: string): string[] {
 function scoreSection(section: string, tokens: string[], originalQuery: string): number {
   const hay = section.toLowerCase();
   let score = 0;
+  const queryLower = originalQuery.toLowerCase();
+  
+  // HIGHEST PRIORITY: Compound phrase matching (e.g., "project logo" vs "builder logo")
+  for (const phrase of COMPOUND_PHRASES) {
+    if (queryLower.includes(phrase) && hay.includes(phrase)) {
+      score += 40; // Very high boost for exact compound phrase match
+    }
+    // Penalize if query has one phrase but section has another related phrase
+    if (queryLower.includes("project logo") && !hay.includes("project logo") && hay.includes("builder logo")) {
+      score -= 20;
+    }
+    if (queryLower.includes("builder logo") && !hay.includes("builder logo") && hay.includes("project logo")) {
+      score -= 20;
+    }
+  }
   
   // Phrase matching - check if common phrases match
-  const queryLower = originalQuery.toLowerCase();
   for (const phrase of COMMON_PHRASES) {
     if (queryLower.includes(phrase) && hay.includes(phrase)) {
       score += 25; // High boost for exact phrase match
