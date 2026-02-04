@@ -2245,6 +2245,31 @@ Purpose: Photo-related queries, image processing, photo shoots
 | Photo queries | Photos Team | Photos@99acres.com |`,
     relatedTopics: ["Troubleshooting", "Support"],
     contactEmail: "xidops@99acres.com"
+  },
+  {
+    id: "slot-reactivation-credit",
+    category: "Slots & Transactions",
+    title: "Slot Re-activation and Credit Back",
+    keywords: ["slot", "reactivate", "re-activate", "credit back", "transaction", "deactivated", "TID", "reactivation", "slot deactivated", "credit refund"],
+    content: `## Slot Re-activation After Deactivation
+
+**Question:** Is there a provision to re-activate a slot or credit back the transaction if the slot was deactivated?
+
+**Answer: No**
+
+Once a transaction is deactivated, it cannot be re-activated using the old TID.
+
+**What Happens Next:**
+- A new TID will be required
+- The old transaction cannot be restored
+- Credit back is not available for deactivated slots
+
+**Important:**
+- Deactivation is a permanent action for that specific TID
+- Plan carefully before deactivating any slot
+- Contact the operations team if you have questions before deactivating`,
+    relatedTopics: ["Slot Activation Errors", "Slot Re-activation Rules"],
+    contactEmail: "xidops@99acres.com"
   }
 ];
 
