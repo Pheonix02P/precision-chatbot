@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Bot, User, Copy, Check, Sparkles } from "lucide-react";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { FeedbackButtons } from "./FeedbackButtons";
@@ -80,6 +81,7 @@ export function ChatMessage({ role, content, isLoading, messageId, userQuestion 
               prose-table:text-xs prose-th:bg-muted prose-th:px-3 prose-th:py-1.5 prose-td:px-3 prose-td:py-1.5 prose-td:border prose-th:border
               prose-ul:my-1.5 prose-ol:my-1.5">
               <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
                 components={{
                   table: ({ children }) => (
                     <div className="overflow-x-auto my-3 rounded-lg border border-border">
