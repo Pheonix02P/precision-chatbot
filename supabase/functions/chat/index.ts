@@ -232,7 +232,7 @@ serve(async (req) => {
     const excerpts = pickRelevantExcerpts(documentText, lastUserMsg);
     
     if (!excerpts) {
-      const noInfoResponse = `Sorry, I wasn't able to help you with this. Please contact xidops@99acres.com or create a ticket at: https://infoedgehelpdesk.freshservice.com/support/catalog/items?category_id=27000510486`;
+      const noInfoResponse = `Sorry, I wasn't able to help you with this. Please contact xidops@99acres.com or [create a ticket here](https://infoedgehelpdesk.freshservice.com/support/catalog/items?category_id=27000510486)`;
 
       return new Response(
         `data: ${JSON.stringify({ choices: [{ delta: { content: noInfoResponse } }] })}\n\ndata: [DONE]\n\n`,
