@@ -13,6 +13,34 @@ export interface KnowledgeChunk {
 
 export const knowledgeChunks: KnowledgeChunk[] = [
   {
+    id: "what-is-xid",
+    category: "General",
+    title: "What is XID / Project Page",
+    keywords: ["what is XID", "XID meaning", "XID definition", "project page", "what is project page", "XID explain", "define XID", "XID full form", "what is a XID", "what is an XID"],
+    content: `## What is XID?
+
+**XID** (also known as **Project Page** or **NP XID**) is a dedicated page on 99acres that showcases a real estate project with all its details.
+
+**Key Features of XID:**
+- Displays project information including name, builder, location, and RERA details
+- Shows available unit configurations (options) with sizes and floor plans
+- Contains images, brochures, videos, and other marketing content
+- Allows multiple dealers/builders to activate slots and advertise on the same project
+
+**XID is used for:**
+- New project launches
+- Under-construction projects
+- Ready-to-move projects
+- Both RERA and non-RERA registered projects
+
+**Who manages XID?**
+The XID Operations team handles all project page creation, modifications, and content updates.
+
+📧 Contact: xidops@99acres.com`,
+    relatedTopics: ["Creating RERA-Registered Projects", "Creating Non-RERA Projects", "Option Creation"],
+    contactEmail: "xidops@99acres.com"
+  },
+  {
     id: "rera-project-creation",
     category: "Project Creation",
     title: "Creating RERA-Registered Projects",
