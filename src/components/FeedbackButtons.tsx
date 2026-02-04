@@ -9,7 +9,7 @@ interface FeedbackButtonsProps {
   userQuestion?: string;
 }
 
-const FRESHSERVICE_TICKET_URL = "https://99acres.freshservice.com/support/tickets/new";
+const FRESHSERVICE_TICKET_URL = "https://infoedgehelpdesk.freshservice.com/support/catalog/items?category_id=27000510486";
 
 export function FeedbackButtons({ messageId, userQuestion }: FeedbackButtonsProps) {
   const [feedback, setFeedback] = useState<"positive" | "negative" | null>(null);

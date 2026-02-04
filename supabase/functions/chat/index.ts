@@ -232,14 +232,7 @@ serve(async (req) => {
     const excerpts = pickRelevantExcerpts(documentText, lastUserMsg);
     
     if (!excerpts) {
-      const noInfoResponse = `❌ **Information not available in the knowledge base.**
-
-The document does not contain information about this specific topic. 
-
-**📧 For assistance, please contact:**
-- **XID Operations:** xidops@99acres.com (Project creation, options, content)
-- **Premium Team:** premium@99acres.com (Builder premium, slots)
-- **Product Team:** product@99acres.com (P2V, New Launch tags)`;
+      const noInfoResponse = `Sorry, I wasn't able to help you with this. Please contact xidops@99acres.com or create a ticket at: https://infoedgehelpdesk.freshservice.com/support/catalog/items?category_id=27000510486`;
 
       return new Response(
         `data: ${JSON.stringify({ choices: [{ delta: { content: noInfoResponse } }] })}\n\ndata: [DONE]\n\n`,
