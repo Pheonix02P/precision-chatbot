@@ -1960,7 +1960,7 @@ Two banner images required:
     id: "property-types-residential",
     category: "Project Creation",
     title: "Residential Property Types",
-    keywords: ["residential property types", "apartment", "villa", "land", "service apartment", "studio apartment", "independent floor"],
+    keywords: ["residential property types", "apartment", "villa", "land", "service apartment", "studio apartment", "independent floor", "property type", "basic requirement for property type", "allowed property types", "which property types", "residential XID property"],
     content: `## Property Types for Residential XID/Project Page
 
 **Allowed Property Types:**
@@ -1982,7 +1982,7 @@ Two banner images required:
     id: "property-types-commercial",
     category: "Project Creation",
     title: "Commercial Property Types",
-    keywords: ["commercial property types", "shop", "office", "showroom", "warehouse", "SCO", "commercial land"],
+    keywords: ["commercial property types", "shop", "office", "showroom", "warehouse", "SCO", "commercial land", "property type", "basic requirement for property type", "allowed property types", "which property types", "commercial XID property"],
     content: `## Property Types for Commercial XID/Project Page
 
 **Allowed Property Types:**
