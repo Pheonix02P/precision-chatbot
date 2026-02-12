@@ -85,12 +85,15 @@ const QUERY_MAPPINGS: Record<string, string> = {
   "np deactivate": "NP deactivation deactivate slot advertiser slot",
   "deactivate np": "NP deactivation deactivate slot advertiser slot",
   "deactivate slot": "NP deactivation deactivate slot advertiser",
-  "property type": "property types residential commercial apartment villa",
+  "property type": "property types residential commercial apartment villa shop office land independent floor",
+  "basic requirement": "mandatory requirements required details property types residential commercial",
+  "requirement for property": "property types residential commercial allowed property types apartment villa land",
   "what is": "glossary definition meaning terms",
   "consent form": "non-RERA consent form state-wise",
   "raw video": "raw video footage policy sharing",
   "escalation": "escalation matrix sales requests",
   "banner": "banner availability campaign mailer LBXID",
+  "requirement": "mandatory requirements required details",
 };
 
 // Common phrases that should trigger high scoring
@@ -101,7 +104,9 @@ const COMMON_PHRASES = [
   "rera project", "non rera", "floor plan", "price list",
   "np deactivate", "deactivate slot", "deactivate np", "slot deactivation",
   "raw video", "banner availability", "consent form", "escalation matrix",
-  "property type", "glossary", "what is", "meaning"
+  "property type", "property types", "glossary", "what is", "meaning",
+  "basic requirement", "residential property", "commercial property",
+  "allowed property", "requirement for"
 ];
 
 function normalizeQuery(query: string): string {
