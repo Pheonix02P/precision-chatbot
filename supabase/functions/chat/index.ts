@@ -65,7 +65,7 @@ Use passive voice or descriptive statements: "X is done by...", "X happens when.
 
 // Critical terms that should always match strongly regardless of length
 // Note: "builder" and "project" removed as standalone terms to prevent cross-matching between similar entries
-const CRITICAL_TERMS = ["xid", "rera", "option", "options", "slot", "price", "image", "bhk", "np", "fp", "pg", "logo"];
+const CRITICAL_TERMS = ["xid", "rera", "option", "options", "slot", "price", "image", "bhk", "np", "fp", "pg", "logo", "deactivate", "deactivation", "glossary", "escalation", "banner", "mailer"];
 
 // Compound phrases that should be matched as units (higher priority than individual terms)
 const COMPOUND_PHRASES = [
@@ -82,6 +82,15 @@ const QUERY_MAPPINGS: Record<string, string> = {
   "create option": "add option sizes create options",
   "how to create xid": "create project page XID creation",
   "how to add options": "add option sizes create options",
+  "np deactivate": "NP deactivation deactivate slot advertiser slot",
+  "deactivate np": "NP deactivation deactivate slot advertiser slot",
+  "deactivate slot": "NP deactivation deactivate slot advertiser",
+  "property type": "property types residential commercial apartment villa",
+  "what is": "glossary definition meaning terms",
+  "consent form": "non-RERA consent form state-wise",
+  "raw video": "raw video footage policy sharing",
+  "escalation": "escalation matrix sales requests",
+  "banner": "banner availability campaign mailer LBXID",
 };
 
 // Common phrases that should trigger high scoring
@@ -89,7 +98,10 @@ const COMMON_PHRASES = [
   "create xid", "add options", "create options", "create project",
   "activation error", "slot error", "change price", "upload image",
   "add option", "option sizes", "how to create", "some error",
-  "rera project", "non rera", "floor plan", "price list"
+  "rera project", "non rera", "floor plan", "price list",
+  "np deactivate", "deactivate slot", "deactivate np", "slot deactivation",
+  "raw video", "banner availability", "consent form", "escalation matrix",
+  "property type", "glossary", "what is", "meaning"
 ];
 
 function normalizeQuery(query: string): string {

@@ -102,6 +102,15 @@ Consent Form (signed OR stamped by builder)
 - Official Letterhead: Only authorized signature required (no stamp needed)
 - Non-letterhead documents: Both signature AND stamp required
 
+**State-wise Consent Forms Available:**
+- Delhi, Kerala, Karnataka, Telangana, Gujarat, Assam
+- Bihar (separate form)
+- Maharashtra (separate form)
+- Punjab (separate form)
+- West Bengal (separate form)
+- Rajasthan (separate form)
+- Rest of India / Other Cities (separate form)
+
 **Saleable Area Requirements:**
 Same rules as RERA projects apply:
 - Default: Carpet Area
@@ -343,6 +352,7 @@ All phases MUST have same saleable area mapping
 *Option 1: Complete Removal*
 - Share official builder communication (email/letterhead)
 - Must confirm size doesn't exist OR is sold out
+- Post this communication, XID team will deactivate the slots after 8 hours
 
 *Option 2: Can't Get Builder Communication*
 - Get confirmation from ALL salespersons with live clients
@@ -658,7 +668,9 @@ Must Include:
 - Extra Charges
 - Government Charges
 - Project Name
-- Option sizes clearly mentioned`,
+- Option sizes clearly mentioned
+
+**Not Accepted:** Excel format price list will NOT be accepted`,
     relatedTopics: ["Pricing Management", "Valid Documents"],
     contactEmail: "xidops@99acres.com"
   },
@@ -1257,12 +1269,16 @@ Cannot Display in Locality Section
 **Effect:**
 - Only builder allowed to advertise
 - All CPs/Dealers restricted
+- Currently active CP/Dealer/Broker slots must be deactivated manually
+- XID team will include all relevant Account Managers in email and seek confirmation
+- If no objections received within 8 hours, XID team proceeds with deactivating dealer slots
 
 ## If CP/Dealer Wants to Advertise Later
 
 **Process:**
 - Must obtain explicit builder approval
 - Share builder approval with request
+- If error encountered: "This profileid does not have access to project ID" - this means builder has blocked dealer slots
 
 ## Use Cases
 
@@ -2298,6 +2314,189 @@ Once a transaction is deactivated, it cannot be re-activated using the old TID.
 - Contact the operations team if you have questions before deactivating`,
     relatedTopics: ["Slot Activation Errors", "Slot Re-activation Rules"],
     contactEmail: "xidops@99acres.com"
+  },
+  {
+    id: "np-deactivation-process",
+    category: "Slots & Transactions",
+    title: "NP Slot / Advertiser Slot Deactivation Process",
+    keywords: ["NP deactivate", "NP deactivation", "deactivate slot", "deactivate NP", "advertiser deactivation", "slot deactivation process", "deactivate advertiser", "remove slot", "deactivate NP slot"],
+    content: `## How to Deactivate an NP Slot / Advertiser Slot
+
+**If the Option is Paid (Client Slots Live):**
+
+*Option 1: Builder Communication*
+- Share official builder communication (email or letterhead) confirming the size does not exist or is sold out
+- Post this communication, XID team will deactivate the slots after 8 hours
+
+*Option 2: No Builder Communication Available*
+- Get confirmation from ALL salespersons who have live clients in that option
+- Each must approve removal of their respective slots
+
+**If the Option is Unpaid (No Client Slots Live):**
+- Only builder document needed (mail/letterhead, price list, or brochure)
+- Must confirm size doesn't exist or is sold out
+
+**To Deactivate for a Specific Dealer/CP/Builder:**
+- Share the TID of the client (e.g., 2526-T0008781)
+- Get confirmation from the salesperson who created the transaction
+
+**Important Notes:**
+- Once deactivated, the slot CANNOT be re-activated with the same TID
+- A new TID will be required for future activation
+- Slots cannot be transferred between configurations or projects`,
+    relatedTopics: ["Slot Re-activation Rules", "Removing Option Sizes"],
+    contactEmail: "xidops@99acres.com"
+  },
+  {
+    id: "glossary-terms",
+    category: "General",
+    title: "Glossary of Key Terms",
+    keywords: ["glossary", "definitions", "terms", "meaning", "what is", "define", "terminology", "abbreviation", "full form", "NP slot meaning", "FP meaning", "PG meaning", "configuration meaning", "saleable area meaning", "client meaning"],
+    content: `## Glossary of Key Terms
+
+**XID Page / Project Page / NPXID:**
+A comprehensive webpage containing all key information about a real estate project — project overview, configurations, pricing, amenities, location, RERA details, and inventory slots added by dealers, CPs, brokers, or the builder.
+
+**Configuration:**
+The number of bedrooms in a residential unit (e.g., 1 BHK, 2 BHK, 3 BHK). BHK stands for Bedroom, Hall, and Kitchen. For plot, office, or shop projects, configurations do not apply — only the unit size is considered.
+
+**Saleable Area:**
+The type of area used to market a unit. Types include:
+- Super Built-up Area (SBA/SA/Super Area/Total Saleable Area)
+- Built-up Area (BA/BUA/Plinth Area)
+- Carpet Area (CA/Net Usable Area/Livable Area/RERA Carpet Area)
+- Plot Area (Land Area)
+
+**NP Slot:**
+New Project slot — also referred to as advertiser slot, dealer slot, or builder slot.
+
+**Client:**
+A builder, dealer, or channel partner.
+
+**Client Slot:**
+Can be NP slot, FP, PG, AdStar, or AdPro.
+
+**FP (Featured Project):**
+Premium visibility product with featured positioning.
+
+**PG (Project Gallery):**
+Enhanced visual presentation product with multiple images showcase.
+
+**USP:**
+Unique Selling Point — also known as "Why You Should Consider" section or Project Highlight.
+
+**Location Highlight:**
+Location advantage — nearby landmarks and connectivity details.
+
+**Floor Plan:**
+Also known as Unit Plan, Option Layout Plan, or Option Image.
+
+**Typical Plan:**
+Layout of a particular floor in a building.
+
+**PIF:**
+Project in Focus — premium banner feature on city page.
+
+**Paid XID:**
+A project page that has active advertising slots.
+
+**Valid Documents for Option Creation:**
+Brochure, Builder website, Price list, Floor plans with option sizes, Builder mail/letterhead, and RERA.
+
+**Project Description / About Project:**
+Section to update about the project, its RERA number, pricing, amenities, famous landmarks.
+
+**Builder Description / About Builder:**
+Section to update brief summary of builder's history, achievements, etc.`,
+    relatedTopics: ["What is XID / Project Page", "Available Advertising Products"],
+    contactEmail: "xidops@99acres.com"
+  },
+  {
+    id: "escalation-matrix",
+    category: "Support",
+    title: "Escalation Matrix for Sales Requests",
+    keywords: ["escalation", "escalation matrix", "escalate", "complaint", "escalate request", "manager", "supervisor"],
+    content: `## Escalation Matrix for Sales Requests
+
+**Level 1:** Kripa Shankar Mahato / Ashish Negi
+
+**Level 2:** Yogesh Sharma
+
+**When to Escalate:**
+- If a request is not resolved within the expected timeframe
+- If there is a disagreement on the resolution provided
+- For urgent or time-sensitive requests that need immediate attention`,
+    relatedTopics: ["Contact Directory - Team Emails"],
+    contactEmail: "xidops@99acres.com"
+  },
+  {
+    id: "raw-video-policy",
+    category: "Content Management",
+    title: "Raw Video Footage Policy",
+    keywords: ["raw video", "video footage", "share video", "video sharing", "raw footage", "video policy"],
+    content: `## Can Raw Video Footage Be Shared with Clients?
+
+**Answer: NO**
+
+As per company policy, raw video footage CANNOT be shared with clients.
+
+**What is Provided:**
+- Only the final edited video is provided
+- Delivered as a YouTube link once uploaded to the backend system
+
+**Self Video Upload Process:**
+- Sales team can upload client's raw video through CRM
+- Must be accompanied by a signed consent form`,
+    relatedTopics: ["AdStar and AdPro Video Process", "Video Management"],
+    contactEmail: "asap.ops@99acres.com"
+  },
+  {
+    id: "additional-activation-errors",
+    category: "Troubleshooting",
+    title: "Additional Slot Activation Errors",
+    keywords: ["existing active product", "AS present", "link ID", "NAN price", "price per sq ft NAN", "profile ID error", "duplicate slot", "duplicate activation"],
+    content: `## Error: "Existing Active Product AS Present with Link ID" 
+
+**Issue:** Duplicate slot activation with same profile ID or same TID
+**Resolution:** Check if a slot is already active with the same profile ID or TID. A new transaction will be required.
+
+## Error: Price per sq ft Showing "NAN"
+
+**Issue:** Mismatch between backend saleable area and Seller panel configuration
+**Resolution:** Check if option sizes are created in backend and ensure saleable area mapping is correctly set. Contact XID team to fix mapping.
+
+## Error: Possession Date Beyond 8 Years
+
+**Issue:** System constraints do not allow possession dates more than 8 years from current year
+**Resolution:**
+1. Connect with XID team
+2. Temporarily update possession date to within 8 years
+3. Activate slot
+4. Inform XID team to revert to original date`,
+    relatedTopics: ["Slot Activation Errors", "Troubleshooting"],
+    contactEmail: "xidops@99acres.com"
+  },
+  {
+    id: "banner-availability",
+    category: "Content Management",
+    title: "Banner Availability Check",
+    keywords: ["banner availability", "check banner", "banner dates", "banner booking check", "available dates"],
+    content: `## How to Check Banner Availability
+
+**Process:**
+1. Go to the Banner Creation tab
+2. Select "Date Availability"
+3. Choose the Banner SKU, Page Type, and City
+4. A popup window will display available dates for that city
+
+## Auto-Generated Email for Banner Booking
+
+**If not received:**
+1. Go to Banner Creation section
+2. Select "QC Process" from dropdown
+3. Search banner using Profile ID`,
+    relatedTopics: ["Campaign Management and Mailers"],
+    contactEmail: "corpservice-99acres@99acres.com"
   }
 ];
 
