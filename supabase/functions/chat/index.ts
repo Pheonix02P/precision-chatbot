@@ -65,7 +65,7 @@ Use passive voice or descriptive statements: "X is done by...", "X happens when.
 
 // Critical terms that should always match strongly regardless of length
 // Note: "builder" and "project" removed as standalone terms to prevent cross-matching between similar entries
-const CRITICAL_TERMS = ["xid", "rera", "option", "options", "slot", "price", "image", "bhk", "np", "fp", "pg", "logo", "deactivate", "deactivation", "glossary", "escalation", "banner", "mailer"];
+const CRITICAL_TERMS = ["xid", "rera", "option", "options", "slot", "price", "image", "bhk", "np", "fp", "pg", "logo", "deactivate", "deactivation", "glossary", "escalation", "banner", "mailer", "possession", "offer", "resale", "verbal", "capital", "pvt", "religious", "washroom", "duration", "reactivate", "profile"];
 
 // Compound phrases that should be matched as units (higher priority than individual terms)
 const COMPOUND_PHRASES = [
@@ -94,6 +94,49 @@ const QUERY_MAPPINGS: Record<string, string> = {
   "escalation": "escalation matrix sales requests",
   "banner": "banner availability campaign mailer LBXID",
   "requirement": "mandatory requirements required details",
+  "check xid": "check XID exists project page search project 99acres suggester",
+  "xid created": "check XID exists project page search project already created",
+  "project page created": "check XID exists project page search project already exists",
+  "xid exists": "check XID exists search project page already created",
+  "extend duration": "extend NP AdStar AdPro transaction expired new TID",
+  "extend adstar": "extend NP AdStar AdPro transaction duration expired",
+  "extend adpro": "extend NP AdStar AdPro transaction duration expired",
+  "reactivate xid": "reactivate activate inactive XID project page reactivation",
+  "activate xid": "reactivate activate inactive XID project page activation",
+  "reactivate project": "reactivate activate inactive XID project page reactivation",
+  "deactivate xid": "deactivate XID project page deactivation deletion remove",
+  "deactivate project": "deactivate XID project page deactivation deletion",
+  "without mail": "without builder mail verbal communication pricing update",
+  "without email": "without builder mail verbal communication pricing update",
+  "verbal communication": "verbal pricing update without mail builder mail mandatory",
+  "builder profile": "builder slot pricing seller portal update price builder",
+  "extend offer": "offer validity extension extend offer date sellers portal",
+  "offer date": "offer validity extension extend offer date sellers portal",
+  "resale listing": "resale listing changes update address pricing images listing screening",
+  "change address": "resale listing address change update listing screening",
+  "change property type": "change property type modification live slots builder communication",
+  "without options": "project without options options mandatory create project page",
+  "multiple property": "multiple property types single project page residential commercial",
+  "religious": "religious content restrictions USP location highlights temple mosque",
+  "mandir": "religious content restrictions location highlights temple mosque not allowed",
+  "temple": "religious content restrictions location highlights mandir mosque not allowed",
+  "remove rera": "remove RERA phase old phase RERA number cannot remove",
+  "remove phase": "remove RERA phase old phase RERA number cannot remove",
+  "capital letter": "project name capital letters uppercase SEO not recommended pvt ltd",
+  "pvt ltd": "project name pvt ltd private limited not allowed SEO",
+  "remove cp": "remove CP dealer broker slots project page builder communication",
+  "remove channel partner": "remove CP dealer broker slots project page",
+  "remove dealer": "remove CP dealer broker slots deactivate",
+  "washroom": "individual images washroom bathroom indoor images image categories",
+  "floor plan size": "floor plan image size format requirements 5 MB JPG",
+  "floor plan image": "floor plan image size format requirements resolution",
+  "profileid": "profile ID access error blocked dealer builder blocked",
+  "profile id": "profile ID access error blocked dealer builder blocked",
+  "does not have access": "profile ID access error blocked dealer builder slots",
+  "possession date": "possession date mandatory status required legally mandatory",
+  "without possession": "possession date mandatory status required cannot create without",
+  "price nan": "NAN price per sq ft mismatch saleable area seller panel",
+  "as present": "existing active product AS present link ID duplicate slot",
 };
 
 // Common phrases that should trigger high scoring
@@ -106,7 +149,25 @@ const COMMON_PHRASES = [
   "raw video", "banner availability", "consent form", "escalation matrix",
   "property type", "property types", "glossary", "what is", "meaning",
   "basic requirement", "residential property", "commercial property",
-  "allowed property", "requirement for"
+  "allowed property", "requirement for",
+  "check xid", "xid exists", "project page exists", "xid created",
+  "extend duration", "extend adstar", "extend adpro",
+  "reactivate xid", "activate xid", "reactivate project",
+  "deactivate xid", "deactivate project",
+  "without mail", "without email", "verbal communication",
+  "builder profile", "update price builder",
+  "extend offer", "offer date", "offer validity",
+  "resale listing", "change address", "resale price",
+  "change property type", "property type change",
+  "without options", "without possession",
+  "multiple property", "multiple property type",
+  "religious content", "religious name", "mandir distance",
+  "remove rera", "remove phase",
+  "capital letter", "pvt ltd",
+  "remove cp", "remove dealer", "remove channel partner",
+  "washroom image", "floor plan size", "floor plan image size",
+  "profile id error", "does not have access",
+  "price nan", "as present with link"
 ];
 
 function normalizeQuery(query: string): string {
@@ -244,6 +305,17 @@ serve(async (req) => {
     const lastUserMsg = [...messages].reverse().find((m: any) => m?.role === "user")?.content ?? "";
 
     console.log("Processing query:", lastUserMsg.substring(0, 100));
+
+    // Handle greetings
+    const greetingPatterns = /^(hi|hello|hey|good morning|good afternoon|good evening|greetings|howdy|hola|namaste)\s*[!?.]*$/i;
+    if (greetingPatterns.test(lastUserMsg.trim())) {
+      const greetingResponse = `Hello! 👋 I'm the Sales Support Assistant for 99acres.\n\nI can help you with:\n- **Project page creation** (RERA & Non-RERA)\n- **Options & floor plans** management\n- **Pricing & price list** updates\n- **Images, brochures & videos**\n- **Slot activation errors** troubleshooting\n- **Builder information** updates\n- **Location & amenities** management\n\nHow can I assist you today?`;
+
+      return new Response(
+        `data: ${JSON.stringify({ choices: [{ delta: { content: greetingResponse } }] })}\n\ndata: [DONE]\n\n`,
+        { headers: { ...corsHeaders, "Content-Type": "text/event-stream" } }
+      );
+    }
 
     // Build excerpts
     const excerpts = pickRelevantExcerpts(documentText, lastUserMsg);
