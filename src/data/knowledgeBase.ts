@@ -713,7 +713,7 @@ Complete Removal (No Replacement): Valid reason must be mentioned in email
     id: "location-highlights",
     category: "Content Management",
     title: "Location Advantages Management",
-    keywords: ["location highlights", "connectivity", "nearby landmarks", "distance", "location advantages", "add location", "update location"],
+    keywords: ["location highlights", "connectivity", "nearby landmarks", "distance", "location advantages", "add location", "update location", "religious places", "mandir", "temple", "mosque", "church"],
     content: `## How to Update Location Highlights/Advantages on the XID Page
 
 **Sources for Location Highlights:**
@@ -724,6 +724,7 @@ Complete Removal (No Replacement): Valid reason must be mentioned in email
 - Location highlights should be mentioned in meters/kilometers, NOT travel time
 - Maximum: 15 highlights per XID page
 - Each location highlight should be from unique category (Preferred)
+- ⚠️ Religious places such as temple, mosque, churches etc. are NOT allowed in location highlights
 
 **Preferred Categories (15 Categories):**
 1. School
@@ -760,7 +761,7 @@ Complete Removal (No Replacement): Valid reason must be mentioned in email
     id: "project-usp",
     category: "Content Management",
     title: "Project Highlights and USPs",
-    keywords: ["USP", "why buy", "project highlights", "unique features", "add USP", "project USP", "unique selling points"],
+    keywords: ["USP", "why buy", "project highlights", "unique features", "add USP", "project USP", "unique selling points", "religious name in USP", "religious content USP"],
     content: `## Guidelines for Project USPs
 
 **Maximum:** 7 logical USPs per project
@@ -771,6 +772,8 @@ Complete Removal (No Replacement): Valid reason must be mentioned in email
 - Location advantages
 - Awards and recognitions
 - Project amenities
+
+⚠️ **No religious content is allowed in the USP section.**
 
 ## Valid USP Examples (Specific and Quantifiable):
 - "Magnificent 25,000 sq ft clubhouse with 5,000 sq ft gym"
@@ -1349,7 +1352,7 @@ Developer company logos CANNOT be used in place of the project logo under any ci
     id: "project-name-change",
     category: "Project Creation",
     title: "Project Name Change",
-    keywords: ["project name", "change project name", "modify project name", "project name change", "rename project", "update project name", "project name guidelines"],
+    keywords: ["project name", "change project name", "modify project name", "project name change", "rename project", "update project name", "project name guidelines", "capital letters", "project name capital", "pvt ltd", "pvt ltd in project name", "uppercase project name"],
     content: `## How to Change or Modify Project Name on an XID Page
 
 **For Non-RERA Registered Projects:**
@@ -1378,6 +1381,10 @@ Developer company logos CANNOT be used in place of the project logo under any ci
 - Adding "Phase 2", "Phase 3" etc. allowed only if phase RERA is mapped on XID
 - Project name cannot be same as builder name
 - City or locality name cannot be added in project name
+
+**SEO & Formatting Rules:**
+- Writing entire project name in CAPITAL LETTERS is NOT recommended (negative SEO impact)
+- "Pvt Ltd", "Ltd" etc. are NOT included in project name (SEO impact)
 
 **System Limitations:**
 - Special characters are NOT allowed in project name
@@ -2497,6 +2504,430 @@ As per company policy, raw video footage CANNOT be shared with clients.
 3. Search banner using Profile ID`,
     relatedTopics: ["Campaign Management and Mailers"],
     contactEmail: "corpservice-99acres@99acres.com"
+  },
+  {
+    id: "check-xid-exists",
+    category: "General",
+    title: "How to Check if XID/Project Page Already Exists",
+    keywords: ["check XID", "XID exists", "project page exists", "search project", "find XID", "check project page", "already exists", "check xid created", "how to check project page created", "search project name", "project already created", "xid created with us"],
+    content: `## How to Check if a Project/XID Page Already Exists on 99acres
+
+**Step 1: Search in 99acres Suggester**
+- Search for the project name in the 99acres Suggester
+- If the society name appears, click on it — it should redirect to the project page
+
+**Step 2: Search on Google**
+If the project doesn't appear in the Suggester, search on Google using:
+- "Project Name + Location/City + 99acres" OR
+- "Project Name + 99acres NPXID" OR
+- "RERA number + 99acres"
+
+**Step 3: Contact XID Team**
+If the project is still not searchable:
+- It may not exist on 99acres, OR
+- It could be in a deactivated state
+- Connect with the XID team for further assistance
+
+📧 Contact: xidops@99acres.com`,
+    relatedTopics: ["What is XID / Project Page", "Project Deactivation and Deletion"],
+    contactEmail: "xidops@99acres.com"
+  },
+  {
+    id: "possession-date-mandatory",
+    category: "Project Creation",
+    title: "Possession Date/Status Requirement",
+    keywords: ["possession date mandatory", "possession status mandatory", "create without possession", "remove possession date", "possession required", "without possession date", "possession status required", "can we create project page without possession"],
+    content: `## Is Possession Date/Status Mandatory for Project Page?
+
+**Answer: YES**
+
+The possession status/date is a legally mandatory detail for every project page.
+
+**Key Rules:**
+- It is REQUIRED at the time of project page creation
+- It CANNOT be removed from an already created project page under any circumstances
+- No project page can be created without a possession status/date
+
+**Valid Possession Statuses:**
+- New Launch
+- Under Construction
+- Ready to Move
+- Partially Ready to Move (only for multi-phase projects)`,
+    relatedTopics: ["Creating RERA-Registered Projects", "Possession Status Changes"],
+    contactEmail: "xidops@99acres.com"
+  },
+  {
+    id: "extend-transaction-duration",
+    category: "Slots & Transactions",
+    title: "Extending NP/AdStar/AdPro Duration",
+    keywords: ["extend duration", "extend NP", "extend AdStar", "extend AdPro", "extend transaction", "extend slot duration", "extend adstar duration", "duration extension", "expired transaction"],
+    content: `## Can NP/AdStar/AdPro Duration Be Extended?
+
+**Answer: NO**
+
+There is no provision to extend the duration of a transaction if it is expired.
+
+**What to Do:**
+- A new transaction ID (TID) will be required to reactivate the expired slot
+- The old transaction cannot be extended or renewed
+
+**Important:**
+- Plan the transaction duration carefully before activation
+- Once expired, the slot must be re-created with a new TID`,
+    relatedTopics: ["Slot Re-activation Rules", "Slot Activation Errors"],
+    contactEmail: "xidops@99acres.com"
+  },
+  {
+    id: "xid-reactivation",
+    category: "Project Creation",
+    title: "How to Reactivate/Activate an Inactive XID",
+    keywords: ["reactivate XID", "activate XID", "inactive XID", "reactivate project page", "activate project page", "reactivation", "activate inactive", "how to reactivate", "XID inactive", "project page inactive", "reactivate inactive"],
+    content: `## How to Reactivate/Activate an Inactive/Deactivated Project Page
+
+Project pages can be inactive or deactivated for various reasons. The activation process depends on the scenario:
+
+| Scenario | Reason | Action Required |
+|----------|--------|-----------------|
+| Pre-Launch Project | Project is in pre-launch stage | Share RERA registration number OR builder consent form |
+| RERA-Registered (Builder Request) | Deactivated on builder's request | Official builder confirmation mail for reactivation |
+| RERA-Registered (Lapsed RERA) | Deactivated by XID team due to lapsed RERA | Share RERA extension certificate OR OC/CC documents |
+| Consent-Based (Builder Request) | Deactivated on builder's request | Official builder mail requesting reactivation |
+| Consent-Based (Auto-deactivated) | No paid activity for 15 days | Connect with XID team for reactivation |
+
+📧 Contact: xidops@99acres.com`,
+    relatedTopics: ["Project Deactivation and Deletion", "Possession Status Changes"],
+    contactEmail: "xidops@99acres.com"
+  },
+  {
+    id: "verbal-pricing-update",
+    category: "Pricing",
+    title: "Pricing Update Without Builder Mail",
+    keywords: ["verbal pricing", "update price without mail", "without builder mail", "verbal communication pricing", "price update without email", "without any mail update prices", "update prices without mail"],
+    content: `## Can Pricing Be Updated on Verbal Communication Only?
+
+**Answer: NO**
+
+Pricing on a project page CANNOT be updated based on verbal communication alone.
+
+**Mandatory Requirements:**
+- An official builder mail is required to update pricing
+- If the builder is not involved with 99acres, an official channel partner mail can be considered
+
+**To Update Prices:**
+- Share the updated price list or builder mail/letterhead
+- Ensure option sizes are clearly mentioned
+- This is essential for accurately updating the prices displayed on the XID page`,
+    relatedTopics: ["Pricing Display Management", "Price List Management"],
+    contactEmail: "xidops@99acres.com"
+  },
+  {
+    id: "update-builder-profile-pricing",
+    category: "Pricing",
+    title: "Update Pricing in Builder Slot/Profile",
+    keywords: ["builder profile pricing", "update price builder slot", "builder pricing", "builder slot pricing", "update price in builder profile", "seller portal pricing", "builder live pricing"],
+    content: `## How to Update Pricing When Only Builder is Live
+
+When the builder is active on a project page, only the builder's pricing is reflected on the project page.
+
+**For Single-Phase Projects:**
+- Pricing updates can be done from the Sales or CMT end through the Seller Portal
+- No XID team involvement needed
+
+**For Multi-Phase Projects (Builder Not Live Across All Phases):**
+- A valid price list or official builder communication is mandatory
+- This needs to be shared with the XID team
+- XID team will calculate and update pricing for remaining phases
+- This ensures a uniform price is displayed on the project page
+
+📧 Contact: xidops@99acres.com`,
+    relatedTopics: ["Pricing Display Management", "Price List Management"],
+    contactEmail: "xidops@99acres.com"
+  },
+  {
+    id: "offer-validity-extension",
+    category: "Content Management",
+    title: "Offer Validity Extension",
+    keywords: ["extend offer", "offer validity", "offer date", "extend offer date", "offer expiry", "extend offer validity", "how to extend offer date"],
+    content: `## Can the Offer Validity Date Be Extended?
+
+**Answer:** There is NO provision to extend the offer validity date from the XID team's end.
+
+**What to Do:**
+- Check the possibility from the Sellers Portal
+- Offer validity (if editable) can only be managed from the Sellers Portal
+- XID team cannot modify offer dates
+
+📧 For further assistance: xidops@99acres.com`,
+    relatedTopics: ["Offer Management", "Pricing Display Management"],
+    contactEmail: "xidops@99acres.com"
+  },
+  {
+    id: "resale-listing-changes",
+    category: "Pricing",
+    title: "Changes in Resale/Rental Listings",
+    keywords: ["resale listing changes", "change address resale", "update resale listing", "resale price update", "rental listing changes", "change address in resale", "update resale price", "resale listing address", "resale images", "rental listing update"],
+    content: `## How to Update Pricing, Address, Images in Resale/Rental Listings
+
+**XID team has NO access** to make any changes in resale or rental listings.
+
+**For all such queries:**
+- Contact the Listing Screening team
+- They handle all modifications to resale and rental listings
+
+📧 Contact: Listingscreening_99acres@99acres.com
+
+**This includes:**
+- Pricing updates in resale listings
+- Address changes in resale listings
+- Image updates in resale listings
+- Any modifications to rental listings`,
+    relatedTopics: ["Resale Block/Unblock Management", "Contact Directory - Team Emails"],
+    contactEmail: "Listingscreening_99acres@99acres.com"
+  },
+  {
+    id: "change-property-type",
+    category: "Options Management",
+    title: "Changing Property Type on Project Page",
+    keywords: ["change property type", "property type change", "change apartment to floor", "modify property type", "property type with live slots", "change property type without mail", "can you change property type", "property type paid project", "change property type in paid"],
+    content: `## Can Property Type Be Changed on a Project Page?
+
+**With Active Client Slots:**
+- ✗ There is NO provision to change the property type when client slots are live
+- For example, cannot change from Apartment to Independent Floor while slots are active
+
+**Without Live Slots:**
+- ✓ Property type CAN be changed
+- The requested property type must be clearly available and supported by valid sources:
+  - Builder's website
+  - RERA details
+  - Brochure
+  - Official builder communication
+
+**Can Property Type Be Changed Without Builder/Client Mail?**
+- ✗ NO — Official builder communication or valid source document is mandatory to change property type
+
+📧 Contact: xidops@99acres.com`,
+    relatedTopics: ["Property Types", "Slot Activation Errors"],
+    contactEmail: "xidops@99acres.com"
+  },
+  {
+    id: "project-without-options",
+    category: "Project Creation",
+    title: "Creating Project Page Without Options",
+    keywords: ["project without options", "create XID without options", "options mandatory", "no options", "create project page without options", "without options"],
+    content: `## Can a Project Page Be Created Without Options?
+
+**Answer: NO**
+
+Option Sizes (with configuration + saleable area) are part of the mandatory details required to create a project page.
+
+**Mandatory Details for Project Page Creation:**
+- Project Name
+- Builder Name
+- RERA Number (or Consent Form for non-RERA)
+- Property Type
+- **Option Sizes (with configuration + saleable area)** — MANDATORY
+
+A project page cannot be created without at least one option size with configuration and saleable area details.`,
+    relatedTopics: ["Creating RERA-Registered Projects", "Valid Documents for Option Sizes"],
+    contactEmail: "xidops@99acres.com"
+  },
+  {
+    id: "multiple-property-types",
+    category: "Project Creation",
+    title: "Multiple Property Types on Single Project Page",
+    keywords: ["multiple property types", "add multiple property type", "two property types", "more than one property type", "multiple property type in project", "can we add multiple property type"],
+    content: `## Can Multiple Property Types Be Advertised on a Single Project Page?
+
+**Answer: YES, with conditions**
+
+Multiple property types CAN be advertised on a single project page, provided:
+- All property types belong to the SAME category — either all residential OR all commercial
+
+**Allowed Examples:**
+- ✓ Apartments + Villas (both residential) — on same page
+- ✓ Shop + Office (both commercial) — on same page
+
+**Not Allowed:**
+- ✗ Apartments + Shops (residential + commercial) — requires separate pages
+
+**Property Type–Wise Possession Dates:**
+- There is NO provision to display multiple possession dates on a single-phase project page
+- If multiple property types are under the same phase, they must have the same possession date`,
+    relatedTopics: ["Property Types", "Mixed-Use Developments"],
+    contactEmail: "xidops@99acres.com"
+  },
+  {
+    id: "religious-content-restrictions",
+    category: "Content Management",
+    title: "Religious Content Restrictions",
+    keywords: ["religious content", "religious name", "mandir", "temple", "mosque", "church", "religious USP", "religious location", "religious highlight", "mandir distance", "religious name in USP"],
+    content: `## Religious Content Restrictions on XID Page
+
+**In USP Section:**
+- ✗ No religious content is allowed in the USP section
+- Religious names, references, or themes cannot be added as project highlights
+
+**In Location Highlights:**
+- ✗ Religious places such as temple, mosque, churches etc. are NOT allowed in location highlights
+- Distance to religious places (e.g., "Mandir — 2 km") cannot be added
+
+**In Images:**
+- ✗ Images with religious content are not permitted on XID page
+
+**Why This Restriction?**
+- Maintains neutrality and inclusivity
+- Ensures compliance with platform content guidelines`,
+    relatedTopics: ["Project Highlights and USPs", "Location Advantages Management"],
+    contactEmail: "xidops@99acres.com"
+  },
+  {
+    id: "remove-rera-phase",
+    category: "Project Creation",
+    title: "Removing Old Phase RERA Number",
+    keywords: ["remove RERA", "remove phase RERA", "remove old RERA", "delete RERA number", "remove phase 1 RERA", "remove RERA from project", "can you remove RERA"],
+    content: `## Can an Old Phase's RERA Number Be Removed from a Project/XID Page?
+
+**Answer: NO**
+
+An old phase's RERA details CANNOT be removed from the project/XID page under any circumstances.
+
+**Important:**
+- Even if a new phase is added, the old phase's RERA number must remain
+- If the builder wants to advertise only the latest phase, this can be done WITHOUT removing the old phase's RERA number from the page
+- RERA details are legally required and cannot be deleted`,
+    relatedTopics: ["Multi-Phase Projects", "RERA QR Code Requirements"],
+    contactEmail: "xidops@99acres.com"
+  },
+  {
+    id: "project-name-capital-pvt",
+    category: "Project Creation",
+    title: "Project Name – Capital Letters and Pvt Ltd Rules",
+    keywords: ["capital letters", "project name capital", "all caps project name", "uppercase project name", "pvt ltd", "pvt ltd in project name", "private limited", "project name in capital letter"],
+    content: `## Can Project Name Be Written Entirely in Capital Letters?
+
+**Answer: NOT RECOMMENDED**
+
+Writing the entire project name in capital letters is not recommended for SEO reasons. It can negatively impact search engine optimization and the project's visibility.
+
+## Can "Pvt. Ltd." Be Added in Project Name?
+
+**Answer: NO**
+
+"Pvt Ltd", "Ltd", and similar terms are NOT included in the project name due to their negative impact on SEO.
+
+**Additional Project Name Rules:**
+- Special characters are NOT allowed
+- Roman numerals (I, II, IV, etc.) are NOT permitted due to SEO impact
+- Project name cannot be same as builder name
+- City or locality name cannot be added in project name`,
+    relatedTopics: ["Project Name Change", "Project Creation"],
+    contactEmail: "xidops@99acres.com"
+  },
+  {
+    id: "remove-cp-slots",
+    category: "Access Control",
+    title: "Remove CP/Dealer Slots from Project Page",
+    keywords: ["remove CP", "remove dealer", "remove broker", "remove channel partner", "remove active CP", "remove CP from page", "remove CP slots", "remove dealer slots", "as per builder mail remove CP", "builder mail remove CP"],
+    content: `## How to Remove Active CP/Dealer/Broker Slots from a Project Page
+
+**If Builder Requests Removal of All CPs:**
+1. Share official builder communication requesting removal
+2. XID team will include all relevant Account Managers in email
+3. Seek confirmation from Account Managers
+4. If no objections received within 8 hours, XID team proceeds with deactivating dealer slots
+5. Once implemented, no new CP/Dealer/Broker slots will be activated
+
+**To Remove a Specific CP/Dealer/Broker:**
+- Share the TID of the client (e.g., 2526-T0008781)
+- Get confirmation from the salesperson who created the transaction
+
+**To Block All Future Dealer Slots:**
+- Official builder communication is required
+- XID team has backend provision to block all CP/Dealer/Broker advertisements
+
+📧 Contact: xidops@99acres.com`,
+    relatedTopics: ["Blocking Advertisers", "NP Slot / Advertiser Slot Deactivation Process"],
+    contactEmail: "xidops@99acres.com"
+  },
+  {
+    id: "individual-images-sections",
+    category: "Content Management",
+    title: "Individual Images in Specific Sections",
+    keywords: ["individual image", "washroom image", "bathroom image", "specific image section", "individual washroom image", "separate image category"],
+    content: `## Can Individual Section Images (e.g., Washroom) Be Added to Project Page?
+
+Individual images are organized into system-defined categories/folders on the XID page. The image folder sequencing and naming is system-defined and cannot be modified.
+
+**System-Defined Image Categories (in order):**
+1. Outdoor Images
+2. Indoor Images
+3. Facilities (Outdoor Facilities first, then Indoor Facilities)
+4. Demo Flats
+5. Construction Images
+6. Others
+
+**Important:**
+- Image titles/naming cannot be changed — all are system-defined
+- Individual room-specific images (like washroom, kitchen, etc.) can be uploaded under the appropriate category (e.g., Indoor Images or Demo Flats)
+- There is no provision to create custom image categories or sub-sections
+- All images must meet standard requirements: JPG format, under 5 MB, high quality
+
+📧 Contact XID team for image upload assistance: xidops@99acres.com`,
+    relatedTopics: ["Image Gallery Requirements", "Cover Image and SRP Visibility"],
+    contactEmail: "xidops@99acres.com"
+  },
+  {
+    id: "floor-plan-image-size",
+    category: "Content Management",
+    title: "Floor Plan Image Size Requirements",
+    keywords: ["floor plan size", "floor plan image size", "floor plan resolution", "floor plan file size", "floor plan format", "what is floor plan image size"],
+    content: `## Floor Plan Image Size and Format Requirements
+
+**Accepted Formats:** JPG, PNG, CDR, HEF, PDF, HEIC, TIF
+
+**Maximum File Size:** Less than 5 MB per image
+
+**Key Points:**
+- Floor plans follow the same image requirements as other project images
+- Only ONE floor plan can be mapped per unit option size on the frontend
+- Multiple floor plans for a single unit option size are NOT allowed
+
+**For all file size/format requirements:**
+
+| Element | Format | Size/Resolution |
+|---------|--------|-----------------|
+| Image/Floor Plan | JPG, PNG, CDR, HEF, PDF, HEIC, TIF | Less than 5 MB each |
+| Project Logo | JPG, PNG | 100 x 60 pixels |
+| Builder Logo | JPG, PNG | 170 x 112 pixels |
+| Brochure | PDF, JPG, PNG | Less than 25 MB |
+| Offer Image | JPG, PNG | 400 x 225 pixels |
+| PIF Banner | JPG, PNG | 960 x 540 pixels |`,
+    relatedTopics: ["Floor Plan Management", "File Size and Format Requirements"],
+    contactEmail: "xidops@99acres.com"
+  },
+  {
+    id: "profileid-access-error",
+    category: "Troubleshooting",
+    title: "Profile ID Access Error on Project",
+    keywords: ["profile id error", "profileid does not have access", "profile ID access", "does not have access to project", "blocked profile", "this profileid does not have access to project ID"],
+    content: `## Error: "This ProfileID Does Not Have Access to Project ID"
+
+**Reason:** The builder has blocked dealer/CP/broker slots on the XID page.
+
+**Resolution:**
+- Official communication from the builder is required to allow activation of that specific dealer on the project page
+- The builder must explicitly approve the dealer for the specific project
+
+**To Unblock:**
+1. Obtain official builder approval (email/letterhead)
+2. Builder must mention the project name and dealer name
+3. Share approval with XID team
+4. XID team will enable access for the specified dealer
+
+📧 Contact: xidops@99acres.com`,
+    relatedTopics: ["Blocking Advertisers", "Slot Activation Errors"],
+    contactEmail: "xidops@99acres.com"
   }
 ];
 
