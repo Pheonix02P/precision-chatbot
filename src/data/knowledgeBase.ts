@@ -910,7 +910,7 @@ ALL option sizes within configuration must be "Price on Request". If even ONE op
     content: `## Updating Price Without Other Charges
 
 **Can price be updated without other charges?**
-Answer: NO — The "+ Other Charges" component is a standard, system-generated, and mandatory part of all paid XID pages. Price updates always include the other charges section. Prices cannot be displayed or updated without the other charges component.
+Answer: YES — Prices can be updated independently without updating the other charges. The base price and other charges are separate components and can be modified individually.
 
 ## Can "+ Other Charges" Be Removed?
 
