@@ -906,8 +906,13 @@ ALL option sizes within configuration must be "Price on Request". If even ONE op
     id: "other-charges",
     category: "Pricing",
     title: "Other Charges Management",
-    keywords: ["other charges", "extra charges", "government charges", "additional costs", "remove other charges", "plus other charges"],
-    content: `## Can "+ Other Charges" Be Removed?
+    keywords: ["other charges", "extra charges", "government charges", "additional costs", "remove other charges", "plus other charges", "update price without other charges", "price without charges", "price update other charges"],
+    content: `## Updating Price Without Other Charges
+
+**Can price be updated without other charges?**
+Answer: NO — The "+ Other Charges" component is a standard, system-generated, and mandatory part of all paid XID pages. Price updates always include the other charges section. Prices cannot be displayed or updated without the other charges component.
+
+## Can "+ Other Charges" Be Removed?
 
 **Answer: NO**
 
