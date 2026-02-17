@@ -1,6 +1,7 @@
 import { ChatContainer } from "@/components/ChatContainer";
-import { Building2, HelpCircle } from "lucide-react";
+import { Building2, HelpCircle, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 import {
   Tooltip,
   TooltipContent,
@@ -10,6 +11,7 @@ import {
 import { FeedbackExport } from "@/components/FeedbackExport";
 
 const Index = () => {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col h-screen bg-background">
       {/* Ultra Compact Header */}
@@ -22,6 +24,16 @@ const Index = () => {
         </div>
         <div className="flex items-center gap-1">
           <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => navigate("/learn")}>
+                  <BookOpen className="h-3.5 w-3.5 text-muted-foreground" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="bottom">
+                <p className="text-xs">Learning Mode</p>
+              </TooltipContent>
+            </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
                 <span>

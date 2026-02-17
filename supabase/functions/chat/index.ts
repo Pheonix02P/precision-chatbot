@@ -313,6 +313,7 @@ serve(async (req) => {
     const body = await req.json().catch(() => ({}));
     const messages = Array.isArray((body as any)?.messages) ? (body as any).messages : [];
     const documentText = typeof (body as any)?.documentText === "string" ? (body as any).documentText : "";
+    const learnedAnswers = Array.isArray((body as any)?.learnedAnswers) ? (body as any).learnedAnswers : [];
 
     const lastUserMsg = [...messages].reverse().find((m: any) => m?.role === "user")?.content ?? "";
 
@@ -346,7 +347,14 @@ serve(async (req) => {
 
     console.log("Found", excerpts.split("---").length, "relevant sections");
 
-    const systemPromptWithContext = `${SYSTEM_PROMPT}\n\n---\n\n## DOCUMENT EXCERPTS (YOUR ONLY SOURCE OF TRUTH)\n\n${excerpts}`;
+    // Build learned answers context
+    let learnedContext = "";
+    if (learnedAnswers.length > 0) {
+      learnedContext = "\n\n---\n\n## LEARNED Q&A PAIRS (HIGH PRIORITY - USE THESE FIRST)\n\n" +
+        learnedAnswers.map((la: any) => `Q: ${la.question}\nA: ${la.answer}`).join("\n\n---\n\n");
+    }
+
+    const systemPromptWithContext = `${SYSTEM_PROMPT}\n\n---\n\n## DOCUMENT EXCERPTS (YOUR ONLY SOURCE OF TRUTH)\n\n${excerpts}${learnedContext}`;
 
     // Keep conversation context but filter to user messages for cleaner context
     const conversationMessages = messages
