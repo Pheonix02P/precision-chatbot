@@ -14,6 +14,41 @@ export type Database = {
   }
   public: {
     Tables: {
+      learned_answers: {
+        Row: {
+          answer: string
+          created_at: string
+          id: string
+          question: string
+          source_feedback_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          answer: string
+          created_at?: string
+          id?: string
+          question: string
+          source_feedback_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          answer?: string
+          created_at?: string
+          id?: string
+          question?: string
+          source_feedback_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "learned_answers_source_feedback_id_fkey"
+            columns: ["source_feedback_id"]
+            isOneToOne: false
+            referencedRelation: "unresolved_feedback"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       unresolved_feedback: {
         Row: {
           created_at: string

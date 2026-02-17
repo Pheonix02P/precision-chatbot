@@ -4,6 +4,7 @@ import { ChatInput } from "./ChatInput";
 import { QuickActions } from "./QuickActions";
 import { streamChat, type Message } from "@/lib/chatApi";
 import { fullDocumentText } from "@/data/knowledgeBase";
+import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { RotateCcw, Building2, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -11,6 +12,7 @@ import { Button } from "@/components/ui/button";
 export function ChatContainer() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [learnedAnswers, setLearnedAnswers] = useState<{ question: string; answer: string }[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
@@ -21,6 +23,16 @@ export function ChatContainer() {
   useEffect(() => {
     scrollToBottom();
   }, [messages, scrollToBottom]);
+
+  // Fetch learned answers on mount
+  useEffect(() => {
+    supabase
+      .from("learned_answers")
+      .select("question, answer")
+      .then(({ data }) => {
+        if (data) setLearnedAnswers(data);
+      });
+  }, []);
 
   const handleSend = async (input: string) => {
     const userMsg: Message = { role: "user", content: input };
@@ -44,6 +56,7 @@ export function ChatContainer() {
     await streamChat({
       messages: [...messages, userMsg],
       documentText: fullDocumentText,
+      learnedAnswers,
       onDelta: (chunk) => upsertAssistant(chunk),
       onDone: () => setIsLoading(false),
       onError: (error) => {
