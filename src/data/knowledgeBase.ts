@@ -81,49 +81,53 @@ These enhance listing quality but are not required for creation:
     id: "non-rera-project-creation",
     category: "Project Creation",
     title: "Creating Non-RERA Projects",
-    keywords: ["consent form", "non-RERA", "builder approval", "project creation", "no RERA", "create non-RERA", "non-RERA XID", "project without RERA", "create XID without RERA"],
-    content: `## Mandatory Requirements for Non-RERA Project Page
+    keywords: ["consent form", "non-RERA", "builder approval", "project creation", "no RERA", "create non-RERA", "non-RERA XID", "project without RERA", "create XID without RERA", "not RERA registered", "without RERA", "non rera consent", "state-wise consent form", "statewise consent form", "download consent form"],
+    content: `## What is Required to Create/Design a Project Page/XID/NPXID if the Project is Not RERA Registered?
 
-**Primary Document Required:**
-Consent Form (signed OR stamped by builder)
+**Mandatory Details:**
 
-**Consent Form Must Include:**
-- Project Name
-- Project Location
-- Possession Date/Status (New Launch, Under Construction)
-- Reason for not being RERA registered
-- Builder Name
-- Builder Contact Details
-- Fact Table (Unit Count, Total Area)
-- Option Sizes (configuration + saleable area)
-- Property Type (apartment, villa, plot, etc.)
+1. **Consent Form** signed or stamped by the builder. The consent form must include:
+   - Project Name
+   - Project Location
+   - Possession Date / Status (e.g., New Launch, Under Construction)
+   - Reason for not being RERA registered
+   - Builder Name
+   - Builder Contact Details
 
-**Document Requirements:**
-- Official Letterhead: Only authorized signature required (no stamp needed)
-- Non-letterhead documents: Both signature AND stamp required
+2. **Fact Table** containing:
+   - Unit Count
+   - Total Area
 
-**State-wise Consent Forms Available:**
-- Delhi, Kerala, Karnataka, Telangana, Gujarat, Assam
-- Bihar (separate form)
-- Maharashtra (separate form)
-- Punjab (separate form)
-- West Bengal (separate form)
-- Rajasthan (separate form)
-- Rest of India / Other Cities (separate form)
+3. **Option Sizes** (with configuration + saleable area)
 
-**Saleable Area Requirements:**
-Same rules as RERA projects apply:
-- Default: Carpet Area
-- Exceptions: Hyderabad/Secunderabad/Bangalore new launch
-- Other cities require Regional Head approval for Super/Built-up Area
+4. **Property Type** (apartment, villa, plot, etc.)
 
-**Optional Details:**
-- Brochure, Project Website, Images
+**Approval Requirements:**
+- If the reason for not being RERA registered is "Outside Planning Area", Regional Head approval is mandatory along with consent form
+- If the reason is other than "Outside Planning Area", Regional Head's approval is required only when no reference document (brochure, website, or builder email) is available for project creation
+- If the requested saleable area is Super Built-up Area or Built-up Area, Regional Head approval is required along with the creation request (not applicable for Hyderabad/Secunderabad and Bangalore new launch projects)
+
+**Additional (Not Mandatory) Details – For Page Enrichment:**
+- Brochure, Project Website, and Images
 - Price List, Payment Plan
 - Project Video
 - USP (Unique Selling Points)
-- Location Highlights`,
-    relatedTopics: ["RERA Projects", "Consent Form Requirements"],
+- Location Highlights
+
+**Important Notes:**
+- Project page can be created with only the mandatory details
+- Additional details are optional, but help in enhancing listing quality
+- For Commercial and Plot projects, configuration (1/2/3 BHK) is not required, as the concept does not apply
+
+**State-wise Consent Forms (downloadable):**
+- [Delhi, Kerala, Karnataka, Telangana, Gujarat, Assam](/consent-forms/Consent_Form_Delhi-Kerala-Karnataka-Telangana-Gujarat-Assam.docx)
+- [Bihar](/consent-forms/Consent_Form_for_Bihar.docx)
+- [Maharashtra](/consent-forms/Consent_Form_for_Maharashtra.docx)
+- [Punjab](/consent-forms/Consent_Form_for_PB_Punjab.docx)
+- [West Bengal](/consent-forms/Consent_Form_for_West_Bengal.docx)
+- [Rajasthan](/consent-forms/Rajasthan_Consent_Form.docx)
+- [Rest of India / Other Cities](/consent-forms/Consent_Form_ROI-Other_Cities.docx)`,
+    relatedTopics: ["RERA Projects", "Consent Form Requirements", "Regional Head Approval"],
     contactEmail: "xidops@99acres.com"
   },
   {

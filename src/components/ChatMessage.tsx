@@ -96,6 +96,7 @@ export function ChatMessage({ role, content, isLoading, messageId, userQuestion 
                       className="text-primary hover:underline font-medium transition-colors hover:text-primary/80"
                       target="_blank"
                       rel="noopener noreferrer"
+                      {...(href?.endsWith('.docx') || href?.endsWith('.pdf') ? { download: true } : {})}
                     >
                       {children}
                     </a>
