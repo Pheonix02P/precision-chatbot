@@ -14,9 +14,47 @@ interface ChatMessageProps {
   userQuestion?: string;
 }
 
+// Convert raw consent form paths to clickable markdown links
+function fixConsentFormLinks(text: string): string {
+  // First, fix broken markdown links that contain consent-forms paths
+  // e.g., [Consent_Form_for_Bihar.docx](/something) or [text](/consent-forms/file.docx)
+  let result = text;
+  
+  // Remove any malformed markdown links containing consent-forms and rebuild them
+  result = result.replace(
+    /\[([^\]]*?(?:consent|Consent)[^\]]*?)\]\(([^)]*?)\)/gi,
+    (_match, linkText, url) => {
+      // Extract the actual file path - could be in either linkText or url
+      const consentPath = [linkText, url].find(s => s.includes('consent-forms/'));
+      if (consentPath) {
+        const pathMatch = consentPath.match(/(\/consent-forms\/[^\s)]+\.docx)/);
+        if (pathMatch) {
+          const filename = pathMatch[1].split('/').pop()?.replace(/_/g, ' ').replace('.docx', '') || 'Consent Form';
+          return `[📥 Download ${filename}](${pathMatch[1]})`;
+        }
+      }
+      return `[${linkText}](${url})`;
+    }
+  );
+  
+  // Then convert any remaining raw paths that aren't inside markdown links
+  result = result.replace(
+    /(?<!\()(\/consent-forms\/([^\s)]+\.docx))(?!\))/g,
+    (_match, fullPath, filename) => {
+      const name = filename.replace(/_/g, ' ').replace('.docx', '');
+      return `[📥 Download ${name}](${fullPath})`;
+    }
+  );
+  
+  return result;
+}
+
 export function ChatMessage({ role, content, isLoading, messageId, userQuestion }: ChatMessageProps) {
   const isUser = role === "user";
   const [copied, setCopied] = useState(false);
+  
+  // Process content to fix consent form links
+  const processedContent = !isUser ? fixConsentFormLinks(content) : content;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(content);
@@ -118,7 +156,7 @@ export function ChatMessage({ role, content, isLoading, messageId, userQuestion 
                   p: ({ children }) => <p className="text-sm my-1.5 leading-relaxed">{children}</p>,
                 }}
               >
-                {content}
+                {processedContent}
               </ReactMarkdown>
             </div>
             
