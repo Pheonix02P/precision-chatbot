@@ -2150,9 +2150,6 @@ XID team has NO access to remove these sections from project page.
 - Ensure all builder's projects have active 99acres page
 - Ensure projects are correctly mapped under same builder name
 
-**For projects without 99acres page:**
-- Valid RERA number OR builder consent form mandatory to create project page
-
 **Note:** Commercial projects and deactivated projects are NOT included in project count`,
     relatedTopics: ["Builder Profile", "Project Display"],
     contactEmail: "xidops@99acres.com"
