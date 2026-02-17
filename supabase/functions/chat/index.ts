@@ -65,7 +65,7 @@ Use passive voice or descriptive statements: "X is done by...", "X happens when.
 
 // Critical terms that should always match strongly regardless of length
 // Note: "builder" and "project" removed as standalone terms to prevent cross-matching between similar entries
-const CRITICAL_TERMS = ["xid", "rera", "option", "options", "slot", "price", "image", "bhk", "np", "fp", "pg", "logo", "deactivate", "deactivation", "glossary", "escalation", "banner", "mailer", "possession", "offer", "resale", "verbal", "capital", "pvt", "religious", "washroom", "duration", "reactivate", "profile"];
+const CRITICAL_TERMS = ["xid", "rera", "option", "options", "slot", "price", "image", "bhk", "np", "fp", "pg", "logo", "deactivate", "deactivation", "glossary", "escalation", "banner", "mailer", "possession", "offer", "resale", "verbal", "capital", "pvt", "religious", "washroom", "duration", "reactivate", "profile", "locality", "typical"];
 
 // Compound phrases that should be matched as units (higher priority than individual terms)
 const COMPOUND_PHRASES = [
@@ -137,6 +137,13 @@ const QUERY_MAPPINGS: Record<string, string> = {
   "without possession": "possession date mandatory status required cannot create without",
   "price nan": "NAN price per sq ft mismatch saleable area seller panel",
   "as present": "existing active product AS present link ID duplicate slot",
+  "typical floor plan": "floor plan residential typical layout upload option size",
+  "upload floor plan": "floor plan residential upload option size commercial land",
+  "floor plan residential": "floor plan residential upload option size typical",
+  "change locality": "locality change update location project page existing RERA builder brochure",
+  "locality in existing": "locality change update location project page existing",
+  "update locality": "locality change update location project page existing RERA",
+  "change location": "locality change update location project page existing RERA builder",
 };
 
 // Common phrases that should trigger high scoring
@@ -167,7 +174,9 @@ const COMMON_PHRASES = [
   "remove cp", "remove dealer", "remove channel partner",
   "washroom image", "floor plan size", "floor plan image size",
   "profile id error", "does not have access",
-  "price nan", "as present with link"
+  "price nan", "as present with link",
+  "typical floor plan", "upload floor plan", "floor plan residential",
+  "change locality", "update locality", "change location", "locality change"
 ];
 
 function normalizeQuery(query: string): string {
