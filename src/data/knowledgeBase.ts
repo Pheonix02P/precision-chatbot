@@ -438,6 +438,9 @@ Frontend: System automatically converts to Square Feet and displays in Square Fe
     keywords: ["floor plans", "unit plans", "layout", "option images", "add floor plan", "upload floor plan", "floor plan requirements"],
     content: `## Floor Plan Guidelines
 
+**Residential Projects:**
+Floor plans can be uploaded for residential project pages (apartments, villas, builder floors, etc.). Floor plans are mapped to individual option sizes.
+
 **Valid Sources for Floor Plans:**
 - Builder brochure
 - Builder's official website
@@ -458,6 +461,9 @@ Answer: NO
 **Multiple Floor Plans Per Option:**
 Can multiple floor plans be added for single unit size?
 Answer: NO - Only ONE floor plan per unit option size on frontend
+
+**Typical Floor Plans:**
+"Typical floor plans" are standard representative floor plans. For residential projects, floor plans are uploaded per option/unit size — there is no separate "typical floor plan" upload. Each floor plan is linked to a specific option size.
 
 **Land Options:**
 Can floor plans be uploaded for land?
@@ -1098,7 +1104,7 @@ Builder name must exactly match name in Developer section
     id: "locality-management",
     category: "Location",
     title: "Location and Locality Management",
-    keywords: ["locality", "location change", "area", "neighborhood", "lat/long", "change locality", "update location", "latitude longitude"],
+    keywords: ["locality", "location change", "area", "neighborhood", "lat/long", "change locality", "update location", "latitude longitude", "change locality in existing project", "update locality", "project locality", "locality change"],
     content: `## Changing Project Locality
 
 **If Locality Explicitly Mentioned In:**
