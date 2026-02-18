@@ -18,10 +18,23 @@ export function FeedbackButtons({ messageId, userQuestion }: FeedbackButtonsProp
   const [isSaving, setIsSaving] = useState(false);
   const { toast } = useToast();
 
-  const handleFeedback = (type: "positive" | "negative") => {
+  const handleFeedback = async (type: "positive" | "negative") => {
     setFeedback(type);
     
     if (type === "positive") {
+      // Save helpful feedback to database
+      if (userQuestion) {
+        try {
+          await supabase
+            .from("helpful_feedback")
+            .insert({
+              question: userQuestion,
+              message_id: messageId,
+            });
+        } catch (err) {
+          console.error("Error saving helpful feedback:", err);
+        }
+      }
       toast({
         title: "Thanks for the feedback!",
         description: "Glad this was helpful.",
