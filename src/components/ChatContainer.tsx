@@ -6,7 +6,7 @@ import { streamChat, type Message } from "@/lib/chatApi";
 import { fullDocumentText } from "@/data/knowledgeBase";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { RotateCcw, Building2, Sparkles } from "lucide-react";
+import { RotateCcw, Sparkles, MessageSquarePlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function ChatContainer() {
@@ -24,7 +24,6 @@ export function ChatContainer() {
     scrollToBottom();
   }, [messages, scrollToBottom]);
 
-  // Fetch learned answers on mount
   useEffect(() => {
     supabase
       .from("learned_answers")
@@ -61,11 +60,7 @@ export function ChatContainer() {
       onDone: () => setIsLoading(false),
       onError: (error) => {
         setIsLoading(false);
-        toast({
-          title: "Error",
-          description: error,
-          variant: "destructive",
-        });
+        toast({ title: "Error", description: error, variant: "destructive" });
       },
     });
   };
@@ -75,49 +70,44 @@ export function ChatContainer() {
   };
 
   return (
-    <div className="flex flex-col h-full bg-gradient-to-b from-background via-background to-muted/30">
-      {/* Messages area - takes maximum space */}
-      <div className="flex-1 overflow-y-auto min-h-0">
+    <div className="flex flex-col h-full">
+      {/* Messages area */}
+      <div className="flex-1 overflow-y-auto min-h-0 custom-scrollbar">
         {messages.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full px-4 py-8">
-            {/* Hero section with animated elements */}
-            <div className="text-center mb-6 animate-message-in">
-              <div className="relative inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary via-purple-500 to-accent shadow-xl shadow-primary/30 mb-4">
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary to-purple-500 animate-pulse-ring opacity-30" />
-                <Building2 className="h-8 w-8 text-primary-foreground relative z-10" />
+          <div className="flex flex-col items-center justify-center h-full px-4 py-6">
+            {/* Welcome hero */}
+            <div className="text-center mb-8 animate-fade-up">
+              <div className="relative inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary/60 shadow-lg mb-4 animate-float">
+                <div className="absolute inset-0 rounded-2xl animate-pulse-ring bg-primary/30" />
+                <Sparkles className="h-7 w-7 text-primary-foreground relative z-10" />
               </div>
-              <h2 className="text-2xl font-bold mb-2 animated-gradient-text">
-                Sales Support Assistant
+              <h2 className="text-xl font-extrabold mb-1.5 animated-gradient-text" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                How can I help you?
               </h2>
-              <p className="text-sm text-muted-foreground max-w-md leading-relaxed">
-                Get instant answers about projects, options, pricing & troubleshooting
+              <p className="text-sm text-muted-foreground max-w-sm leading-relaxed">
+                Ask about projects, options, pricing, or pick a topic below
               </p>
             </div>
-            
-            {/* Quick Actions - Full view */}
-            <div className="w-full max-w-2xl mb-4 animate-message-in" style={{ animationDelay: '0.1s' }}>
-              <div className="flex items-center gap-2 mb-3">
-                <Sparkles className="h-4 w-4 text-primary animate-pulse" />
-                <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Quick Topics</span>
-              </div>
+
+            {/* Categorized quick actions */}
+            <div className="w-full max-w-2xl animate-fade-up" style={{ animationDelay: '0.15s' }}>
               <QuickActions onAction={handleSend} disabled={isLoading} variant="full" />
             </div>
           </div>
         ) : (
           <div className="pb-2">
-            {/* Compact quick actions bar when chatting */}
-            <div className="sticky top-0 z-10 bg-background/80 backdrop-blur-md border-b border-border/50 py-1">
+            {/* Compact quick actions bar */}
+            <div className="sticky top-0 z-10 glass border-b border-border/40 py-1.5">
               <QuickActions onAction={handleSend} disabled={isLoading} variant="compact" />
             </div>
-            
+
             {/* Messages */}
-            <div className="space-y-1">
+            <div className="space-y-0.5">
               {messages.map((msg, index) => {
-                // Find the preceding user question for assistant messages
-                const userQuestion = msg.role === "assistant" && index > 0 
-                  ? messages.slice(0, index).reverse().find(m => m.role === "user")?.content 
+                const userQuestion = msg.role === "assistant" && index > 0
+                  ? messages.slice(0, index).reverse().find(m => m.role === "user")?.content
                   : undefined;
-                
+
                 return (
                   <ChatMessage
                     key={index}
@@ -138,18 +128,18 @@ export function ChatContainer() {
         )}
       </div>
 
-      {/* Input area - minimal */}
-      <div className="border-t border-border/50 bg-background/80 backdrop-blur-sm">
-        <div className="flex items-center gap-1.5 p-2 max-w-4xl mx-auto">
+      {/* Input area */}
+      <div className="border-t border-border/50 glass">
+        <div className="flex items-center gap-2 p-2.5 max-w-3xl mx-auto">
           {messages.length > 0 && (
             <Button
-              variant="ghost"
+              variant="outline"
               size="icon"
               onClick={handleNewChat}
-              className="h-9 w-9 shrink-0 text-muted-foreground hover:text-foreground"
+              className="h-9 w-9 shrink-0 rounded-xl border-border/60 hover:bg-primary/10 hover:text-primary hover:border-primary/30 transition-all"
               title="New Chat"
             >
-              <RotateCcw className="h-4 w-4" />
+              <MessageSquarePlus className="h-4 w-4" />
             </Button>
           )}
           <div className="flex-1">
