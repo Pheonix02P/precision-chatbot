@@ -14,6 +14,27 @@ export type Database = {
   }
   public: {
     Tables: {
+      helpful_feedback: {
+        Row: {
+          created_at: string
+          id: string
+          message_id: string | null
+          question: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message_id?: string | null
+          question: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message_id?: string | null
+          question?: string
+        }
+        Relationships: []
+      }
       learned_answers: {
         Row: {
           answer: string
