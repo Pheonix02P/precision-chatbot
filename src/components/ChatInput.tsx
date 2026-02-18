@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { SendHorizontal, Loader2, Sparkles } from "lucide-react";
+import { SendHorizontal, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ChatInputProps {
@@ -31,7 +31,7 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 200)}px`;
+      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 160)}px`;
     }
   }, [input]);
 
@@ -39,13 +39,13 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
     <form
       onSubmit={handleSubmit}
       className={cn(
-        "flex items-end gap-2 p-1 rounded-2xl border-2 transition-all duration-300",
-        isFocused 
-          ? "border-primary/50 shadow-lg shadow-primary/10 bg-background" 
-          : "border-border bg-muted/30 hover:border-border/80"
+        "flex items-end gap-2 p-1.5 rounded-2xl border transition-all duration-300",
+        isFocused
+          ? "border-primary/40 shadow-lg shadow-primary/8 bg-card"
+          : "border-border/60 bg-card/50 hover:border-border"
       )}
     >
-      <div className="flex-1 relative">
+      <div className="flex-1">
         <Textarea
           ref={textareaRef}
           value={input}
@@ -53,9 +53,9 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
           onKeyDown={handleKeyDown}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
-          placeholder="Ask about projects, options, pricing..."
+          placeholder="Type your question..."
           disabled={disabled}
-          className="min-h-[42px] max-h-[120px] resize-none border-0 bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 pr-4 text-sm py-2.5 px-3 placeholder:text-muted-foreground/60"
+          className="min-h-[40px] max-h-[120px] resize-none border-0 bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 text-sm py-2.5 px-3 placeholder:text-muted-foreground/50"
           rows={1}
         />
       </div>
@@ -64,18 +64,16 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
         size="icon"
         disabled={!input.trim() || disabled}
         className={cn(
-          "h-10 w-10 shrink-0 rounded-xl transition-all duration-300 shadow-md",
+          "h-9 w-9 shrink-0 rounded-xl transition-all duration-300",
           input.trim() && !disabled
-            ? "bg-gradient-to-r from-primary to-purple-500 hover:from-primary/90 hover:to-purple-500/90 hover:scale-105 hover:shadow-lg shadow-primary/30"
+            ? "bg-primary hover:bg-primary/90 text-primary-foreground shadow-md shadow-primary/20 hover:shadow-lg hover:scale-105"
             : "bg-muted text-muted-foreground shadow-none"
         )}
       >
         {disabled ? (
           <Loader2 className="h-4 w-4 animate-spin" />
-        ) : input.trim() ? (
-          <SendHorizontal className="h-4 w-4" />
         ) : (
-          <Sparkles className="h-4 w-4" />
+          <SendHorizontal className="h-4 w-4" />
         )}
       </Button>
     </form>

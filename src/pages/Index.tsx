@@ -1,5 +1,5 @@
 import { ChatContainer } from "@/components/ChatContainer";
-import { Building2, HelpCircle, BookOpen } from "lucide-react";
+import { Building2, BookOpen, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import {
@@ -14,20 +14,28 @@ const Index = () => {
   const navigate = useNavigate();
   return (
     <div className="flex flex-col h-screen bg-background">
-      {/* Ultra Compact Header */}
-      <header className="flex items-center justify-between px-3 py-1.5 border-b border-border/50 bg-card/50 backdrop-blur-sm sticky top-0 z-20">
-        <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-md bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-            <Building2 className="h-3.5 w-3.5 text-primary-foreground" />
+      {/* Header */}
+      <header className="flex items-center justify-between px-4 py-2.5 border-b border-border/60 glass sticky top-0 z-20">
+        <div className="flex items-center gap-3">
+          <div className="relative w-8 h-8 rounded-xl bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center shadow-md animate-glow">
+            <Building2 className="h-4 w-4 text-primary-foreground" />
           </div>
-          <h1 className="font-semibold text-foreground text-xs">Sales Support</h1>
+          <div>
+            <h1 className="font-bold text-foreground text-sm tracking-tight" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              Sales Support
+            </h1>
+            <p className="text-[10px] text-muted-foreground leading-none flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
+              Online
+            </p>
+          </div>
         </div>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-0.5">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => navigate("/learn")}>
-                  <BookOpen className="h-3.5 w-3.5 text-muted-foreground" />
+                <Button variant="ghost" size="icon" className="h-8 w-8 rounded-lg hover:bg-primary/10" onClick={() => navigate("/learn")}>
+                  <BookOpen className="h-4 w-4 text-muted-foreground" />
                 </Button>
               </TooltipTrigger>
               <TooltipContent side="bottom">
@@ -44,25 +52,13 @@ const Index = () => {
                 <p className="text-xs">Admin Export</p>
               </TooltipContent>
             </Tooltip>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-6 w-6">
-                  <HelpCircle className="h-3.5 w-3.5 text-muted-foreground" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent side="bottom" className="max-w-xs">
-                <p className="text-xs">
-                  Ask about RERA projects, options, pricing, and troubleshooting.
-                </p>
-              </TooltipContent>
-            </Tooltip>
           </TooltipProvider>
         </div>
       </header>
 
-      {/* Main chat area - maximum space */}
+      {/* Main chat area */}
       <main className="flex-1 overflow-hidden min-h-0">
-        <div className="h-full max-w-4xl mx-auto">
+        <div className="h-full max-w-3xl mx-auto">
           <ChatContainer />
         </div>
       </main>
