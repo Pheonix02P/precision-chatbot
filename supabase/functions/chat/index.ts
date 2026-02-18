@@ -171,6 +171,14 @@ const QUERY_MAPPINGS: Record<string, string> = {
   "ad star": "AdStar ad star product",
   "ad pro": "AdPro ad pro product",
   "listing broker": "LBXID listing broker XID",
+  "types of descriptions": "description types system generated user generated project description about project XID page",
+  "project description": "description types system generated user generated about project XID page",
+  "about project": "description types system generated user generated project description XID page",
+  "description types": "description types system generated user generated project description about project",
+  "project not visible": "project page not visible frontend deactivated RERA consent reactivate",
+  "not visible on frontend": "project page not visible frontend deactivated RERA consent reactivate",
+  "delete xid": "deactivate delete XID project page deactivation deletion remove",
+  "delete project": "deactivate delete XID project page deactivation deletion remove",
 };
 
 // Common phrases that should trigger high scoring
