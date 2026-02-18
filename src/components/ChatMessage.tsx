@@ -54,20 +54,20 @@ export function ChatMessage({ role, content, isLoading, messageId, userQuestion 
   return (
     <div
       className={cn(
-        "flex gap-2.5 px-4 py-3 animate-message-in",
+        "flex gap-3 px-4 py-3 animate-message-in",
         isUser ? "flex-row-reverse" : "flex-row"
       )}
     >
       {/* Avatar */}
       <div
         className={cn(
-          "flex h-7 w-7 shrink-0 items-center justify-center rounded-lg transition-transform duration-200",
+          "flex h-8 w-8 shrink-0 items-center justify-center rounded-full",
           isUser
             ? "bg-primary text-primary-foreground shadow-sm"
-            : "bg-gradient-to-br from-primary/20 to-primary/5 text-primary border border-primary/20"
+            : "bg-primary/10 text-primary"
         )}
       >
-        {isUser ? <User className="h-3.5 w-3.5" /> : <Bot className="h-3.5 w-3.5" />}
+        {isUser ? <User className="h-4 w-4" /> : <Bot className="h-4 w-4" />}
       </div>
 
       {/* Message bubble */}
@@ -76,15 +76,15 @@ export function ChatMessage({ role, content, isLoading, messageId, userQuestion 
           "flex-1 rounded-2xl px-4 py-3 max-w-[85%] relative group",
           isUser
             ? "bg-primary text-primary-foreground ml-auto shadow-sm"
-            : "bg-card text-card-foreground border border-border/50 shadow-sm chat-bubble-hover"
+            : "bg-card text-card-foreground border border-border shadow-sm chat-bubble-hover"
         )}
       >
         {isLoading && !content ? (
-          <div className="flex items-center gap-2.5 py-1">
+          <div className="flex items-center gap-2 py-1">
             <div className="flex items-center gap-1">
-              <span className="w-1.5 h-1.5 bg-primary rounded-full animate-typing-dot" style={{ animationDelay: '0s' }} />
-              <span className="w-1.5 h-1.5 bg-primary rounded-full animate-typing-dot" style={{ animationDelay: '0.2s' }} />
-              <span className="w-1.5 h-1.5 bg-primary rounded-full animate-typing-dot" style={{ animationDelay: '0.4s' }} />
+              <span className="w-2 h-2 bg-primary rounded-full animate-typing-dot" style={{ animationDelay: '0s' }} />
+              <span className="w-2 h-2 bg-primary rounded-full animate-typing-dot" style={{ animationDelay: '0.2s' }} />
+              <span className="w-2 h-2 bg-primary rounded-full animate-typing-dot" style={{ animationDelay: '0.4s' }} />
             </div>
             <span className="text-xs text-muted-foreground flex items-center gap-1">
               <Sparkles className="h-3 w-3 animate-pulse" />
@@ -101,8 +101,8 @@ export function ChatMessage({ role, content, isLoading, messageId, userQuestion 
               prose-strong:text-foreground prose-strong:font-semibold
               prose-li:text-foreground prose-li:my-0.5 prose-li:text-sm
               prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:text-xs prose-code:before:content-none prose-code:after:content-none
-              prose-blockquote:border-l-primary prose-blockquote:bg-muted/50 prose-blockquote:py-1 prose-blockquote:px-3 prose-blockquote:rounded-r-lg prose-blockquote:my-2
-              prose-table:text-xs prose-th:bg-muted prose-th:px-3 prose-th:py-1.5 prose-td:px-3 prose-td:py-1.5 prose-td:border prose-th:border
+              prose-blockquote:border-l-primary prose-blockquote:bg-primary/5 prose-blockquote:py-1 prose-blockquote:px-3 prose-blockquote:rounded-r-lg prose-blockquote:my-2
+              prose-table:text-xs prose-th:bg-primary/5 prose-th:px-3 prose-th:py-1.5 prose-td:px-3 prose-td:py-1.5 prose-td:border prose-th:border
               prose-ul:my-1.5 prose-ol:my-1.5">
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
@@ -115,7 +115,7 @@ export function ChatMessage({ role, content, isLoading, messageId, userQuestion 
                   a: ({ href, children }) => (
                     <a
                       href={href}
-                      className="text-primary hover:underline font-medium transition-colors hover:text-primary/80"
+                      className="text-primary hover:underline font-medium transition-colors"
                       target="_blank"
                       rel="noopener noreferrer"
                       {...(href?.endsWith('.docx') || href?.endsWith('.pdf') ? { download: true } : {})}
@@ -123,9 +123,7 @@ export function ChatMessage({ role, content, isLoading, messageId, userQuestion 
                       {children}
                     </a>
                   ),
-                  ul: ({ children }) => (
-                    <ul className="list-none space-y-0.5 my-2">{children}</ul>
-                  ),
+                  ul: ({ children }) => <ul className="list-none space-y-1 my-2">{children}</ul>,
                   li: ({ children }) => (
                     <li className="flex items-start gap-2 text-sm">
                       <span className="text-primary mt-1.5 text-xs">•</span>
@@ -142,23 +140,17 @@ export function ChatMessage({ role, content, isLoading, messageId, userQuestion 
               </ReactMarkdown>
             </div>
 
-            {/* Copy button */}
             {content && !isLoading && (
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={handleCopy}
-                className="absolute top-2 right-2 h-7 w-7 p-0 opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-primary/10 rounded-lg"
+                className="absolute top-2 right-2 h-7 w-7 p-0 opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-primary/10"
               >
-                {copied ? (
-                  <Check className="h-3.5 w-3.5 text-primary" />
-                ) : (
-                  <Copy className="h-3.5 w-3.5 text-muted-foreground" />
-                )}
+                {copied ? <Check className="h-3.5 w-3.5 text-primary" /> : <Copy className="h-3.5 w-3.5 text-muted-foreground" />}
               </Button>
             )}
 
-            {/* Feedback */}
             {content && !isLoading && messageId && (
               <FeedbackButtons messageId={messageId} userQuestion={userQuestion} />
             )}

@@ -31,7 +31,7 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 160)}px`;
+      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 200)}px`;
     }
   }, [input]);
 
@@ -39,10 +39,10 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
     <form
       onSubmit={handleSubmit}
       className={cn(
-        "flex items-end gap-2 p-1.5 rounded-2xl border transition-all duration-300",
+        "flex items-end gap-2 p-1 rounded-xl border transition-all duration-200",
         isFocused
-          ? "border-primary/40 shadow-lg shadow-primary/8 bg-card"
-          : "border-border/60 bg-card/50 hover:border-border"
+          ? "border-primary/40 shadow-md shadow-primary/10 bg-card"
+          : "border-border bg-card hover:border-border/80"
       )}
     >
       <div className="flex-1">
@@ -53,9 +53,9 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
           onKeyDown={handleKeyDown}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
-          placeholder="Type your question..."
+          placeholder="Ask about projects, options, pricing..."
           disabled={disabled}
-          className="min-h-[40px] max-h-[120px] resize-none border-0 bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 text-sm py-2.5 px-3 placeholder:text-muted-foreground/50"
+          className="min-h-[42px] max-h-[120px] resize-none border-0 bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 text-sm py-2.5 px-3 placeholder:text-muted-foreground/60"
           rows={1}
         />
       </div>
@@ -64,17 +64,13 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
         size="icon"
         disabled={!input.trim() || disabled}
         className={cn(
-          "h-9 w-9 shrink-0 rounded-xl transition-all duration-300",
+          "h-9 w-9 shrink-0 rounded-lg transition-all duration-200",
           input.trim() && !disabled
-            ? "bg-primary hover:bg-primary/90 text-primary-foreground shadow-md shadow-primary/20 hover:shadow-lg hover:scale-105"
-            : "bg-muted text-muted-foreground shadow-none"
+            ? "bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm"
+            : "bg-muted text-muted-foreground"
         )}
       >
-        {disabled ? (
-          <Loader2 className="h-4 w-4 animate-spin" />
-        ) : (
-          <SendHorizontal className="h-4 w-4" />
-        )}
+        {disabled ? <Loader2 className="h-4 w-4 animate-spin" /> : <SendHorizontal className="h-4 w-4" />}
       </Button>
     </form>
   );
