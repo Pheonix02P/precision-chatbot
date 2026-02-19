@@ -166,12 +166,16 @@ const QUERY_MAPPINGS: Record<string, string> = {
   "how many usp": "USP unique selling points maximum 7 project highlights",
   "how many highlights": "location highlights maximum 15 highlights per XID page location advantages",
   "maximum usp": "USP unique selling points maximum 7 project highlights why buy",
+  "maximum usps": "USP unique selling points maximum 7 project highlights why buy",
+  "usps that": "USP unique selling points maximum 7 project highlights why buy",
+  "usps can": "USP unique selling points maximum 7 project highlights why buy",
+  "how many usps": "USP unique selling points maximum 7 project highlights why buy",
   "call to action": "CTA call to action button",
   "call to action button": "CTA call to action button",
   "search engine optimization": "SEO search engine optimization",
-  "unique selling point": "USP unique selling points",
-  "unique selling points": "USP unique selling points",
-  "unique selling proposition": "USP unique selling points",
+  "unique selling point": "USP unique selling points maximum 7",
+  "unique selling points": "USP unique selling points maximum 7",
+  "unique selling proposition": "USP unique selling points maximum 7",
   "new project": "NP new project slot",
   "new launch": "NP new project new launch",
   "project page": "XID project page NPXID",
@@ -227,7 +231,8 @@ const COMMON_PHRASES = [
   "typical floor plan", "upload floor plan", "floor plan residential",
   "change locality", "update locality", "change location", "locality change",
   "location highlight", "location highlights", "location advantage", "location advantages",
-  "maximum location", "maximum highlights", "maximum usp", "how many highlights"
+  "maximum location", "maximum highlights", "maximum usp", "maximum usps", "how many highlights",
+  "how many usps", "usps that can", "usps can be"
 
 ];
 
@@ -281,6 +286,19 @@ function scoreSection(section: string, tokens: string[], originalQuery: string):
         !hay.includes("usp") && !hay.includes("unique selling") && 
         (hay.includes("location highlight") || hay.includes("location advantage"))) {
       score -= 25;
+    }
+    // Penalize location highlights section when query is specifically about USP count/maximum
+    if ((queryLower.includes("usp") || queryLower.includes("usps")) && 
+        (queryLower.includes("maximum") || queryLower.includes("how many") || queryLower.includes("can be added")) &&
+        hay.includes("location highlight") && !hay.includes("usp")) {
+      score -= 40;
+    }
+    // Penalize USP section when query is specifically about location highlights count/maximum
+    if ((queryLower.includes("location") || queryLower.includes("highlight")) && 
+        !queryLower.includes("usp") && !queryLower.includes("usps") &&
+        (queryLower.includes("maximum") || queryLower.includes("how many") || queryLower.includes("can be added")) &&
+        hay.includes("usp") && !hay.includes("location highlight")) {
+      score -= 40;
     }
   }
   
