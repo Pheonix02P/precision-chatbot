@@ -1,29 +1,18 @@
 import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import type { Session } from "@supabase/supabase-js";
 
 export function useAdminAuth() {
-  const [session, setSession] = useState<Session | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-      setLoading(false);
-    });
-
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setLoading(false);
-    });
-
-    return () => subscription.unsubscribe();
+    setIsAuthenticated(sessionStorage.getItem("admin_authenticated") === "true");
+    setLoading(false);
   }, []);
 
-  const signOut = async () => {
-    await supabase.auth.signOut();
-    setSession(null);
+  const signOut = () => {
+    sessionStorage.removeItem("admin_authenticated");
+    setIsAuthenticated(false);
   };
 
-  return { session, loading, isAuthenticated: !!session, signOut };
+  return { isAuthenticated, loading, signOut };
 }

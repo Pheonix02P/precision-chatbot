@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,7 +7,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Lock, ArrowLeft } from "lucide-react";
 
 export default function AdminLogin() {
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
@@ -17,13 +15,33 @@ export default function AdminLogin() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    setLoading(false);
-    if (error) {
-      toast({ title: "Login failed", description: error.message, variant: "destructive" });
-    } else {
-      const redirectTo = new URLSearchParams(window.location.search).get("redirect") || "/learn";
-      navigate(redirectTo);
+
+    try {
+      const resp = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/verify-admin`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+          },
+          body: JSON.stringify({ password }),
+        }
+      );
+
+      const data = await resp.json();
+
+      if (data.success) {
+        sessionStorage.setItem("admin_authenticated", "true");
+        const redirectTo = new URLSearchParams(window.location.search).get("redirect") || "/learn";
+        navigate(redirectTo);
+      } else {
+        toast({ title: "Login failed", description: "Invalid password", variant: "destructive" });
+      }
+    } catch {
+      toast({ title: "Error", description: "Could not verify password", variant: "destructive" });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -37,23 +55,17 @@ export default function AdminLogin() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin} className="space-y-4">
-            <p className="text-sm text-muted-foreground">Sign in to access admin features.</p>
-            <Input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+            <p className="text-sm text-muted-foreground">Enter admin password to continue.</p>
             <Input
               type="password"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              autoFocus
             />
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Signing in..." : "Sign In"}
+              {loading ? "Verifying..." : "Sign In"}
             </Button>
             <Button type="button" variant="ghost" className="w-full" onClick={() => navigate("/")}>
               <ArrowLeft className="h-4 w-4 mr-2" /> Back to Chat
