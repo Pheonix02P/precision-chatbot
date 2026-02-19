@@ -413,90 +413,156 @@ serve(async (req) => {
       .slice(-6) // Keep last 6 messages for context
       .map((m: any) => ({ role: m.role, content: m.content }));
 
-    // Try multiple models as fallback
-    const MODELS = ["google/gemini-2.5-flash-lite", "google/gemini-3-flash-preview", "google/gemini-2.5-flash"];
-    
     const aiMessages = [
       { role: "system", content: systemPromptWithContext },
       ...conversationMessages
     ];
 
-    // Try each model with streaming, then non-streaming fallback
+    // Step 1: Try Lovable AI gateway first (single quick attempt)
     let aiResp: Response | null = null;
-    let lastError = "";
     let useStreaming = true;
 
-    for (const model of MODELS) {
-      for (const streaming of [true, false]) {
-        try {
-          console.log(`Trying model=${model}, stream=${streaming}`);
-          aiResp = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${LOVABLE_API_KEY}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              model,
-              messages: aiMessages,
-              stream: streaming,
-            }),
-          });
+    try {
+      console.log("Trying Lovable AI gateway...");
+      aiResp = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${LOVABLE_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "google/gemini-2.5-flash",
+          messages: aiMessages,
+          stream: true,
+        }),
+      });
 
-          if (aiResp.ok) {
-            useStreaming = streaming;
-            break;
-          }
-
-          if (aiResp.status === 429) {
-            return new Response(
-              JSON.stringify({ error: "Rate limit exceeded. Please try again in a moment." }),
-              { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-            );
-          }
-          if (aiResp.status === 402) {
-            return new Response(
-              JSON.stringify({ error: "Usage limit reached. Please check your account." }),
-              { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-            );
-          }
-
-          lastError = await aiResp.text();
-          console.error(`AI error model=${model} stream=${streaming}:`, aiResp.status, lastError);
-          aiResp = null;
-          await new Promise(r => setTimeout(r, 800));
-        } catch (fetchErr) {
-          console.error(`AI fetch error model=${model}:`, fetchErr);
-          lastError = fetchErr instanceof Error ? fetchErr.message : "Network error";
-          aiResp = null;
-          await new Promise(r => setTimeout(r, 800));
+      if (!aiResp.ok) {
+        if (aiResp.status === 429) {
+          return new Response(
+            JSON.stringify({ error: "Rate limit exceeded. Please try again in a moment." }),
+            { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          );
         }
+        if (aiResp.status === 402) {
+          return new Response(
+            JSON.stringify({ error: "Usage limit reached. Please check your account." }),
+            { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          );
+        }
+        const errText = await aiResp.text();
+        console.error("Lovable gateway failed:", aiResp.status, errText);
+        aiResp = null;
       }
-      if (aiResp?.ok) break;
+    } catch (err) {
+      console.error("Lovable gateway fetch error:", err);
+      aiResp = null;
     }
 
+    // Step 2: Fallback to direct Gemini API
     if (!aiResp || !aiResp.ok) {
-      console.error("All AI models failed. Last error:", lastError);
-      return new Response(
-        JSON.stringify({ error: "AI service is temporarily unavailable. Please try again in a few minutes." }),
-        { status: 503, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
+      const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY");
+      if (!GEMINI_API_KEY) {
+        return new Response(
+          JSON.stringify({ error: "AI service is temporarily unavailable. Please try again later." }),
+          { status: 503, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+
+      console.log("Falling back to direct Gemini API...");
+
+      // Convert messages to Gemini format
+      const systemContent = aiMessages.find((m: any) => m.role === "system")?.content || "";
+      const geminiContents = aiMessages
+        .filter((m: any) => m.role !== "system")
+        .map((m: any) => ({
+          role: m.role === "assistant" ? "model" : "user",
+          parts: [{ text: m.content }],
+        }));
+
+      try {
+        aiResp = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:streamGenerateContent?alt=sse&key=${GEMINI_API_KEY}`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              system_instruction: { parts: [{ text: systemContent }] },
+              contents: geminiContents,
+            }),
+          }
+        );
+
+        if (!aiResp.ok) {
+          const errText = await aiResp.text();
+          console.error("Gemini API error:", aiResp.status, errText);
+          return new Response(
+            JSON.stringify({ error: "AI service is temporarily unavailable." }),
+            { status: 503, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          );
+        }
+
+        // Transform Gemini SSE stream to OpenAI-compatible SSE
+        const geminiReader = aiResp.body!.getReader();
+        const decoder = new TextDecoder();
+        
+        const transformedStream = new ReadableStream({
+          async start(controller) {
+            const encoder = new TextEncoder();
+            let buffer = "";
+            
+            try {
+              while (true) {
+                const { done, value } = await geminiReader.read();
+                if (done) break;
+                buffer += decoder.decode(value, { stream: true });
+                
+                let newlineIdx;
+                while ((newlineIdx = buffer.indexOf("\n")) !== -1) {
+                  let line = buffer.slice(0, newlineIdx);
+                  buffer = buffer.slice(newlineIdx + 1);
+                  if (line.endsWith("\r")) line = line.slice(0, -1);
+                  if (!line.startsWith("data: ") || line.trim() === "") continue;
+                  
+                  const jsonStr = line.slice(6).trim();
+                  if (!jsonStr || jsonStr === "[DONE]") continue;
+                  
+                  try {
+                    const parsed = JSON.parse(jsonStr);
+                    const text = parsed?.candidates?.[0]?.content?.parts?.[0]?.text;
+                    if (text) {
+                      const openaiChunk = JSON.stringify({ choices: [{ delta: { content: text } }] });
+                      controller.enqueue(encoder.encode(`data: ${openaiChunk}\n\n`));
+                    }
+                  } catch { /* skip malformed */ }
+                }
+              }
+              controller.enqueue(encoder.encode("data: [DONE]\n\n"));
+              controller.close();
+            } catch (err) {
+              console.error("Stream transform error:", err);
+              controller.close();
+            }
+          }
+        });
+
+        return new Response(transformedStream, {
+          headers: { ...corsHeaders, "Content-Type": "text/event-stream" },
+        });
+
+      } catch (geminiErr) {
+        console.error("Gemini API fetch error:", geminiErr);
+        return new Response(
+          JSON.stringify({ error: "AI service is temporarily unavailable." }),
+          { status: 503, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
     }
 
-    if (useStreaming) {
-      // Stream the response directly
-      return new Response(aiResp.body, {
-        headers: { ...corsHeaders, "Content-Type": "text/event-stream" },
-      });
-    } else {
-      // Convert non-streaming response to SSE format for the client
-      const jsonData = await aiResp.json();
-      const content = jsonData?.choices?.[0]?.message?.content || "Sorry, I couldn't generate a response.";
-      const sseData = `data: ${JSON.stringify({ choices: [{ delta: { content } }] })}\n\ndata: [DONE]\n\n`;
-      return new Response(sseData, {
-        headers: { ...corsHeaders, "Content-Type": "text/event-stream" },
-      });
-    }
+    // Gateway succeeded - stream directly
+    return new Response(aiResp.body, {
+      headers: { ...corsHeaders, "Content-Type": "text/event-stream" },
+    });
 
   } catch (error) {
     console.error("Chat error:", error);
