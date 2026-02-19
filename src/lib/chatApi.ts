@@ -21,14 +21,38 @@ export async function streamChat({
   onError: (error: string) => void;
 }) {
   try {
-    const resp = await fetch(CHAT_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-      },
-      body: JSON.stringify({ messages, documentText, learnedAnswers: learnedAnswers || [] }),
-    });
+    const MAX_RETRIES = 2;
+    let resp: Response | null = null;
+
+    for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+      try {
+        resp = await fetch(CHAT_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+          },
+          body: JSON.stringify({ messages, documentText, learnedAnswers: learnedAnswers || [] }),
+        });
+        if (resp.ok) break;
+        if (resp.status === 429 && attempt < MAX_RETRIES) {
+          await new Promise(r => setTimeout(r, 1000 * (attempt + 1)));
+          continue;
+        }
+        break;
+      } catch (fetchErr) {
+        if (attempt < MAX_RETRIES) {
+          await new Promise(r => setTimeout(r, 1000 * (attempt + 1)));
+          continue;
+        }
+        throw fetchErr;
+      }
+    }
+
+    if (!resp) {
+      onError("Failed to connect. Please try again.");
+      return;
+    }
 
     if (!resp.ok) {
       const errorData = await resp.json().catch(() => ({ error: "Failed to get response" }));
