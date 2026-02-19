@@ -818,52 +818,52 @@ Complete Removal (No Replacement): Valid reason must be mentioned in email
     id: "slot-activation-errors",
     category: "Troubleshooting",
     title: "Slot Activation Errors",
-    keywords: ["activation error", "slot error", "cannot activate", "NP slot error", "some error occurred", "error", "fix error", "troubleshoot error", "slot activation error", "activation issue"],
+    keywords: ["activation error", "slot error", "cannot activate", "NP slot error", "some error occurred", "error", "fix error", "troubleshoot error", "slot activation error", "activation issue", "unable to activate", "unable to active", "AS present", "link ID", "NAN price", "price per sq ft NAN", "duplicate slot", "duplicate activation", "existing active product"],
     content: `## How to Resolve Slot Activation Errors
 
 ### Error: "Some Error Occurred"
 **Issue:** Tower mapping missing for project
-**Resolution:** Tower mapping must be done from XID backend by XID team. Contact XID team to add tower mapping.
+**Resolution:** Tower mapping must be completed from the XID backend by the XID team.
 
-### Error: "This Is a New Launch Premium Project"
-**Full Message:** "Please Use FP/PG to Advertise on This Project"
-**Issue:** Project tagged as New Launch Premium (restricts AdPro/AdStar)
-**Resolution:** Turn off New Launch tag
+### Error: "This Is a New Launch Premium Project. Please Use FP/PG to Advertise on This Project" / NP Allow Error
+**Issue:** Project tagged as New Launch Premium, restricted to AdPro/AdStar advertising
+**Resolution:** Turn off the New Launch tag by coordinating with the XID team.
 
 **Required Approvals:**
-- Non-RERA Projects: Official builder email mentioning project name and launch date
-- RERA Projects: Product Team approval required to remove tag
+- Non-RERA Projects: Official builder email mentioning project name & launch date
+- RERA Projects: Product Team approval required to remove the tag
 
-### Error: "Config Slot Count Cannot Exceed Available Configurations"
-**Issue:** Number of selected slots exceeds available configurations
-**Resolution Steps:**
-1. XID team creates temporary dummy option
-2. Map dummy option to relevant phase
-3. Proceed with transaction
-4. After slot activated, inform XID team to remove dummy option
+### Error: "Config Slot Count Cannot Exceed the Number of Available Configurations"
+**Issue:** Selected slot count exceeds available configurations
+**Resolution:** Connect with XID team to resolve configuration mismatch.
 
 ### Error: "Phase Status and Completion Date Does Not Match"
-**Issue:** Phase status doesn't align with possession/completion date
+**Issue:** Phase status does not align with possession/completion date
 **Resolution Options:**
-- Option 1: Mark as Ready to Move (requires OC/CC, or builder consent form + RTM images + Regional Head approval)
-- Option 2: Extend Possession Date (requires extension certificate or official builder communication)
+- Option 1: Mark project as Ready-to-Move (submit OC/CC or builder consent + RTM images + Regional Head approval)
+- Option 2: Extend possession date (submit extension certificate or official builder communication)
 
-### Error: "Max Slots Entered Cannot Be Greater Than Number of Distinct Configurations"
-**Also Appears As:** "Option Area Is Coming as 0"
-**Issue:** No option sizes/configurations in backend OR saleable mapping missing/incorrect
-**Resolution:** Check if option sizes created in backend, ensure saleable area mapping correctly set
+### Error: "Max Slots Entered Cannot Be Greater Than Number of Distinct Configurations on Project i.e. 0" / "Option Area Is Coming as 0"
+**Issue:** No option sizes/configurations in backend or saleable mapping missing/incorrect
+**Resolution:** Connect with XID team to check option size creation, ensure saleable area mapping is correct.
 
 ### Error: "Quantity Left Is Less Than Required"
-**Issue:** Not enough slots available to activate transaction
-**Resolution:** Verify slot availability, check if transaction already active
+**Issue:** Insufficient slots available for activation
+**Resolution:** The current transaction has no available slots for additional configurations. A new transaction will be required, the XID team cannot assist further.
 
-### Error: Possession Date Beyond 2030
-**Issue:** System limitation - possession dates beyond 2030 cause errors
+### Error: Possession Date More Than 8 Years from Current Year
+**Issue:** Possession dates cannot be added beyond 8 years from the current year due to system constraints.
 **Resolution:**
-1. Connect with XID team
-2. Temporarily update possession date to before 2030
-3. Activate slot
-4. Inform XID team to revert to original date`,
+1. Temporarily update the possession date to within 8 years by coordinating with the XID team to activate the slot
+2. Once activated, revert the possession date to the original timeline
+
+### Error: "AS Present with Link ID:"
+**Issue:** Existing active product with same profile ID or duplicate slot activation with same TID
+**Resolution:** Check if client slot is visible on project page. If not, connect with XID team to deactivate old transaction.
+
+### Error: Price per sq ft Showing "NAN"
+**Issue:** Mismatch between backend saleable area and Seller panel configuration
+**Resolution:** Connect with XID team to remove mismatched option sizes.`,
     relatedTopics: ["Slot Management", "Option Creation"],
     contactEmail: "xidops@99acres.com"
   },
@@ -2455,32 +2455,6 @@ As per company policy, raw video footage CANNOT be shared with clients.
 - Must be accompanied by a signed consent form`,
     relatedTopics: ["AdStar and AdPro Video Process", "Video Management"],
     contactEmail: "asap.ops@99acres.com"
-  },
-  {
-    id: "additional-activation-errors",
-    category: "Troubleshooting",
-    title: "Additional Slot Activation Errors",
-    keywords: ["existing active product", "AS present", "link ID", "NAN price", "price per sq ft NAN", "profile ID error", "duplicate slot", "duplicate activation"],
-    content: `## Error: "Existing Active Product AS Present with Link ID" 
-
-**Issue:** Duplicate slot activation with same profile ID or same TID
-**Resolution:** Check if a slot is already active with the same profile ID or TID. A new transaction will be required.
-
-## Error: Price per sq ft Showing "NAN"
-
-**Issue:** Mismatch between backend saleable area and Seller panel configuration
-**Resolution:** Check if option sizes are created in backend and ensure saleable area mapping is correctly set. Contact XID team to fix mapping.
-
-## Error: Possession Date Beyond 8 Years
-
-**Issue:** System constraints do not allow possession dates more than 8 years from current year
-**Resolution:**
-1. Connect with XID team
-2. Temporarily update possession date to within 8 years
-3. Activate slot
-4. Inform XID team to revert to original date`,
-    relatedTopics: ["Slot Activation Errors", "Troubleshooting"],
-    contactEmail: "xidops@99acres.com"
   },
   {
     id: "banner-availability",
