@@ -402,7 +402,7 @@ serve(async (req) => {
     const learnedAnswers = Array.isArray((body as any)?.learnedAnswers) ? (body as any).learnedAnswers.slice(0, 200) : [];
 
     // Input validation
-    if (rawMessages.length > 50) {
+    if (rawMessages.length > 100) {
       return new Response(
         JSON.stringify({ error: "Too many messages. Please start a new conversation." }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
