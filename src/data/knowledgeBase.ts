@@ -81,7 +81,7 @@ These enhance listing quality but are not required for creation:
     id: "non-rera-project-creation",
     category: "Project Creation",
     title: "Creating Non-RERA Projects",
-    keywords: ["consent form", "non-RERA", "builder approval", "project creation", "no RERA", "create non-RERA", "non-RERA XID", "project without RERA", "create XID without RERA", "not RERA registered", "without RERA", "non rera consent", "state-wise consent form", "statewise consent form", "download consent form"],
+    keywords: ["consent form", "non-RERA", "builder approval", "project creation", "no RERA", "create non-RERA", "non-RERA XID", "project without RERA", "create XID without RERA", "not RERA registered", "without RERA", "non rera consent", "state-wise consent form", "statewise consent form", "download consent form", "bihar consent", "west bengal consent", "maharashtra consent", "punjab consent", "rajasthan consent", "delhi consent", "kerala consent", "karnataka consent", "telangana consent", "gujarat consent", "assam consent", "bihar", "west bengal", "maharashtra", "punjab", "rajasthan"],
     content: `## What is Required to Create/Design a Project Page/XID/NPXID if the Project is Not RERA Registered?
 
 **Mandatory Details:**

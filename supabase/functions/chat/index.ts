@@ -66,7 +66,7 @@ Use passive voice or descriptive statements: "X is done by...", "X happens when.
 
 // Critical terms that should always match strongly regardless of length
 // Note: "builder" and "project" removed as standalone terms to prevent cross-matching between similar entries
-const CRITICAL_TERMS = ["xid", "rera", "option", "options", "slot", "price", "image", "bhk", "np", "fp", "pg", "logo", "deactivate", "deactivation", "glossary", "escalation", "banner", "mailer", "possession", "offer", "resale", "verbal", "capital", "pvt", "religious", "washroom", "duration", "reactivate", "profile", "locality", "typical"];
+const CRITICAL_TERMS = ["xid", "rera", "option", "options", "slot", "price", "image", "bhk", "np", "fp", "pg", "logo", "deactivate", "deactivation", "glossary", "escalation", "banner", "mailer", "possession", "offer", "resale", "verbal", "capital", "pvt", "religious", "washroom", "duration", "reactivate", "profile", "locality", "typical", "consent"];
 
 // Compound phrases that should be matched as units (higher priority than individual terms)
 const COMPOUND_PHRASES = [
@@ -102,6 +102,20 @@ const QUERY_MAPPINGS: Record<string, string> = {
   "without rera": "non-RERA consent form project creation not RERA registered",
   "create non rera": "non-RERA consent form project creation without RERA builder approval",
   "non rera xid": "non-RERA consent form project creation XID without RERA",
+  "bihar consent": "consent form non-RERA state-wise Bihar download consent form",
+  "west bengal consent": "consent form non-RERA state-wise West Bengal download consent form",
+  "maharashtra consent": "consent form non-RERA state-wise Maharashtra download consent form",
+  "punjab consent": "consent form non-RERA state-wise Punjab download consent form",
+  "rajasthan consent": "consent form non-RERA state-wise Rajasthan download consent form",
+  "delhi consent": "consent form non-RERA state-wise Delhi download consent form",
+  "kerala consent": "consent form non-RERA state-wise Kerala download consent form",
+  "karnataka consent": "consent form non-RERA state-wise Karnataka download consent form",
+  "gujarat consent": "consent form non-RERA state-wise Gujarat download consent form",
+  "assam consent": "consent form non-RERA state-wise Assam download consent form",
+  "telangana consent": "consent form non-RERA state-wise Telangana download consent form",
+  "bihar form": "consent form non-RERA state-wise Bihar download",
+  "west bengal form": "consent form non-RERA state-wise West Bengal download",
+  "maharashtra form": "consent form non-RERA state-wise Maharashtra download",
   "raw video": "raw video footage policy sharing",
   "escalation": "escalation matrix sales requests",
   "banner": "banner availability campaign mailer LBXID",
