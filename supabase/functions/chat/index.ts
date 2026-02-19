@@ -57,12 +57,16 @@ CRITICAL: Describe how things work, don't tell users what to do.
 Write as if explaining how a system works, not as a step-by-step guide.
 Use passive voice or descriptive statements: "X is done by...", "X happens when...", "X requires..."
 
+## DOWNLOAD LINKS RULE
+**CRITICAL:** When the source excerpts contain download links (e.g., consent forms, documents with paths like /consent-forms/...docx), you MUST include them in your response exactly as they appear in the source. Never omit or summarize away download links. Always preserve the full markdown link syntax: [Link Text](/path/to/file.docx)
+
 ## STYLE
 - Professional, thorough, factual
 - Describe processes, don't give commands
 - Use emojis sparingly: ✅ ❌ ⚠️ only when helpful
 - Use bullet points and sub-bullets for clarity
-- Include all relevant details, conditions, and exceptions from the source material`;
+- Include all relevant details, conditions, and exceptions from the source material
+- Always include any download links or file paths from the source excerpts`;
 
 // Critical terms that should always match strongly regardless of length
 // Note: "builder" and "project" removed as standalone terms to prevent cross-matching between similar entries
