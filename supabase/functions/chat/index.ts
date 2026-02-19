@@ -166,6 +166,7 @@ const QUERY_MAPPINGS: Record<string, string> = {
   "how many usp": "USP unique selling points maximum 7 project highlights",
   "how many highlights": "location highlights maximum 15 highlights per XID page location advantages",
   "maximum usp": "USP unique selling points maximum 7 project highlights why buy",
+  "usp and location": "USP unique selling points maximum 7 location highlights maximum 15",
   "maximum usps": "USP unique selling points maximum 7 project highlights why buy",
   "usps that": "USP unique selling points maximum 7 project highlights why buy",
   "usps can": "USP unique selling points maximum 7 project highlights why buy",
@@ -276,29 +277,36 @@ function scoreSection(section: string, tokens: string[], originalQuery: string):
     if (queryLower.includes("builder logo") && !hay.includes("builder logo") && hay.includes("project logo")) {
       score -= 20;
     }
-    // Penalize USP section when query is about location highlights and vice versa
-    if ((queryLower.includes("location highlight") || queryLower.includes("location advantage")) && 
-        !hay.includes("location highlight") && !hay.includes("location advantage") && 
-        (hay.includes("usp") || hay.includes("unique selling"))) {
-      score -= 25;
-    }
-    if ((queryLower.includes("usp") || queryLower.includes("unique selling") || queryLower.includes("project highlight")) && 
-        !hay.includes("usp") && !hay.includes("unique selling") && 
-        (hay.includes("location highlight") || hay.includes("location advantage"))) {
-      score -= 25;
-    }
-    // Penalize location highlights section when query is specifically about USP count/maximum
-    if ((queryLower.includes("usp") || queryLower.includes("usps")) && 
-        (queryLower.includes("maximum") || queryLower.includes("how many") || queryLower.includes("can be added")) &&
-        hay.includes("location highlight") && !hay.includes("usp")) {
-      score -= 40;
-    }
-    // Penalize USP section when query is specifically about location highlights count/maximum
-    if ((queryLower.includes("location") || queryLower.includes("highlight")) && 
-        !queryLower.includes("usp") && !queryLower.includes("usps") &&
-        (queryLower.includes("maximum") || queryLower.includes("how many") || queryLower.includes("can be added")) &&
-        hay.includes("usp") && !hay.includes("location highlight")) {
-      score -= 40;
+    // Detect if query asks about BOTH topics — skip cross-penalties in that case
+    const queryHasUsp = queryLower.includes("usp") || queryLower.includes("unique selling") || queryLower.includes("project highlight");
+    const queryHasLocation = queryLower.includes("location highlight") || queryLower.includes("location advantage");
+    const queryAsksBoth = queryHasUsp && queryHasLocation;
+
+    if (!queryAsksBoth) {
+      // Penalize USP section when query is about location highlights and vice versa
+      if (queryHasLocation && 
+          !hay.includes("location highlight") && !hay.includes("location advantage") && 
+          (hay.includes("usp") || hay.includes("unique selling"))) {
+        score -= 25;
+      }
+      if (queryHasUsp && 
+          !hay.includes("usp") && !hay.includes("unique selling") && 
+          (hay.includes("location highlight") || hay.includes("location advantage"))) {
+        score -= 25;
+      }
+      // Penalize location highlights section when query is specifically about USP count/maximum
+      if ((queryLower.includes("usp") || queryLower.includes("usps")) && 
+          (queryLower.includes("maximum") || queryLower.includes("how many") || queryLower.includes("can be added")) &&
+          hay.includes("location highlight") && !hay.includes("usp")) {
+        score -= 40;
+      }
+      // Penalize USP section when query is specifically about location highlights count/maximum
+      if ((queryLower.includes("location") || queryLower.includes("highlight")) && 
+          !queryLower.includes("usp") && !queryLower.includes("usps") &&
+          (queryLower.includes("maximum") || queryLower.includes("how many") || queryLower.includes("can be added")) &&
+          hay.includes("usp") && !hay.includes("location highlight")) {
+        score -= 40;
+      }
     }
   }
   
