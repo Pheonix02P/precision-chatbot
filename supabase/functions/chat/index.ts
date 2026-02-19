@@ -343,11 +343,30 @@ serve(async (req) => {
 
   try {
     const body = await req.json().catch(() => ({}));
-    const messages = Array.isArray((body as any)?.messages) ? (body as any).messages : [];
-    const documentText = typeof (body as any)?.documentText === "string" ? (body as any).documentText : "";
-    const learnedAnswers = Array.isArray((body as any)?.learnedAnswers) ? (body as any).learnedAnswers : [];
+    const rawMessages = Array.isArray((body as any)?.messages) ? (body as any).messages : [];
+    const documentText = typeof (body as any)?.documentText === "string" ? (body as any).documentText.slice(0, 200000) : "";
+    const learnedAnswers = Array.isArray((body as any)?.learnedAnswers) ? (body as any).learnedAnswers.slice(0, 200) : [];
+
+    // Input validation
+    if (rawMessages.length > 50) {
+      return new Response(
+        JSON.stringify({ error: "Too many messages. Please start a new conversation." }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const messages = rawMessages
+      .filter((m: any) => m && typeof m.role === "string" && typeof m.content === "string")
+      .map((m: any) => ({ role: m.role === "user" ? "user" : "assistant", content: String(m.content).slice(0, 4000) }));
 
     const lastUserMsg = [...messages].reverse().find((m: any) => m?.role === "user")?.content ?? "";
+
+    if (!lastUserMsg.trim()) {
+      return new Response(
+        JSON.stringify({ error: "Empty message" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
 
     console.log("Processing query:", lastUserMsg.substring(0, 100));
 

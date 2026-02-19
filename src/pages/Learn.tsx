@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Lock, Plus, Trash2, BookOpen, ArrowLeft, MessageSquareWarning, CheckCircle2 } from "lucide-react";
+import { Plus, Trash2, BookOpen, ArrowLeft, MessageSquareWarning, CheckCircle2, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
-const ADMIN_PASSWORD = "admin123";
 
 type UnresolvedFeedback = {
   id: string;
@@ -24,9 +23,7 @@ type LearnedAnswer = {
 };
 
 export default function Learn() {
-  const [password, setPassword] = useState("");
-  const [authenticated, setAuthenticated] = useState(false);
-  const [error, setError] = useState("");
+  const { isAuthenticated, loading: authLoading, signOut } = useAdminAuth();
   const [unresolvedQuestions, setUnresolvedQuestions] = useState<UnresolvedFeedback[]>([]);
   const [learnedAnswers, setLearnedAnswers] = useState<LearnedAnswer[]>([]);
   const [newQuestion, setNewQuestion] = useState("");
@@ -37,20 +34,17 @@ export default function Learn() {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    if (password === ADMIN_PASSWORD) {
-      setAuthenticated(true);
-      setError("");
-    } else {
-      setError("Incorrect password");
+  useEffect(() => {
+    if (!authLoading && !isAuthenticated) {
+      navigate("/admin-login?redirect=/learn");
     }
-  };
+  }, [authLoading, isAuthenticated, navigate]);
 
   useEffect(() => {
-    if (authenticated) {
+    if (isAuthenticated) {
       fetchData();
     }
-  }, [authenticated]);
+  }, [isAuthenticated]);
 
   const fetchData = async () => {
     setLoading(true);
@@ -74,7 +68,6 @@ export default function Learn() {
       toast({ title: "Error", description: "Failed to save answer.", variant: "destructive" });
       return;
     }
-    // Remove from unresolved
     await supabase.from("unresolved_feedback").delete().eq("id", feedbackId);
     setAnsweringId(null);
     setAnswerText("");
@@ -110,31 +103,15 @@ export default function Learn() {
     fetchData();
   };
 
-  if (!authenticated) {
+  if (authLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-background p-4">
-        <Card className="w-full max-w-sm">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Lock className="h-5 w-5" /> Learning Mode
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <p className="text-sm text-muted-foreground">Enter admin password to access learning mode.</p>
-            <Input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleLogin()}
-            />
-            {error && <p className="text-sm text-destructive">{error}</p>}
-            <Button onClick={handleLogin} className="w-full">Unlock</Button>
-          </CardContent>
-        </Card>
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-muted-foreground">Loading...</p>
       </div>
     );
   }
+
+  if (!isAuthenticated) return null;
 
   return (
     <div className="min-h-screen bg-background">
@@ -143,7 +120,10 @@ export default function Learn() {
           <ArrowLeft className="h-4 w-4" />
         </Button>
         <BookOpen className="h-5 w-5 text-primary" />
-        <h1 className="font-semibold text-sm">Learning Mode</h1>
+        <h1 className="font-semibold text-sm flex-1">Learning Mode</h1>
+        <Button variant="ghost" size="sm" onClick={signOut} className="text-xs gap-1">
+          <LogOut className="h-3.5 w-3.5" /> Sign Out
+        </Button>
       </header>
 
       <div className="max-w-3xl mx-auto p-4 space-y-6">
