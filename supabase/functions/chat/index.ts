@@ -70,7 +70,9 @@ const CRITICAL_TERMS = ["xid", "rera", "option", "options", "slot", "price", "im
 // Compound phrases that should be matched as units (higher priority than individual terms)
 const COMPOUND_PHRASES = [
   "project logo", "builder logo", "developer logo",
-  "project page", "project name", "builder name"
+  "project page", "project name", "builder name",
+  "location highlights", "location advantages", "location highlight",
+  "project highlights", "project usp", "unique selling"
 ];
 
 // Common phrase mappings for query normalization
@@ -156,6 +158,14 @@ const QUERY_MAPPINGS: Record<string, string> = {
   "locality in existing": "locality change update location project page existing",
   "update locality": "locality change update location project page existing RERA",
   "change location": "locality change update location project page existing RERA builder",
+  "maximum location": "location highlights maximum 15 highlights per XID page location advantages",
+  "maximum highlights": "location highlights maximum 15 highlights per XID page location advantages",
+  "location highlight": "location highlights location advantages maximum 15 highlights nearby landmarks distance",
+  "location advantages": "location highlights location advantages maximum 15 highlights nearby landmarks",
+  "how many location": "location highlights maximum 15 highlights per XID page",
+  "how many usp": "USP unique selling points maximum 7 project highlights",
+  "how many highlights": "location highlights maximum 15 highlights per XID page location advantages",
+  "maximum usp": "USP unique selling points maximum 7 project highlights why buy",
   "call to action": "CTA call to action button",
   "call to action button": "CTA call to action button",
   "search engine optimization": "SEO search engine optimization",
@@ -215,7 +225,10 @@ const COMMON_PHRASES = [
   "profile id error", "does not have access",
   "price nan", "as present with link",
   "typical floor plan", "upload floor plan", "floor plan residential",
-  "change locality", "update locality", "change location", "locality change"
+  "change locality", "update locality", "change location", "locality change",
+  "location highlight", "location highlights", "location advantage", "location advantages",
+  "maximum location", "maximum highlights", "maximum usp", "how many highlights"
+
 ];
 
 function normalizeQuery(query: string): string {
@@ -257,6 +270,17 @@ function scoreSection(section: string, tokens: string[], originalQuery: string):
     }
     if (queryLower.includes("builder logo") && !hay.includes("builder logo") && hay.includes("project logo")) {
       score -= 20;
+    }
+    // Penalize USP section when query is about location highlights and vice versa
+    if ((queryLower.includes("location highlight") || queryLower.includes("location advantage")) && 
+        !hay.includes("location highlight") && !hay.includes("location advantage") && 
+        (hay.includes("usp") || hay.includes("unique selling"))) {
+      score -= 25;
+    }
+    if ((queryLower.includes("usp") || queryLower.includes("unique selling") || queryLower.includes("project highlight")) && 
+        !hay.includes("usp") && !hay.includes("unique selling") && 
+        (hay.includes("location highlight") || hay.includes("location advantage"))) {
+      score -= 25;
     }
   }
   
