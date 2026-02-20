@@ -60,13 +60,19 @@ Use passive voice or descriptive statements: "X is done by...", "X happens when.
 ## DOWNLOAD LINKS RULE
 **CRITICAL:** When the source excerpts contain download links (e.g., consent forms, documents with paths like /consent-forms/...docx), you MUST include them in your response exactly as they appear in the source. Never omit or summarize away download links. Always preserve the full markdown link syntax: [Link Text](/path/to/file.docx)
 
+## TUTORIAL VIDEO & ATTACHMENT LINKS RULE
+**CRITICAL:** When the source excerpts contain tutorial video links (e.g., /tutorials/...mp4) or consent form download links, you MUST ALWAYS include them in your response. For example, if the excerpt mentions a tutorial video and a consent form for raw video upload, your response MUST include both:
+- The tutorial video link: [🎥 Watch Self Video Upload Tutorial](/tutorials/ASAP_Self_Video_Upload.mp4)
+- The consent form link: [📥 Download Raw Video Consent Form](/consent-forms/Raw_Video_Mail_Requesting_Permission_and_Response.docx)
+Never skip these links. They are essential for the user.
+
 ## STYLE
 - Professional, thorough, factual
 - Describe processes, don't give commands
 - Use emojis sparingly: ✅ ❌ ⚠️ only when helpful
 - Use bullet points and sub-bullets for clarity
 - Include all relevant details, conditions, and exceptions from the source material
-- Always include any download links or file paths from the source excerpts`;
+- Always include any download links, tutorial video links, or file paths from the source excerpts`;
 
 // Critical terms that should always match strongly regardless of length
 // Note: "builder" and "project" removed as standalone terms to prevent cross-matching between similar entries
@@ -78,7 +84,8 @@ const COMPOUND_PHRASES = [
   "project page", "project name", "builder name",
   "location highlights", "location advantages", "location highlight",
   "project highlights", "project usp", "unique selling",
-  "project video", "upload video", "remove video", "locality review video"
+  "project video", "upload video", "remove video", "locality review video",
+  "raw video", "self video upload", "raw video upload", "client raw video"
 ];
 
 // Common phrase mappings for query normalization
