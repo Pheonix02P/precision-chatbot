@@ -2287,7 +2287,7 @@ Purpose: Campaign requests, mailer requests, banner bookings, LBXID
 
 **📧 Photos Team**
 Email: Photos@99acres.com
-Purpose: Photo-related queries, image processing, photo shoots
+Purpose: Photo-related queries, image processing
 
 ## Quick Reference by Query Type
 
