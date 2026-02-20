@@ -1935,9 +1935,13 @@ NOT Allowed:
 - ✗ Disclosure of project pricing
 - ✗ Reference to or comparison with other builders
 
-## Self Video Upload
+## Self Video Upload - Can a Sales Person Upload Their Client's Raw Video?
 
-Sales can upload client's raw video through CRM with signed consent form.
+**Yes**, you can upload their raw video directly through the CRM, provided it is accompanied by a signed consent form.
+
+**Tutorial Video:** [🎥 Watch Self Video Upload Tutorial](/tutorials/ASAP_Self_Video_Upload.mp4)
+
+**Consent Form:** [📥 Download Raw Video Consent Form](/consent-forms/Raw_Video_Mail_Requesting_Permission_and_Response.docx)
 
 **Contact for queries:** asap.ops@99acres.com
 
@@ -2457,7 +2461,11 @@ As per company policy, raw video footage CANNOT be shared with clients.
 
 **Self Video Upload Process:**
 - Sales team can upload client's raw video through CRM
-- Must be accompanied by a signed consent form`,
+- Must be accompanied by a signed consent form
+
+**Tutorial Video:** [🎥 Watch Self Video Upload Tutorial](/tutorials/ASAP_Self_Video_Upload.mp4)
+
+**Consent Form:** [📥 Download Raw Video Consent Form](/consent-forms/Raw_Video_Mail_Requesting_Permission_and_Response.docx)`,
     relatedTopics: ["AdStar and AdPro Video Process", "Video Management"],
     contactEmail: "asap.ops@99acres.com"
   },

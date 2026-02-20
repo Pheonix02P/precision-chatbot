@@ -37,6 +37,13 @@ function fixConsentFormLinks(text: string): string {
       return `[📥 Download ${name}](${fullPath})`;
     }
   );
+  result = result.replace(
+    /(?<!\()(\/tutorials\/([^\s)]+\.mp4))(?!\))/g,
+    (_match, fullPath, filename) => {
+      const name = filename.replace(/_/g, ' ').replace('.mp4', '');
+      return `[🎥 ${name}](${fullPath})`;
+    }
+  );
   return result;
 }
 
@@ -118,7 +125,7 @@ export function ChatMessage({ role, content, isLoading, messageId, userQuestion 
                       className="text-primary hover:underline font-medium transition-colors"
                       target="_blank"
                       rel="noopener noreferrer"
-                      {...(href?.endsWith('.docx') || href?.endsWith('.pdf') ? { download: true } : {})}
+                      {...(href?.endsWith('.docx') || href?.endsWith('.pdf') || href?.endsWith('.mp4') ? { download: true } : {})}
                     >
                       {children}
                     </a>
