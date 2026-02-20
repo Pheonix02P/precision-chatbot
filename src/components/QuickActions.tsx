@@ -58,7 +58,7 @@ const quickActions = [
   { id: "cta", label: "CTA", icon: MousePointer, query: "CTA" },
   { id: "advertiser", label: "Advertiser", icon: ShieldCheck, query: "Advertiser" },
   { id: "fix-errors", label: "Fix Errors", icon: AlertTriangle, query: "Fix Errors" },
-  { id: "contacts", label: "Contacts", icon: Mail, query: "Contacts" },
+  { id: "contacts", label: "Contact Emails", icon: Mail, query: "Contact Emails" },
 ];
 
 export function QuickActions({ onAction, disabled, variant = "compact" }: QuickActionsProps) {
