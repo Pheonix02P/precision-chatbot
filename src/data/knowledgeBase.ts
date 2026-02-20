@@ -605,21 +605,26 @@ Share new brochure with XID team
     id: "video-management",
     category: "Content Management",
     title: "Video Management",
-    keywords: ["videos", "YouTube", "project video", "P2V", "video upload", "add video", "upload video", "video requirements"],
-    content: `## How to Add Video to XID Page
+    keywords: ["videos", "YouTube", "project video", "P2V", "video upload", "add video", "upload video", "video requirements", "remove video", "locality review video", "how many videos", "project videos"],
+    content: `## How to Upload a Project Video on XID Page
 
-Raw video files cannot be directly added
+Raw video files cannot be directly added to the XID page. Videos can be uploaded only via a YouTube link.
 
-**Process:**
-1. Video must be uploaded to YouTube
-2. Share YouTube link with XID team
+- The video should be uploaded on the builder's official YouTube channel.
+- If the builder does not have an official YouTube channel, the raw .MP4 file can be uploaded on the XID team's YouTube channel, provided there is no copyright content in the video.
+- If the video shows copyright content during upload, it must be shared via the builder's official YouTube channel only.
 
-**YouTube Channel Requirements:**
-- Preferred: Builder's official YouTube channel
-- Alternative: Raw .MP4 file can be uploaded on XID team's YouTube channel (must have NO copyright content)
-- If Copyright Content Detected: Must use builder's official YouTube channel only
+## How Many Videos Can Be Displayed on a Project Page
 
-**Maximum Videos on XID Page:** 3 videos maximum
+A maximum of **three project videos** can be displayed on a project page. If the builder wants to add an additional video, they must specify which existing video should be removed and replaced with the new builder video.
+
+## How to Remove a Project Video from Project Page
+
+Providing a replacement video is **mandatory** to remove an already uploaded video from the project page. If the builder insists on removing a video without providing a replacement, official communication from the builder is required, clearly mentioning the reason for removal.
+
+## How to Remove a 99acres Locality Review Video from Project Page
+
+The XID team has no access to remove 99acres locality review videos. Kindly connect with the feedback team for the same.
 
 **Video Priority Order:**
 1. In-house Video (99acres YouTube)
