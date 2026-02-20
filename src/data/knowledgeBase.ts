@@ -1898,7 +1898,7 @@ If the upcoming locality is mentioned on official websites or documents from gov
     category: "Slot Types",
     title: "AdStar and AdPro Video Process",
     keywords: ["AdStar video", "AdPro video", "video shoot", "virtual shoot", "seller card video", "profile video", "project video"],
-    content: `## How to Arrange Video Shoot for AdPro
+    content: `## How to Arrange Video Shoot for AdStar
 
 **Virtual Video Shoot:**
 Share client details with virtualshoot@99acres.com:
@@ -2275,7 +2275,7 @@ Purpose: AdStar/AdPro video queries, video shoot arrangements, seller card video
 
 **📧 Virtual Shoot Team**
 Email: virtualshoot@99acres.com
-Purpose: Virtual video shoot requests for AdPro
+Purpose: Virtual video shoot requests for AdStar
 
 **📧 Corp Service Team**
 Email: Corpservice-99acres@99acres.com
