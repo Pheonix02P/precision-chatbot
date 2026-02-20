@@ -70,14 +70,15 @@ Use passive voice or descriptive statements: "X is done by...", "X happens when.
 
 // Critical terms that should always match strongly regardless of length
 // Note: "builder" and "project" removed as standalone terms to prevent cross-matching between similar entries
-const CRITICAL_TERMS = ["xid", "rera", "option", "options", "slot", "price", "image", "bhk", "np", "fp", "pg", "logo", "deactivate", "deactivation", "glossary", "escalation", "banner", "mailer", "possession", "offer", "resale", "verbal", "capital", "pvt", "religious", "washroom", "duration", "reactivate", "profile", "locality", "typical", "consent"];
+const CRITICAL_TERMS = ["xid", "rera", "option", "options", "slot", "price", "image", "bhk", "np", "fp", "pg", "logo", "deactivate", "deactivation", "glossary", "escalation", "banner", "mailer", "possession", "offer", "resale", "verbal", "capital", "pvt", "religious", "washroom", "duration", "reactivate", "profile", "locality", "typical", "consent", "video"];
 
 // Compound phrases that should be matched as units (higher priority than individual terms)
 const COMPOUND_PHRASES = [
   "project logo", "builder logo", "developer logo",
   "project page", "project name", "builder name",
   "location highlights", "location advantages", "location highlight",
-  "project highlights", "project usp", "unique selling"
+  "project highlights", "project usp", "unique selling",
+  "project video", "upload video", "remove video", "locality review video"
 ];
 
 // Common phrase mappings for query normalization
@@ -121,6 +122,14 @@ const QUERY_MAPPINGS: Record<string, string> = {
   "west bengal form": "consent form non-RERA state-wise West Bengal download",
   "maharashtra form": "consent form non-RERA state-wise Maharashtra download",
   "raw video": "raw video footage policy sharing",
+  "upload video": "video upload project video YouTube XID page how to upload",
+  "project video": "project video upload YouTube XID page video management",
+  "add video": "video upload add project video YouTube XID page",
+  "video xid": "video upload project video YouTube XID page",
+  "upload video xid": "video upload project video YouTube XID page how to upload",
+  "remove video": "remove video project page replacement builder communication",
+  "locality review video": "locality review video 99acres remove feedback team",
+  "how many video": "maximum videos project page three videos display",
   "escalation": "escalation matrix sales requests",
   "banner": "banner availability campaign mailer LBXID",
   "requirement": "mandatory requirements required details",
@@ -227,6 +236,8 @@ const COMMON_PHRASES = [
   "rera project", "non rera", "floor plan", "price list",
   "np deactivate", "deactivate slot", "deactivate np", "slot deactivation",
   "raw video", "banner availability", "consent form", "escalation matrix",
+  "project video", "upload video", "add video", "remove video", "video xid",
+  "locality review video", "how many video",
   "property type", "property types", "glossary", "what is", "meaning",
   "basic requirement", "residential property", "commercial property",
   "allowed property", "requirement for",
