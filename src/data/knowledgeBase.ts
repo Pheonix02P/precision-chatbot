@@ -902,12 +902,7 @@ The system displays pricing in this priority order:
 - Essential for accurate price updates
 
 ## Price on Request
-**Configuration-Level Rule:**
-ALL option sizes within configuration must be "Price on Request". If even ONE option has price, system calculates pricing for all.
-
-**Cannot Show Selective "Price on Request"**
-- No provision to show "Price on Request" for just one option
-- Cannot mix "Price on Request" with actual prices in same configuration`,
+It is mandatory for all XIDs to display active pricing. XID team is strictly prohibited from using "Price on Request" on any of the Project page on the platform.`,
     relatedTopics: ["Price List", "Builder Slots"],
     contactEmail: "xidops@99acres.com"
   },
@@ -1806,23 +1801,9 @@ The same RERA number cannot be added to two different projects.
     category: "Pricing",
     title: "Price on Request Display",
     keywords: ["price on request", "hide price", "no pricing", "POR"],
-    content: `## Can "Price on Request" be Shown on Live Option Sizes?
+    content: `## Can We Show "Price on Request" on Live Option Sizes?
 
-**Answer: NO**
-
-**Rule:** It is MANDATORY for all XIDs to display active pricing.
-
-**XID team is strictly prohibited** from using "Price on Request" on any project page on the platform.
-
-## Configuration-Level Rule
-
-ALL option sizes within a configuration must be "Price on Request" for it to display.
-
-If even ONE option has a price: System calculates pricing for all options.
-
-**Cannot show selective "Price on Request":**
-- No provision to show "Price on Request" for just one option
-- Cannot mix "Price on Request" with actual prices in same configuration`,
+It is mandatory for all XIDs to display active pricing. XID team is strictly prohibited from using "Price on Request" on any of the Project page on the platform.`,
     relatedTopics: ["Pricing Display", "Option Management"],
     contactEmail: "xidops@99acres.com"
   },
